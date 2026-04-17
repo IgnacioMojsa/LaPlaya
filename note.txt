@@ -1,0 +1,54 @@
+my-pixi-game/
+│
+├── public/
+│   └── index.html
+│
+├── src/
+│   ├── main.js *             # Entry point
+│   ├── game/
+│   │   ├── Game.js *         # Game class (core loop, setup)
+│   │   ├── SceneManager.js * # Handles scenes (menu, gameplay, etc.)
+│   │   ├── config/
+            ├── GameConfig.js * // screen size, gravity, FPS, etc.
+            ├── Controls.js * // key bindings
+            └── Physics.js  * // speeds, jump force, etc.
+│   │   ├── scenes/
+│   │   │   ├── MenuScene.js *
+│   │   │   └── GameScene.js *
+│   │   │   └── BaseScene.js *
+│   │   ├── entities/
+│   │   │   ├── Player.js *
+│   │   │   └── NPC.js 
+│   │   │
+│   │   ├── systems/
+│   │   │   ├── InputSystem.js *
+│   │   │   ├── CollisionSystem.js
+│   │   │   └── RenderSystem.js
+│   │   │
+│   │   └── utils/
+│   │       ├── Loader.js *
+│   │       └── Constants.js *
+│   │
+│   ├── assets/
+│   │   ├── images/
+│   │   ├── sounds/
+│   │   └── fonts/
+│   │
+│   └── styles/
+│       └── style.css
+│
+├── package.json
+└── vite.config.js (or webpack config)
+
+With this:
+
+Click → switches scene
+Player moves left/right
+Clean architecture already working
+
+Next logical steps 
+Add jump + gravity (Physics.js)
+Add collision system (your GDevelop knowledge fits here)
+Add camera follow
+Add sprites instead of Graphics
+Add delta-time independent movement (important)

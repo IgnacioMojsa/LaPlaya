@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "cors": "^2.8.6",
+    "pixi.js": "^8.18.1"
+  }
+}
