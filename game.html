@@ -9,6 +9,7 @@
         
         <script src = "pixi.js"> </script>
         <script src = "hombre.js"> </script>
+        <script src = "mujer.js"> </script>
         
 
     </head>
@@ -29,9 +30,9 @@
             
             let fps = 60
 
-            let cantidadTotalDeHombres = 300
+            let cantidadTotalDeNpc = 200
 
-            let arrayDeHombres = []
+            let arrayDeNpc = []
 
             let ahora = 0 
 
@@ -56,24 +57,27 @@
                 document.body.appendChild(pixiApp.canvas);
                 pixiInicializado = true
 
-                cargarUnaImagen()
+                cargarUnPersonajeNoJugable(Hombre, 'npc_prueba.png')
+                cargarUnPersonajeNoJugable(Mujer, 'npc_prueba2.png')
+                
             }
 
-            async function cargarUnaImagen() {
-                texture = await PIXI.Assets.load('npc_prueba.png');
+            async function cargarUnPersonajeNoJugable(unPersonaje, unaImagen) {
+                texture = await PIXI.Assets.load(unaImagen);
 
                 const separacionX = 34
                 const separacionY = 60
                 
-                for (let i = 0; i < cantidadTotalDeHombres; i ++){
-                    const coordenadaXDeHombre = window.innerWidth / 2
-                    const coordenadaYDeHombre = window.innerHeight / 2
+                for (let i = 0; i < cantidadTotalDeNpc; i ++){
                     
-                    const instanciaDeHombre = new Hombre(coordenadaXDeHombre, coordenadaYDeHombre, texture, i)
+                    const coordenadaXDeNPC = window.innerWidth / 2;
+                    const coordenadaYDeNPC = window.innerHeight / 2;
 
-                    arrayDeHombres.push(instanciaDeHombre)
+                    const instanciaDeNPC = new unPersonaje(coordenadaXDeNPC, coordenadaYDeNPC, texture, i)
 
-                    pixiApp.stage.addChild(instanciaDeHombre.sprite);
+                    arrayDeNpc.push(instanciaDeNPC)
+
+                    pixiApp.stage.addChild(instanciaDeNPC.sprite);
                 }
 
                 arrancarGameLoop()
@@ -86,9 +90,9 @@
 
                 ahora = nuevoAhora
 
-                for (let i = 0; i < arrayDeHombres.length; i++){
-                    const hombre = arrayDeHombres[i]
-                    hombre.moverse()
+                for (let i = 0; i < arrayDeNpc.length; i++){
+                    const npc = arrayDeNpc[i]
+                    npc.moverse()
                 }
 
                 requestAnimationFrame(arrancarGameLoop)
@@ -97,11 +101,11 @@
             function verCuantosHombreEstanFueraDePantalla(){
                 let arr = []
 
-                for (let i = 0; i < arrayDeHombres.length; i++){
-                    const hombres = arrayDeHombres[i]
+                for (let i = 0; i < arrayDeNpc.length; i++){
+                    const npcs = arrayDeNpc[i]
 
-                    if (hombres.sprite.x < 0 || hombres.sprite.x > window.innerWidth || hombres.sprite.y < 0 || hombres.sprite.y > window.innerHeight){
-                        arr.push(conejito)
+                    if (npcs.sprite.x < 0 || npcs.sprite.x > window.innerWidth || npcs.sprite.y < 0 || npcs.sprite.y > window.innerHeight){
+                        arr.push(npcs)
                     }
                 }
 
