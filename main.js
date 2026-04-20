@@ -6,6 +6,8 @@ let ahora = 0;
 let arrayDeHombres = []
 let cantidadTotalDeNpc = 200
 let arrayDeNpc = []
+let bgm = new Audio("./bgm.wav");
+bgm.loop = true;
 
 
 //contemplo mayusculas y minusculas pq sino no funca
@@ -104,6 +106,7 @@ function verCuantosHombreEstanFueraDePantalla(){
 let nuevoAhora = performance.now();
 
 function gameLoop(now) {
+    bgm.play();
     jugador.inputTeclado(keys);
     jugador.mantenerEnPantallaX();
 
