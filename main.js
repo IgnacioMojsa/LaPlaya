@@ -1,0 +1,118 @@
+let pixiApp;
+let jugador;
+let pixiInicializado = false;
+let ahora = 0;
+
+let arrayDeHombres = []
+let cantidadTotalDeNpc = 200
+let arrayDeNpc = []
+
+
+//contemplo mayusculas y minusculas pq sino no funca
+const keys = {
+     w:false,
+     a:false,
+     s:false,
+     d:false,
+     W:false,
+     A:false,
+     S:false,
+     D:false
+};
+
+//comprende cuando una tecla es presionada
+window.addEventListener('keydown', (e) => {
+  if (e.key in keys){
+    keys[e.key] = true;
+    e.preventDefault();
+    }
+});
+
+//comprende cuando una tecla es soltada
+window.addEventListener('keyup', (e) => {
+  if (e.key in keys){
+    keys[e.key] = false;
+    e.preventDefault();
+    }
+});
+
+async function arrancar() {
+    console.log("arrancando");
+    pixiApp = new PIXI.Application()
+    console.log("app de pixi creada");
+
+    const opcionesDePixi = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        background: "#f6cd7c"
+    };
+
+    await pixiApp.init(opcionesDePixi);
+    window.__PIXI_APP__ = pixiApp
+    document.body.appendChild(pixiApp.canvas);
+    pixiInicializado = true;
+
+    //cargarUnaImagen()
+    cargarJugador()
+    cargarUnPersonajeNoJugable(Hombre, 'npc_prueba.png')
+    cargarUnPersonajeNoJugable(Mujer, 'npc_prueba2.png')
+}
+
+async function cargarUnPersonajeNoJugable(unPersonaje, unaImagen) {
+    texture = await PIXI.Assets.load(unaImagen);
+    const separacionX = 34
+    const separacionY = 60
+           
+    for (let i = 0; i < cantidadTotalDeNpc; i ++){
+                  
+        const coordenadaXDeNPC = window.innerWidth / 2;
+        const coordenadaYDeNPC = window.innerHeight / 2;
+        const instanciaDeNPC = new unPersonaje(coordenadaXDeNPC, coordenadaYDeNPC, texture, i)
+        arrayDeNpc.push(instanciaDeNPC)
+        pixiApp.stage.addChild(instanciaDeNPC.sprite);
+        }
+                //Acá debería estar el gameLoop pero choca con el input de teclado por alguna razon, sale en console. Funciona aunque esté comentado
+                //gameLoop()
+            }
+
+async function cargarJugador() {
+    const coordenadaXdeJugador = window.innerWidth / 2
+    const coordenadaYdeJugador = window.innerHeight / 2
+
+    //const
+    texture = await PIXI.Assets.load('player.png');
+    jugador = new Jugador(coordenadaXdeJugador, coordenadaYdeJugador, texture);
+    pixiApp.stage.addChild(jugador.sprite);
+    requestAnimationFrame(gameLoop);
+}
+
+function verCuantosHombreEstanFueraDePantalla(){
+    let arr = []
+
+    for (let i = 0; i < arrayDeNpc.length; i++){
+        const npcs = arrayDeNpc[i]
+
+        if (npcs.sprite.x < 0 || npcs.sprite.x > window.innerWidth || npcs.sprite.y < 0 || npcs.sprite.y > window.innerHeight){
+            arr.push(npcs)
+            }
+        }
+
+        return arr
+}
+
+//arrancarGameLoop
+let nuevoAhora = performance.now();
+
+function gameLoop(now) {
+    jugador.inputTeclado(keys);
+    jugador.mantenerEnPantallaX();
+
+    for (let i = 0; i < arrayDeNpc.length; i++){
+        const npc = arrayDeNpc[i]
+            npc.moverse()
+    }
+
+    requestAnimationFrame(gameLoop);
+}
+
+arrancar()

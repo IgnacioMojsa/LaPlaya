@@ -1,122 +1,17 @@
 <html>
-    <head>
-        
-        <style>
-        body {
-            margin: 0px
+  <head>
+
+    <style>
+        body{
+            margin:0
         }
-        </style>
-        
-        <script src = "pixi.js"> </script>
-        <script src = "hombre.js"> </script>
-        <script src = "mujer.js"> </script>
-        
+    </style>
 
-    </head>
-
-    <body>
-
-        <script>
-
-            let pixiApp;
-
-            let texture;
-
-            let pixiInicializado = false
-
-            let numeroFrame = 0
-            
-            let duracionFrame = 16
-            
-            let fps = 60
-
-            let cantidadTotalDeNpc = 200
-
-            let arrayDeNpc = []
-
-            let ahora = 0 
-
-            async function arrancar() {
-                if (pixiInicializado) {
-                    console.log("no podes arrancar pixi de nuevo")
-                    return
-                }
-
-                console.log("arrancando")
-                pixiApp = new PIXI.Application();
-                console.log("app de pixi creada", pixiApp)
-                const opcionesDePixi = {
-                    background: "#f6cd7c",
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                };
-                await pixiApp.init(opcionesDePixi);
-
-                window.__PIXI_APP__ = pixiApp
-
-                document.body.appendChild(pixiApp.canvas);
-                pixiInicializado = true
-
-                cargarUnPersonajeNoJugable(Hombre, 'npc_prueba.png')
-                cargarUnPersonajeNoJugable(Mujer, 'npc_prueba2.png')
-                
-            }
-
-            async function cargarUnPersonajeNoJugable(unPersonaje, unaImagen) {
-                texture = await PIXI.Assets.load(unaImagen);
-
-                const separacionX = 34
-                const separacionY = 60
-                
-                for (let i = 0; i < cantidadTotalDeNpc; i ++){
-                    
-                    const coordenadaXDeNPC = window.innerWidth / 2;
-                    const coordenadaYDeNPC = window.innerHeight / 2;
-
-                    const instanciaDeNPC = new unPersonaje(coordenadaXDeNPC, coordenadaYDeNPC, texture, i)
-
-                    arrayDeNpc.push(instanciaDeNPC)
-
-                    pixiApp.stage.addChild(instanciaDeNPC.sprite);
-                }
-
-                arrancarGameLoop()
-            }
-
-            function arrancarGameLoop(){
-                const nuevoAhora = performance.now()
-                const duracionFrame = nuevoAhora - ahora
-                const fps = 1000 / duracionFrame
-
-                ahora = nuevoAhora
-
-                for (let i = 0; i < arrayDeNpc.length; i++){
-                    const npc = arrayDeNpc[i]
-                    npc.moverse()
-                }
-
-                requestAnimationFrame(arrancarGameLoop)
-            }
-
-            function verCuantosHombreEstanFueraDePantalla(){
-                let arr = []
-
-                for (let i = 0; i < arrayDeNpc.length; i++){
-                    const npcs = arrayDeNpc[i]
-
-                    if (npcs.sprite.x < 0 || npcs.sprite.x > window.innerWidth || npcs.sprite.y < 0 || npcs.sprite.y > window.innerHeight){
-                        arr.push(npcs)
-                    }
-                }
-
-                return arr
-            }
-
-            arrancar()
-            
-        </script>
-
-    </body>
-
+    <script src="pixi.js"></script>
+    <script src="jugador.js"></script>
+    <script src="hombre.js"></script>
+    <script src="mujer.js"></script>
+    <script defer src="main.js"></script>
+  </head>
+  <body></body>
 </html>
-

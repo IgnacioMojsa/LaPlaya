@@ -1,4 +1,4 @@
-class Hombre {
+class Hombre{
     constructor(x, y, textura, i){
         this.id = i;
         this.sprite = new PIXI.Sprite(textura);
