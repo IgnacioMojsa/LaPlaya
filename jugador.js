@@ -16,16 +16,16 @@ class Jugador {
     const abajo  = keys.s || keys.S;
 
     //Izquierda
-    if (izq && !der) this.sprite.x -= this.movimiento;
+    if (izq) this.sprite.x -= this.movimiento;
 
     //Derecha
-    else if (der && !izq) this.sprite.x += this.movimiento;
+    else if (der) this.sprite.x += this.movimiento;
 
     // Arriba
-    if (arriba && !abajo) this.sprite.y -= this.movimiento;
+    if (arriba) this.sprite.y -= this.movimiento;
 
     //Abajo
-    else if (abajo && !arriba) this.sprite.y += this.movimiento;
+    else if (abajo) this.sprite.y += this.movimiento;
 
   }
 
