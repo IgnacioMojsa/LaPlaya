@@ -2,7 +2,7 @@
 class Jugador {
   constructor(x, y, texture) {
     this.sprite = new PIXI.Sprite(texture);
-    this.sprite.anchor.set(1);
+    this.sprite.anchor.set(0.5); //Usá el anchor en el centro
     this.sprite.x = x;
     this.sprite.y = y;
 
@@ -29,10 +29,18 @@ class Jugador {
 
   }
 
-  //auxilio no sé cómo logré esto el código se ve horrible
-  mantenerEnPantallaX() {
-    this.sprite.x = Math.max(this.sprite.width, Math.min(window.innerWidth - this.sprite.width, this.sprite.x));
-    this.sprite.y = Math.max(this.sprite.height, Math.min(window.innerHeight - this.sprite.height, this.sprite.y));
+  //PARAMETRO QUE TOMA EN MAIN.JS PARA QUE NO PASE EL LIMITE DE AGUA
+  mantenerEnPantalla(limiteAguaY) {
+    const mitadW = this.sprite.width / 2;
+    const mitadH = this.sprite.height / 2;
+
+    this.sprite.x = Math.max(mitadW, Math.min(window.innerWidth - mitadW, this.sprite.x));
+    this.sprite.y = Math.max(mitadH, Math.min(window.innerHeight - mitadH, this.sprite.y));
+
+    // 🚫 agua
+    if (this.sprite.y - mitadH < limiteAguaY) {
+      this.sprite.y = limiteAguaY + mitadH;
+    }
   }
 
 }

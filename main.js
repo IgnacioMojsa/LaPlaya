@@ -8,6 +8,8 @@ let cantidadTotalDeNpc = 200
 let arrayDeNpc = []
 let bgm = new Audio("./bgm.wav");
 bgm.loop = true;
+let LIMITE_AGUA_Y = 0;
+const AGUA_Y_EN_IMAGEN = 290; // 👈 AJUSTALO a ojo fino
 
 
 //contemplo mayusculas y minusculas pq sino no funca
@@ -137,6 +139,9 @@ function ajustarFondo() {
 
     fondo.x = (screenW - fondo.width) / 2;
     fondo.y = (screenH - fondo.height) / 2;
+
+    // 🔥 CALCULAR LIMITE DINÁMICO DEL AGUA
+    LIMITE_AGUA_Y = fondo.y + (AGUA_Y_EN_IMAGEN * escala);
 }
 
 // =======================
@@ -157,13 +162,18 @@ let nuevoAhora = performance.now();
 function gameLoop(now) {
     bgm.play();
     jugador.inputTeclado(keys);
-    jugador.mantenerEnPantallaX();
+    jugador.mantenerEnPantalla(LIMITE_AGUA_Y);
+
 
     for (let i = 0; i < arrayDeNpc.length; i++){
-        const npc = arrayDeNpc[i]
-            npc.moverse()
-    }
+        const npc = arrayDeNpc[i];
 
+        npc.moverse();
+
+        if (npc.sprite.y < LIMITE_AGUA_Y) {
+            npc.sprite.y = LIMITE_AGUA_Y;
+        }
+    }
     requestAnimationFrame(gameLoop);
 }
 
