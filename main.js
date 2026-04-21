@@ -58,6 +58,7 @@ async function arrancar() {
     cargarJugador()
     cargarUnPersonajeNoJugable(Hombre, 'npc_prueba.png')
     cargarUnPersonajeNoJugable(Mujer, 'npc_prueba2.png')
+    cargarUnPersonajeNoJugable(Nenes, 'nene.png')
 }
 
 async function cargarUnPersonajeNoJugable(unPersonaje, unaImagen) {
