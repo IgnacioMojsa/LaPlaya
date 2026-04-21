@@ -46,7 +46,7 @@ async function arrancar() {
     const opcionesDePixi = {
         width: window.innerWidth,
         height: window.innerHeight,
-        background: "#f6cd7c"
+        background: "#000000"
     };
 
     await pixiApp.init(opcionesDePixi);
@@ -54,11 +54,15 @@ async function arrancar() {
     document.body.appendChild(pixiApp.canvas);
     pixiInicializado = true;
 
+    await cargarFondo(); // 👈 importante esperar
     //cargarUnaImagen()
     cargarJugador()
     cargarUnPersonajeNoJugable(Hombre, 'npc_prueba.png')
     cargarUnPersonajeNoJugable(Mujer, 'npc_prueba2.png')
     cargarUnPersonajeNoJugable(Nenes, 'nene.png')
+
+    // 👇 resize
+    window.addEventListener('resize', onResize);
 }
 
 async function cargarUnPersonajeNoJugable(unPersonaje, unaImagen) {
@@ -101,6 +105,50 @@ function verCuantosHombreEstanFueraDePantalla(){
         }
 
         return arr
+}
+// =======================
+// FONDO
+// =======================
+async function cargarFondo() {
+    const textura = await PIXI.Assets.load('playa.png');
+
+    fondo = new PIXI.Sprite(textura);
+
+    ajustarFondo();
+
+    pixiApp.stage.addChildAt(fondo, 0);
+}
+
+function ajustarFondo() {
+    if (!fondo) return;
+
+    const screenW = window.innerWidth;
+    const screenH = window.innerHeight;
+
+    const texW = fondo.texture.width;
+    const texH = fondo.texture.height;
+
+    const escalaX = screenW / texW;
+    const escalaY = screenH / texH;
+
+    const escala = Math.max(escalaX, escalaY); // cover
+
+    fondo.scale.set(escala);
+
+    fondo.x = (screenW - fondo.width) / 2;
+    fondo.y = (screenH - fondo.height) / 2;
+}
+
+// =======================
+// RESIZE
+// =======================
+function onResize() {
+    const newW = window.innerWidth;
+    const newH = window.innerHeight;
+
+    pixiApp.renderer.resize(newW, newH);
+
+    ajustarFondo();
 }
 
 //arrancarGameLoop
