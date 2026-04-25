@@ -2,15 +2,12 @@ let pixiApp;
 let jugador;
 let pixiInicializado = false;
 let ahora = 0;
-
 let arrayDeHombres = []
 let cantidadTotalDeNpc = 200
 let arrayDeNpc = []
 let bgm = new Audio("./bgm.wav");
-bgm.loop = true;
 let LIMITE_AGUA_Y = 0;
 const AGUA_Y_EN_IMAGEN = 290; // 👈 AJUSTALO a ojo fino
-
 
 //contemplo mayusculas y minusculas pq sino no funca
 const keys = {
@@ -23,6 +20,8 @@ const keys = {
      S:false,
      D:false
 };
+
+bgm.loop = true;
 
 //comprende cuando una tecla es presionada
 window.addEventListener('keydown', (e) => {
@@ -40,6 +39,11 @@ window.addEventListener('keyup', (e) => {
     }
 });
 
+async function precargarAssets() {
+    this.hombreAssets = await PIXI.Assets.load("spritesheet.json")
+    this.mujerAssets = await PIXI.Assets.load("mujer.json")
+}
+
 async function arrancar() {
     console.log("arrancando");
     pixiApp = new PIXI.Application()
@@ -56,29 +60,30 @@ async function arrancar() {
     document.body.appendChild(pixiApp.canvas);
     pixiInicializado = true;
 
-    await cargarFondo(); // 👈 importante esperar
-    //cargarUnaImagen()
+    await cargarFondo();
+    await precargarAssets();
+    console.log("assets cargados")
     cargarJugador()
-    cargarUnPersonajeNoJugable(Hombre, 'npc_prueba.png')
-    cargarUnPersonajeNoJugable(Mujer, 'npc_prueba2.png')
-    cargarUnPersonajeNoJugable(Nenes, 'nene.png')
+    cargarUnPersonajeNoJugable(Hombre, hombreAssets)
+    cargarUnPersonajeNoJugable(Mujer, mujerAssets)
+    //cargarUnPersonajeNoJugable(Nenes, 'nene.png')
 
-    // 👇 resize
     window.addEventListener('resize', onResize);
 }
 
 async function cargarUnPersonajeNoJugable(unPersonaje, unaImagen) {
-    texture = await PIXI.Assets.load(unaImagen);
+    let datosParaNPC = unaImagen;
+
     const separacionX = 34
     const separacionY = 60
            
     for (let i = 0; i < cantidadTotalDeNpc; i ++){
-                  
-        const coordenadaXDeNPC = window.innerWidth / 2;
-        const coordenadaYDeNPC = window.innerHeight / 2;
-        const instanciaDeNPC = new unPersonaje(coordenadaXDeNPC, coordenadaYDeNPC, texture, i)
+
+        const coordenadaXDeNPC = Math.random();
+        const coordenadaYDeNPC = Math.random();
+        const instanciaDeNPC = new unPersonaje(coordenadaXDeNPC, coordenadaYDeNPC, datosParaNPC, i)
         arrayDeNpc.push(instanciaDeNPC)
-        pixiApp.stage.addChild(instanciaDeNPC.sprite);
+        //pixiApp.stage.addChild(instanciaDeNPC.sprite);
         }
                 //Acá debería estar el gameLoop pero choca con el input de teclado por alguna razon, sale en console. Funciona aunque esté comentado
                 //gameLoop()
@@ -140,7 +145,7 @@ function ajustarFondo() {
     fondo.x = (screenW - fondo.width) / 2;
     fondo.y = (screenH - fondo.height) / 2;
 
-    // 🔥 CALCULAR LIMITE DINÁMICO DEL AGUA
+    // CALCULAR LIMITE DINÁMICO DEL AGUA
     LIMITE_AGUA_Y = fondo.y + (AGUA_Y_EN_IMAGEN * escala);
 }
 
@@ -168,10 +173,10 @@ function gameLoop(now) {
     for (let i = 0; i < arrayDeNpc.length; i++){
         const npc = arrayDeNpc[i];
 
-        npc.moverse();
+        npc.render();
 
-        if (npc.sprite.y < LIMITE_AGUA_Y) {
-            npc.sprite.y = LIMITE_AGUA_Y;
+        if (npc.container.y < LIMITE_AGUA_Y) {
+            npc.container.y = LIMITE_AGUA_Y;
         }
     }
     requestAnimationFrame(gameLoop);

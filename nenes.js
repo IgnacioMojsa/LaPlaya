@@ -28,4 +28,8 @@ class Nenes{
             this.sprite.x = 0
         }
     }
+
+    render(){
+        this.moverse()
+    }
 }
