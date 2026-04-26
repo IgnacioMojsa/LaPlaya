@@ -13,9 +13,16 @@ let LIMITE_AGUA_Y = 0;
 const AGUA_Y_EN_IMAGEN = 335; // 👈 AJUSTALO a ojo fino
 //CLIMA
 let tiempoDelDia = 0; // 0 a 1 (0 = amanecer, 0.5 = mediodía, 1 = noche)
-let velocidadTiempo = 0.00005;
+let velocidadTiempo = 0.0005//0.00005;
 
-let climaActual = "soleado"; // opciones: "soleado", "nublado", "lluvia"
+let climaActual = "despejado"; // opciones: "despejado", "nublado", "lluvia"
+
+//SOL Y LUNA
+let sol;
+let luna;
+
+let texturaSol;
+let texturaLuna;
 
 //contemplo mayusculas y minusculas pq sino no funca
 const keys = {
@@ -51,6 +58,29 @@ async function precargarAssets() {
     this.mujerAssets = await PIXI.Assets.load("mujer.json")
 }
 
+async function cargarSolYLuna() {
+    texturaSol = await PIXI.Assets.load('sol.png');
+    texturaLuna = await PIXI.Assets.load('luna.png');
+
+    sol = new PIXI.Sprite(texturaSol);
+    luna = new PIXI.Sprite(texturaLuna);
+
+    // tamaño opcional
+    sol.scale.set(0.15);
+    luna.scale.set(0.12);
+
+    pixiApp.stage.addChild(sol);
+    pixiApp.stage.addChild(luna);
+}
+
+function resetearAstros() {
+    sol.x = window.innerWidth;
+    luna.x = window.innerWidth;
+
+    sol.y = 100;
+    luna.y = 100;
+}
+
 async function arrancar() {
     console.log("arrancando");
     pixiApp = new PIXI.Application()
@@ -69,6 +99,8 @@ async function arrancar() {
 
     await cargarFondo();
     await cargarCielo(); // 👈 después del fondo
+    await cargarSolYLuna(); 
+    await resetearAstros(); 
     await precargarAssets();
     console.log("assets cargados")
     cargarJugador()
@@ -127,6 +159,41 @@ async function cargarJugador() {
 // =======================
 // FONDO
 // =======================
+
+function actualizarAstros() {
+
+    const screenW = window.innerWidth;
+    const cieloAltura = -window.innerHeight * 0.25; // 👈 MISMO que usás en cargarCielo
+    const offsetY = 120; // margen desde arriba
+
+    // 🌞 SOL
+    if (tiempoDelDia < 0.85) {
+
+        sol.visible = true;
+        luna.visible = false;
+
+        let progreso = tiempoDelDia / 0.85;
+
+        // derecha → izquierda
+        sol.x = screenW - (screenW * progreso);
+
+        // arco SOLO dentro del cielo
+        sol.y = offsetY + Math.sin(progreso * Math.PI) * (cieloAltura * 0.8);
+    } 
+    // 🌙 LUNA
+    else {
+
+        sol.visible = false;
+        luna.visible = true;
+
+        let progreso = (tiempoDelDia - 0.85) / 0.15;
+
+        luna.x = screenW - (screenW * progreso);
+
+        luna.y = offsetY + Math.sin(progreso * Math.PI) * (cieloAltura * 0.8);
+    }
+}
+
 async function cargarFondo() {
     const textura = await PIXI.Assets.load('playa.png');
 
@@ -233,40 +300,53 @@ function actualizarCielo() {
         // amanecer → día
         let t = tiempoDelDia / 0.25;
         colorBase = lerpColor(coloresDia.amanecer, coloresDia.dia, t);
+        cielo.alpha = 1;
+        fondo.alpha = 0.8;
+        console.log("Tiempo del día: amanecer");
 
     } else if (tiempoDelDia < 0.5) {
         colorBase = coloresDia.dia;
+        cielo.alpha = 1;
+        fondo.alpha = 1;
+        console.log("Tiempo del día: mañana");
 
     } else if (tiempoDelDia < 0.75) {
         // día → atardecer
         let t = (tiempoDelDia - 0.5) / 0.25;
         colorBase = lerpColor(coloresDia.dia, coloresDia.atardecer, t);
+        cielo.alpha = 1;
+        fondo.alpha = 0.8;
+        console.log("Tiempo del día: atardecer");
 
     } else {
         // atardecer → noche
         let t = (tiempoDelDia - 0.75) / 0.25;
         colorBase = lerpColor(coloresDia.atardecer, coloresDia.noche, t);
+        cielo.alpha = 1;
+        fondo.alpha = 0.6;
+        console.log("Tiempo del día: anochecer");
     }
 
     // 🌧️ modificar según clima
     if (climaActual === "nublado") {
         colorBase = lerpColor(colorBase, 0x888888, 0.5);
+        cielo.alpha = 0.9;
+        fondo.alpha = 0.7;
     }
 
     if (climaActual === "lluvia") {
         colorBase = lerpColor(colorBase, 0x444466, 0.7);
         cielo.alpha = 1;
-        fondo.alpha = 0.8;
-    } else {
-        cielo.alpha = 1;
-        fondo.alpha = 1;
+        fondo.alpha = 0.6;
     }
 
     cielo.tint = colorBase;
 }
 
 function iniciarSistemaDeClima() {
-    const climas = ["soleado", "nublado", "lluvia"];
+    const climas = ["despejado", "nublado", "lluvia"];
+
+    console.log("Clima actual:", climaActual);
 
     setInterval(() => {
         climaActual = climas[Math.floor(Math.random() * climas.length)];
@@ -295,6 +375,7 @@ function gameLoop(now) {
     jugador.inputTeclado(keys);
     jugador.mantenerEnPantalla(LIMITE_AGUA_Y);
     actualizarCielo();
+    actualizarAstros();
 
 
     for (let i = 0; i < arrayDeNpc.length; i++){
