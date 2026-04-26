@@ -5,9 +5,12 @@ let ahora = 0;
 let arrayDeHombres = []
 let cantidadTotalDeNpc = 200
 let arrayDeNpc = []
+//MUSICA
 let bgm = new Audio("./bgm.wav");
+bgm.loop = true;
+//AGUA Y PLAYA
 let LIMITE_AGUA_Y = 0;
-const AGUA_Y_EN_IMAGEN = 290; // 👈 AJUSTALO a ojo fino
+const AGUA_Y_EN_IMAGEN = 335; // 👈 AJUSTALO a ojo fino
 
 //contemplo mayusculas y minusculas pq sino no funca
 const keys = {
@@ -21,7 +24,6 @@ const keys = {
      D:false
 };
 
-bgm.loop = true;
 
 //comprende cuando una tecla es presionada
 window.addEventListener('keydown', (e) => {
@@ -61,6 +63,7 @@ async function arrancar() {
     pixiInicializado = true;
 
     await cargarFondo();
+    await cargarCielo(); // 👈 después del fondo
     await precargarAssets();
     console.log("assets cargados")
     cargarJugador()
@@ -74,8 +77,8 @@ async function arrancar() {
 async function cargarUnPersonajeNoJugable(unPersonaje, unaImagen) {
     let datosParaNPC = unaImagen;
 
-    const separacionX = 34
-    const separacionY = 60
+    //const separacionX = 34 NO SE USA
+    //const separacionY = 60 NO SE USA
            
     for (let i = 0; i < cantidadTotalDeNpc; i ++){
 
@@ -100,7 +103,7 @@ async function cargarJugador() {
     requestAnimationFrame(gameLoop);
 }
 
-function verCuantosHombreEstanFueraDePantalla(){
+/*function verCuantosHombreEstanFueraDePantalla(){ NO SE USA
     let arr = []
 
     for (let i = 0; i < arrayDeNpc.length; i++){
@@ -112,7 +115,7 @@ function verCuantosHombreEstanFueraDePantalla(){
         }
 
         return arr
-}
+}*/
 // =======================
 // FONDO
 // =======================
@@ -147,6 +150,45 @@ function ajustarFondo() {
 
     // CALCULAR LIMITE DINÁMICO DEL AGUA
     LIMITE_AGUA_Y = fondo.y + (AGUA_Y_EN_IMAGEN * escala);
+}
+
+async function cargarCielo() {
+    const textura = await PIXI.Assets.load('cielo.png'); // tu imagen
+
+    cielo = new PIXI.Sprite(textura);
+
+    ajustarCielo();
+
+    pixiApp.stage.addChildAt(cielo, 1); 
+    // 👆 arriba del fondo (que está en 0)
+}
+
+function ajustarCielo() {
+    if (!cielo) return;
+
+    const screenW = window.innerWidth;
+    const screenH = window.innerHeight;
+
+    alturaCielo = screenH * 0.25;
+
+    const texW = cielo.texture.width;
+    const texH = cielo.texture.height;
+
+    // 👇 importante: cubrir ancho siempre
+    const escala = screenW / texW;
+
+    cielo.scale.set(escala);
+
+    // centrar horizontalmente
+    cielo.x = 0;
+
+    // posicion arriba
+    cielo.y = 0;
+
+    // 👇 RECORTE si sobra altura
+    if (cielo.height > alturaCielo) {
+        cielo.height = alturaCielo;
+    }
 }
 
 // =======================

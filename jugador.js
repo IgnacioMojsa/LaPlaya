@@ -34,12 +34,13 @@ class Jugador {
     const mitadW = this.sprite.width / 2;
     const mitadH = this.sprite.height / 2;
 
+    // límites normales de pantalla
     this.sprite.x = Math.max(mitadW, Math.min(window.innerWidth - mitadW, this.sprite.x));
     this.sprite.y = Math.max(mitadH, Math.min(window.innerHeight - mitadH, this.sprite.y));
-
-    // 🚫 agua
-    if (this.sprite.y - mitadH < limiteAguaY) {
-      this.sprite.y = limiteAguaY + mitadH;
+      
+    // 🚫 agua (misma lógica que NPC)
+    if (this.sprite.y + mitadH < limiteAguaY) {
+      this.sprite.y = limiteAguaY - mitadH;
     }
   }
 
