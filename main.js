@@ -11,6 +11,11 @@ bgm.loop = true;
 //AGUA Y PLAYA
 let LIMITE_AGUA_Y = 0;
 const AGUA_Y_EN_IMAGEN = 335; // 👈 AJUSTALO a ojo fino
+//CLIMA
+let tiempoDelDia = 0; // 0 a 1 (0 = amanecer, 0.5 = mediodía, 1 = noche)
+let velocidadTiempo = 0.00005;
+
+let climaActual = "soleado"; // opciones: "soleado", "nublado", "lluvia"
 
 //contemplo mayusculas y minusculas pq sino no funca
 const keys = {
@@ -72,6 +77,9 @@ async function arrancar() {
     //cargarUnPersonajeNoJugable(Nenes, 'nene.png')
 
     window.addEventListener('resize', onResize);
+
+    // 👇 ACÁ va el cambio de clima
+    iniciarSistemaDeClima();
 }
 
 async function cargarUnPersonajeNoJugable(unPersonaje, unaImagen) {
@@ -191,6 +199,81 @@ function ajustarCielo() {
     }
 }
 
+function lerpColor(a, b, t) {
+    const ar = (a >> 16) & 0xff;
+    const ag = (a >> 8) & 0xff;
+    const ab = a & 0xff;
+
+    const br = (b >> 16) & 0xff;
+    const bg = (b >> 8) & 0xff;
+    const bb = b & 0xff;
+
+    const rr = ar + t * (br - ar);
+    const rg = ag + t * (bg - ag);
+    const rb = ab + t * (bb - ab);
+
+    return (rr << 16) + (rg << 8) + rb;
+}
+
+const coloresDia = {
+    amanecer: 0xffb27f,
+    dia: 0x87ceeb,
+    atardecer: 0xff8c42,
+    noche: 0x0a0a2a
+};
+
+function actualizarCielo() {
+    // avanzar tiempo
+    tiempoDelDia += velocidadTiempo;
+    if (tiempoDelDia > 1) tiempoDelDia = 0;
+
+    let colorBase;
+
+    if (tiempoDelDia < 0.25) {
+        // amanecer → día
+        let t = tiempoDelDia / 0.25;
+        colorBase = lerpColor(coloresDia.amanecer, coloresDia.dia, t);
+
+    } else if (tiempoDelDia < 0.5) {
+        colorBase = coloresDia.dia;
+
+    } else if (tiempoDelDia < 0.75) {
+        // día → atardecer
+        let t = (tiempoDelDia - 0.5) / 0.25;
+        colorBase = lerpColor(coloresDia.dia, coloresDia.atardecer, t);
+
+    } else {
+        // atardecer → noche
+        let t = (tiempoDelDia - 0.75) / 0.25;
+        colorBase = lerpColor(coloresDia.atardecer, coloresDia.noche, t);
+    }
+
+    // 🌧️ modificar según clima
+    if (climaActual === "nublado") {
+        colorBase = lerpColor(colorBase, 0x888888, 0.5);
+    }
+
+    if (climaActual === "lluvia") {
+        colorBase = lerpColor(colorBase, 0x444466, 0.7);
+        cielo.alpha = 1;
+        fondo.alpha = 0.8;
+    } else {
+        cielo.alpha = 1;
+        fondo.alpha = 1;
+    }
+
+    cielo.tint = colorBase;
+}
+
+function iniciarSistemaDeClima() {
+    const climas = ["soleado", "nublado", "lluvia"];
+
+    setInterval(() => {
+        climaActual = climas[Math.floor(Math.random() * climas.length)];
+        console.log("Nuevo clima:", climaActual);
+    }, 20000); // cada 20 segundos
+}
+
 // =======================
 // RESIZE
 // =======================
@@ -201,6 +284,7 @@ function onResize() {
     pixiApp.renderer.resize(newW, newH);
 
     ajustarFondo();
+    ajustarCielo();
 }
 
 //arrancarGameLoop
@@ -210,6 +294,7 @@ function gameLoop(now) {
     bgm.play();
     jugador.inputTeclado(keys);
     jugador.mantenerEnPantalla(LIMITE_AGUA_Y);
+    actualizarCielo();
 
 
     for (let i = 0; i < arrayDeNpc.length; i++){
