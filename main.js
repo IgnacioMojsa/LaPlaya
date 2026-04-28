@@ -9,7 +9,7 @@ let arrayDeNpc = []
 let bgm = new Audio("./bgm.wav");
 bgm.loop = true;
 //AGUA Y PLAYA
-let LIMITE_AGUA_Y = 0;
+let LIMITE_AGUA = {x: 0, y: 0};
 const AGUA_Y_EN_IMAGEN = 335; // 👈 AJUSTALO a ojo fino
 //CLIMA
 let tiempoDelDia = 0; // 0 a 1 (0 = amanecer, 0.5 = mediodía, 1 = noche)
@@ -54,8 +54,9 @@ window.addEventListener('keyup', (e) => {
 });
 
 async function precargarAssets() {
-    this.hombreAssets = await PIXI.Assets.load("spritesheet.json")
-    this.mujerAssets = await PIXI.Assets.load("mujer.json")
+    this.hombreAssets = await PIXI.Assets.load("spritesheet.json");
+    this.mujerAssets = await PIXI.Assets.load("mujer.json");
+    this.jugadorAssets = await await PIXI.Assets.load('hombre_spritesheet.json')
 }
 
 async function cargarSolYLuna() {
@@ -122,8 +123,8 @@ async function cargarUnPersonajeNoJugable(unPersonaje, unaImagen) {
            
     for (let i = 0; i < cantidadTotalDeNpc; i ++){
 
-        const coordenadaXDeNPC = Math.random();
-        const coordenadaYDeNPC = Math.random();
+        const coordenadaXDeNPC = Math.random() * window.innerWidth;
+        const coordenadaYDeNPC = LIMITE_AGUA.y + Math.random() * window.innerHeight;
         const instanciaDeNPC = new unPersonaje(coordenadaXDeNPC, coordenadaYDeNPC, datosParaNPC, i)
         arrayDeNpc.push(instanciaDeNPC)
         //pixiApp.stage.addChild(instanciaDeNPC.sprite);
@@ -137,25 +138,10 @@ async function cargarJugador() {
     const coordenadaYdeJugador = window.innerHeight / 2
 
     //const
-    texture = await PIXI.Assets.load('player.png');
-    jugador = new Jugador(coordenadaXdeJugador, coordenadaYdeJugador, texture);
-    pixiApp.stage.addChild(jugador.sprite);
+    jugador = new Jugador(coordenadaXdeJugador, coordenadaYdeJugador, jugadorAssets);
     requestAnimationFrame(gameLoop);
 }
 
-/*function verCuantosHombreEstanFueraDePantalla(){ NO SE USA
-    let arr = []
-
-    for (let i = 0; i < arrayDeNpc.length; i++){
-        const npcs = arrayDeNpc[i]
-
-        if (npcs.sprite.x < 0 || npcs.sprite.x > window.innerWidth || npcs.sprite.y < 0 || npcs.sprite.y > window.innerHeight){
-            arr.push(npcs)
-            }
-        }
-
-        return arr
-}*/
 // =======================
 // FONDO
 // =======================
@@ -224,7 +210,7 @@ function ajustarFondo() {
     fondo.y = (screenH - fondo.height) / 2;
 
     // CALCULAR LIMITE DINÁMICO DEL AGUA
-    LIMITE_AGUA_Y = fondo.y + (AGUA_Y_EN_IMAGEN * escala);
+    LIMITE_AGUA.y = fondo.y + (AGUA_Y_EN_IMAGEN * escala);
 }
 
 async function cargarCielo() {
@@ -373,7 +359,7 @@ let nuevoAhora = performance.now();
 function gameLoop(now) {
     bgm.play();
     jugador.inputTeclado(keys);
-    jugador.mantenerEnPantalla(LIMITE_AGUA_Y);
+    jugador.mantenerEnPantalla(LIMITE_AGUA.y);
     actualizarCielo();
     actualizarAstros();
 
@@ -381,12 +367,9 @@ function gameLoop(now) {
     for (let i = 0; i < arrayDeNpc.length; i++){
         const npc = arrayDeNpc[i];
 
-        npc.render();
-
-        if (npc.container.y < LIMITE_AGUA_Y) {
-            npc.container.y = LIMITE_AGUA_Y;
-        }
+        npc.update();
     }
+    
     requestAnimationFrame(gameLoop);
 }
 

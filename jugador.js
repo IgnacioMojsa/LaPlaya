@@ -1,12 +1,15 @@
 // Clase Jugador para PIXI
 class Jugador {
   constructor(x, y, texture) {
-    this.sprite = new PIXI.Sprite(texture);
-    this.sprite.anchor.set(0.5); //Usá el anchor en el centro
-    this.sprite.x = x;
-    this.sprite.y = y;
+    this.container = new PIXI.Container();
+    this.container.x = x;
+    this.container.y = y;
 
-    this.movimiento = 5 //px
+    this.movimiento = 5 
+
+    this.cargarSpritesAnimados(texture);
+    this.cambiarAnimacion(Object.keys(texture.animations)[0]);
+    window.__PIXI_APP__.stage.addChild(this.container);
   }
 
   inputTeclado(keys) {
@@ -16,31 +19,65 @@ class Jugador {
     const abajo  = keys.s || keys.S;
 
     //Izquierda
-    if (izq) this.sprite.x -= this.movimiento;
+    if (izq) this.container.x -= this.movimiento;
 
     //Derecha
-    else if (der) this.sprite.x += this.movimiento;
+    else if (der) this.container.x += this.movimiento;
 
     // Arriba
-    if (arriba) this.sprite.y -= this.movimiento;
+    if (arriba) this.container.y -= this.movimiento;
 
     //Abajo
-    else if (abajo) this.sprite.y += this.movimiento;
+    else if (abajo) this.container.y += this.movimiento;
 
+  }
+
+  cargarSpritesAnimados(spritesACargar){
+    this.spritesAnimados = {};
+
+    for (let key of Object.keys(spritesACargar.animations)) {
+      this.spritesAnimados[key] = new PIXI.AnimatedSprite(spritesACargar.animations[key])
+      
+      this.spritesAnimados[key].name = key;
+      this.spritesAnimados[key].play();
+      this.spritesAnimados[key].loop = true;
+      this.spritesAnimados[key].animationSpeed = 0.1;
+      this.spritesAnimados[key].anchor.set(0.5, 1);
+      this.container.addChild(this.spritesAnimados[key]);
+    }
+  }
+
+  cambiarAnimacion(nuevaAnimacion){
+    this.animacionActual = nuevaAnimacion
+      for (let key of Object.keys(this.spritesAnimados)) {
+        this.spritesAnimados[key].visible = false;
+      }
+      
+    this.spritesAnimados[nuevaAnimacion].visible = true;
+    this.spriteAnimadoActual = this.spritesAnimados[nuevaAnimacion];
+  }
+
+  cambiarDeSpriteDeDireccion(){
+    if (this.velocidad.x > 0) {
+      this.cambiarAnimacion("der");
+    }
+    else if (this.velocidad.x < 0) {
+      this.cambiarAnimacion("izq");
+    }
   }
 
   //PARAMETRO QUE TOMA EN MAIN.JS PARA QUE NO PASE EL LIMITE DE AGUA
   mantenerEnPantalla(limiteAguaY) {
-    const mitadW = this.sprite.width / 2;
-    const mitadH = this.sprite.height / 2;
+    const mitadW = this.container.width / 2;
+    const mitadH = this.container.height / 2;
 
     // límites normales de pantalla
-    this.sprite.x = Math.max(mitadW, Math.min(window.innerWidth - mitadW, this.sprite.x));
-    this.sprite.y = Math.max(mitadH, Math.min(window.innerHeight - mitadH, this.sprite.y));
+    this.container.x = Math.max(mitadW, Math.min(window.innerWidth - mitadW, this.container.x));
+    this.container.y = Math.max(mitadH, Math.min(window.innerHeight - mitadH, this.container.y));
       
-    // 🚫 agua (misma lógica que NPC)
-    if (this.sprite.y + mitadH < limiteAguaY) {
-      this.sprite.y = limiteAguaY - mitadH;
+    // agua (misma lógica que NPC)
+    if (this.container.y + mitadH < limiteAguaY) {
+      this.container.y = limiteAguaY - mitadH;
     }
   }
 
