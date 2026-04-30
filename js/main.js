@@ -36,7 +36,6 @@ const keys = {
      D:false
 };
 
-
 //comprende cuando una tecla es presionada
 window.addEventListener('keydown', (e) => {
   if (e.key in keys){
@@ -357,9 +356,14 @@ function onResize() {
 let nuevoAhora = performance.now();
 
 function gameLoop(now) {
+
+    const dt = Math.min(0.05, (now - nuevoAhora) / 1000);
+    nuevoAhora = now;
+
     bgm.play();
-    jugador.inputTeclado(keys);
+    jugador.inputTeclado(dt, keys);
     jugador.mantenerEnPantalla(LIMITE_AGUA.y);
+    jugador.update(dt);
     actualizarCielo();
     actualizarAstros();
 

@@ -5,31 +5,48 @@ class Jugador {
     this.container.x = x;
     this.container.y = y;
 
-    this.movimiento = 5 
+    this.vx = 0;
+    this.vy = 0;
+
+    this.aceleracion = 300;
+    this.friccion = 1;
 
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
     window.__PIXI_APP__.stage.addChild(this.container);
   }
 
-  inputTeclado(keys) {
+  inputTeclado(dt, keys) {
     const izq    = keys.a || keys.A;
     const der    = keys.d || keys.D;
     const arriba = keys.w || keys.W;
     const abajo  = keys.s || keys.S;
 
-    //Izquierda
-    if (izq) this.container.x -= this.movimiento;
 
-    //Derecha
-    else if (der) this.container.x += this.movimiento;
+    if (izq) this.vx -= this.aceleracion * dt;
+    else if (der) this.vx += this.aceleracion * dt;
+    else this.vx = this.aplicarFriccion(this.vx, dt);
 
-    // Arriba
-    if (arriba) this.container.y -= this.movimiento;
+    if (arriba) this.vy -= this.aceleracion * dt;
+    else if (abajo) this.vy += this.aceleracion * dt;
+    else this.vy = this.aplicarFriccion(this.vy, dt);
+  }
 
-    //Abajo
-    else if (abajo) this.container.y += this.movimiento;
+  aplicarFriccion(dt, vel){
+    if (vel == 0) return 0;
+    const signo = Math.sign(vel);
+    const nueva = Math.abs(vel) - this.friccion * dt;
+    if (nueva > 0){
+      return signo * nueva;
+    }
+    else {
+      return 0;
+    }
+  }
 
+  update(dt){
+    this.container.x += this.vx * dt;
+    this.container.y += this.vy * dt;
   }
 
   cargarSpritesAnimados(spritesACargar){
