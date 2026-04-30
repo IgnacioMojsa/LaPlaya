@@ -8,8 +8,10 @@ class Jugador {
     this.vx = 0;
     this.vy = 0;
 
-    this.aceleracion = 300;
+    //Para cambiar la fuidez del movimiento, modifiquen aceleracion o vel maxima
+    this.aceleracion = 200;
     this.friccion = 1;
+    this.velMaxima = 200;
 
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
@@ -30,12 +32,19 @@ class Jugador {
     if (arriba) this.vy -= this.aceleracion * dt;
     else if (abajo) this.vy += this.aceleracion * dt;
     else this.vy = this.aplicarFriccion(this.vy, dt);
+
+    const velocidad = Math.hypot(this.vx, this.vy);
+    if (velocidad > this.velMaxima){
+      const limite = this.velMaxima / velocidad;
+      this.vx *= limite;
+      this.vy *= limite;
+      }
   }
 
-  aplicarFriccion(dt, vel){
-    if (vel == 0) return 0;
-    const signo = Math.sign(vel);
-    const nueva = Math.abs(vel) - this.friccion * dt;
+  aplicarFriccion(dt, v){
+    if (v) return 0;
+    const signo = Math.sign(v);
+    const nueva = Math.abs(v) - this.friccion * dt;
     if (nueva > 0){
       return signo * nueva;
     }
