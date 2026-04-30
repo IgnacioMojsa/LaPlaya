@@ -6,7 +6,7 @@ let arrayDeHombres = []
 let cantidadTotalDeNpc = 200
 let arrayDeNpc = []
 //MUSICA
-let bgm = new Audio("./bgm.wav");
+let bgm = new Audio("assets/bgm.wav");
 bgm.loop = true;
 //AGUA Y PLAYA
 let LIMITE_AGUA = {x: 0, y: 0};
@@ -54,14 +54,14 @@ window.addEventListener('keyup', (e) => {
 });
 
 async function precargarAssets() {
-    this.hombreAssets = await PIXI.Assets.load("spritesheet.json");
-    this.mujerAssets = await PIXI.Assets.load("mujer.json");
-    this.jugadorAssets = await await PIXI.Assets.load('hombre_spritesheet.json')
+    this.hombreAssets = await PIXI.Assets.load("assets/spritesheets/hombre.json");
+    this.mujerAssets = await PIXI.Assets.load("assets/spritesheets/mujer.json");
+    this.jugadorAssets = await await PIXI.Assets.load('assets/spritesheets/player.json')
 }
 
 async function cargarSolYLuna() {
-    texturaSol = await PIXI.Assets.load('sol.png');
-    texturaLuna = await PIXI.Assets.load('luna.png');
+    texturaSol = await PIXI.Assets.load('assets/sol.png');
+    texturaLuna = await PIXI.Assets.load('assets/luna.png');
 
     sol = new PIXI.Sprite(texturaSol);
     luna = new PIXI.Sprite(texturaLuna);
@@ -107,7 +107,7 @@ async function arrancar() {
     cargarJugador()
     cargarUnPersonajeNoJugable(Hombre, hombreAssets)
     cargarUnPersonajeNoJugable(Mujer, mujerAssets)
-    //cargarUnPersonajeNoJugable(Nenes, 'nene.png')
+    //cargarUnPersonajeNoJugable(Nenes, 'assets/nene.png')
 
     window.addEventListener('resize', onResize);
 
@@ -181,7 +181,7 @@ function actualizarAstros() {
 }
 
 async function cargarFondo() {
-    const textura = await PIXI.Assets.load('playa.png');
+    const textura = await PIXI.Assets.load('assets/playa.png');
 
     fondo = new PIXI.Sprite(textura);
 
@@ -214,7 +214,7 @@ function ajustarFondo() {
 }
 
 async function cargarCielo() {
-    const textura = await PIXI.Assets.load('cielo.png'); // tu imagen
+    const textura = await PIXI.Assets.load('assets/cielo.png'); // tu imagen
 
     cielo = new PIXI.Sprite(textura);
 
