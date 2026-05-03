@@ -1,35 +1,66 @@
-class Nenes{
-    constructor(x, y, textura, i){
-        this.id = i;
-        this.sprite = new PIXI.Sprite(textura);
-        this.sprite.x = x;
-        this.sprite.y = y;
-        this.velocidadX = Math.random() * 10 - 5;
-        this.velocidadY = Math.random() * 10 - 5;
+class Nenes extends Npc{
+    constructor(x, y, animacion, i, adulto = null){
+        super(x, y, animacion, i)
+        this.adulto = adulto;
+        this.perdido = false;
+        this.separacion = {x: 50, y: 50};
+        this.distanciaMaxAdulto = 10;
+        this.distanciaMinAdulto = 10;
+
+        this.targetNene = {x: this.container.x, y: this.container.y};
+        this.suavizado = 1;
+        this.aceleracionMax = 0.05;
+
+        console.log("nenes creados")
     }
 
-    moverse(){
-        this.sprite.y = this.sprite.y + this.velocidadY;
-        this.sprite.x = this.sprite.x + this.velocidadX;
+  estaPerdido(){
+    //if (this.adulto == null)
+    return this.perdido === true;
 
-        if (this.sprite.y > window.innerHeight){
-            this.sprite.y = -this.sprite.height - Math.random()*100;
-        }
 
-        if (this.sprite.y < -this.sprite.height){
-            this.sprite.y = window.innerHeight
-        }
+  }
 
-        if (this.sprite.x < -this.sprite.width){
-            this.sprite.x = window.innerWidth
-        }
+mantenerCercaDeAdulto(){
+  if (this.estaPerdido()) return;
 
-         if (this.sprite.x > window.innerWidth){
-            this.sprite.x = 0
-        }
-    }
+  const targetX = this.adulto.container.x + this.separacion.x;
+  const targetY = this.adulto.container.y + this.separacion.y;
 
-    render(){
-        this.moverse()
-    }
+  this.targetNene.x += (targetX - this.targetNene.x) * this.suavizado;
+  this.targetNene.y += (targetY - this.targetNene.y) * this.suavizado;
+
+  const d = distancia(this.container.x, this.targetNene.x, this.container.y, this.targetNene.y);
+  if(d === 0) return;
+
+  if(d > this.distanciaMaxAdulto){
+    const dX = (this.targetNene.x - this.container.x) / d;
+    const dY = (this.targetNene.y - this.container.y) / d;
+    let intensidad = (d - this.distanciaMaxAdulto) * 0.05;
+    intensidad = Math.min(intensidad, this.aceleracionMax);
+    this.sumarAceleracion(dX * intensidad, dY * intensidad);
+  }
+  else if(d < this.distanciaMinAdulto){
+    const dX = (this.container.x - this.targetNene.x) / d;
+    const dY = (this.container.y - this.targetNene.y) / d;
+    this.sumarAceleracion(dX * 0.05, dY * 0.05);
+  }
+  else {
+    this.sumarAceleracion((this.adulto.velocidad.x - this.velocidad.x) * 0.05, (this.adulto.velocidad.y - this.velocidad.y) * 0.05);
+  }
 }
+
+  render(){
+    if(this.estaPerdido()){
+      this.aceleracion.x = 0;
+      this.aceleracion.y = 0;
+      return;
+    }
+    super.render();
+  }
+
+  update(){
+    this.mantenerCercaDeAdulto();
+    super.update();
+  }
+};

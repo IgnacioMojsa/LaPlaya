@@ -5,15 +5,16 @@ class Npc {
         this.container.position.set(x, y)
         this.velocidad = {x: Math.random() * 2 - 1, y: Math.random() * 2 - 1};
         this.aceleracion = {x: 0, y: 0};
-        this.velocidadMax = 2;
+        this.velocidadMax = 1;
         this.fuerzaMax = 0.25;
+
 
         this.cargarSpritesAnimados(animacion);
         this.cambiarAnimacion(Object.keys(animacion.animations)[0]);
         window.__PIXI_APP__.stage.addChild(this.container);
     }
 
-    mantenerEnLimites(){
+/*     mantenerEnLimites(){
         //this.container.y = this.container.y + this.velocidadY;
         //this.container.x = this.container.x + this.velocidadX;
 
@@ -31,8 +32,16 @@ class Npc {
 
          if (this.container.x > window.innerWidth){
             this.container.x = 0
-        }
+        } */
+
+    mantenerEnLimites(){
+        if (this.container.x < 0) { this.container.x = 0; this.velocidad.x *= -1; }
+        if (this.container.x > window.innerWidth) { this.container.x = window.innerWidth; this.velocidad.x *= -1; }
+
+        if (this.container.y < 0) { this.container.y = 0; this.velocidad.y *= -1; }
+        if (this.container.y > window.innerHeight) { this.container.y = window.innerHeight; this.velocidad.y *= -1; }
     }
+    
 
     sumarAceleracion(x, y) {
         this.aceleracion.x += x;
@@ -73,8 +82,7 @@ class Npc {
             
             let fuerzaX = direccionDeseada.x - this.velocidad.x;
             let fuerzaY = direccionDeseada.y - this.velocidad.y;
-
-            this.sumarAceleracion(fuerzaX * 0.1, fuerzaY * 0.1)
+            this.sumarAceleracion(fuerzaX * 0.5, fuerzaY * 0.5)
         }
     }
 
@@ -113,7 +121,7 @@ class Npc {
     }
 
     separar(boids) {
-        let distanciaDeseada = 30; // El espacio personal de cada NPC
+        let distanciaDeseada = 50; // El espacio personal de cada NPC
         let direccionAlejamiento = { x: 0, y: 0 };
         let total = 0;
 
@@ -208,6 +216,7 @@ class Npc {
     }
 
     update(){
+        //this.mantenerCercaDelAdulto();
         this.render();
         this.cambiarDeSpriteDeDireccion();
         this.mantenerEnLimites();
