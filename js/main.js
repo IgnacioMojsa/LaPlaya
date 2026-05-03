@@ -6,7 +6,7 @@ let ahora = 0;
 let cantAdultos = 10; //Se puede crear cant. de hombres y mujeres tambien
 let cantNenes = 3;
 
-let cantidadTotalDeNpc = cantAdultos + cantNenes
+let cantidadTotalDeNpc = cantAdultos + cantNenes + perdidos
 
 let arrayDeNpc = [];
 let totalAdultos = [];
