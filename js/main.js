@@ -5,13 +5,12 @@ let ahora = 0;
 
 let cantAdultos = 10; //Se puede crear cant. de hombres y mujeres tambien
 let cantNenes = 3;
-
-let cantidadTotalDeNpc = cantAdultos + cantNenes + perdidos
-
 let arrayDeNpc = [];
 let totalAdultos = [];
 let totalNenes = [];
 let perdidos = 1
+
+let cantidadTotalDeNpc = cantAdultos + cantNenes + perdidos
 
 //MUSICA
 let bgm = new Audio("assets/bgm.wav");
