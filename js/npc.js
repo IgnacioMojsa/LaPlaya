@@ -38,10 +38,9 @@ class Npc {
         if (this.container.x < 0) { this.container.x = 0; this.velocidad.x *= -1; }
         if (this.container.x > window.innerWidth) { this.container.x = window.innerWidth; this.velocidad.x *= -1; }
 
-        if (this.container.y < 0) { this.container.y = 0; this.velocidad.y *= -1; }
+        if (this.container.y < 300) { this.evitarAgua() }
         if (this.container.y > window.innerHeight) { this.container.y = window.innerHeight; this.velocidad.y *= -1; }
     }
-    
 
     sumarAceleracion(x, y) {
         this.aceleracion.x += x;
@@ -197,6 +196,19 @@ class Npc {
         }
     }
 
+    estaNadando(){
+        return this.container.y < LIMITE_AGUA.y + 8
+    }
+
+    nadar(){
+        if(this.estaNadando() && this.velocidad.x > 0){
+            this.cambiarAnimacion("swim_der");
+        }
+        else if (this.estaNadando() && this.velocidad.x < 0){
+            this.cambiarAnimacion("swim_izq");
+        }
+    }
+
     render(){
         this.velocidad.x += this.aceleracion.x;
         this.velocidad.y += this.aceleracion.y;
@@ -221,6 +233,7 @@ class Npc {
         this.cambiarDeSpriteDeDireccion();
         this.mantenerEnLimites();
         this.agrupar(arrayDeNpc)
-        this.evitarAgua();
+        this.nadar()
+        //this.evitarAgua();
     }
 }

@@ -1,9 +1,209 @@
 {
 	"frames": {
-		"left_1.png": {
+		"hombre_swim_left_1.png": {
 			"frame": {
 				"x": 1,
 				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"hombre_swim_left_2.png": {
+			"frame": {
+				"x": 67,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"hombre_swim_left_3.png": {
+			"frame": {
+				"x": 133,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"hombre_swim_left_4.png": {
+			"frame": {
+				"x": 199,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"hombre_swim_left_5.png": {
+			"frame": {
+				"x": 1,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"hombre_swim_right_1.png": {
+			"frame": {
+				"x": 67,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"hombre_swim_right_2.png": {
+			"frame": {
+				"x": 133,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"hombre_swim_right_3.png": {
+			"frame": {
+				"x": 199,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"hombre_swim_right_4.png": {
+			"frame": {
+				"x": 1,
+				"y": 133,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"hombre_swim_right_5.png": {
+			"frame": {
+				"x": 67,
+				"y": 133,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"left_1.png": {
+			"frame": {
+				"x": 133,
+				"y": 133,
 				"w": 64,
 				"h": 64
 			},
@@ -22,8 +222,8 @@
 		},
 		"left_2.png": {
 			"frame": {
-				"x": 67,
-				"y": 1,
+				"x": 199,
+				"y": 133,
 				"w": 64,
 				"h": 64
 			},
@@ -42,8 +242,8 @@
 		},
 		"left_3.png": {
 			"frame": {
-				"x": 133,
-				"y": 1,
+				"x": 1,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -62,8 +262,8 @@
 		},
 		"left_4.png": {
 			"frame": {
-				"x": 1,
-				"y": 67,
+				"x": 67,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -82,8 +282,8 @@
 		},
 		"left_5.png": {
 			"frame": {
-				"x": 67,
-				"y": 67,
+				"x": 133,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -102,8 +302,8 @@
 		},
 		"right_1.png": {
 			"frame": {
-				"x": 133,
-				"y": 67,
+				"x": 199,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -122,8 +322,8 @@
 		},
 		"right_2.png": {
 			"frame": {
-				"x": 1,
-				"y": 133,
+				"x": 265,
+				"y": 1,
 				"w": 64,
 				"h": 64
 			},
@@ -142,8 +342,8 @@
 		},
 		"right_3.png": {
 			"frame": {
-				"x": 67,
-				"y": 133,
+				"x": 265,
+				"y": 67,
 				"w": 64,
 				"h": 64
 			},
@@ -162,7 +362,7 @@
 		},
 		"right_4.png": {
 			"frame": {
-				"x": 133,
+				"x": 265,
 				"y": 133,
 				"w": 64,
 				"h": 64
@@ -182,8 +382,8 @@
 		},
 		"right_5.png": {
 			"frame": {
-				"x": 199,
-				"y": 1,
+				"x": 265,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -216,8 +416,23 @@
 			"right_3.png",
 			"right_4.png",
 			"right_5.png"
+		],
+		"swim_izq": [
+			"hombre_swim_left_1.png",
+			"hombre_swim_left_2.png",
+			"hombre_swim_left_3.png",
+			"hombre_swim_left_4.png",
+			"hombre_swim_left_5.png"
+		],
+		"swim_der":[
+			"hombre_swim_right_1.png",
+			"hombre_swim_right_2.png",
+			"hombre_swim_right_3.png",
+			"hombre_swim_right_4.png",
+			"hombre_swim_right_5.png"
 		]
 	},
+
 
 	"meta": {
 		"app": "http://www.codeandweb.com/texturepacker",
@@ -225,8 +440,8 @@
 		"image": "hombre.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 264,
-			"h": 198
+			"w": 330,
+			"h": 264
 		},
 		"scale": "1"
 	}
