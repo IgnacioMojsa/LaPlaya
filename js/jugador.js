@@ -108,4 +108,11 @@ class Jugador {
     }
   }
 
+  getPosicion() {
+    return {
+        x: this.container?.x ?? this.x ?? 0,
+        y: this.container?.y ?? this.y ?? 0
+    };
+  }
+
 }

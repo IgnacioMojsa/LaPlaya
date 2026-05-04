@@ -16,6 +16,10 @@ let cantidadTotalDeNpc = cantAdultos + cantNenes + perdidos
 let bgm = new Audio("assets/bgm.wav");
 bgm.loop = true;
 
+//TEJO
+let portalTejo;
+let tejoJuego;
+
 //contemplo mayusculas y minusculas pq sino no funca
 const keys = {
      w:false,
@@ -41,6 +45,12 @@ window.addEventListener('keyup', (e) => {
   if (e.key in keys){
     keys[e.key] = false;
     e.preventDefault();
+    }
+});
+
+window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && tejoJuego.activo) {
+        tejoJuego.salir();
     }
 });
 
@@ -79,6 +89,17 @@ async function arrancar() {
     cargarUnPersonajeNoJugable(Nenes, neneAssets, (cantNenes + perdidos))
 
     window.addEventListener('resize', onResize);
+
+    tejoJuego = new TejoJuego(pixiApp);
+
+    portalTejo = new TejoPortal(
+        window.innerWidth * 0.7,
+        window.innerHeight * 0.7,
+        pixiApp,
+        tejoJuego
+    );
+
+    await portalTejo.init();
 
     // 👇 ACÁ va el cambio de clima
     iniciarSistemaDeClima();
@@ -141,22 +162,31 @@ let nuevoAhora = performance.now();
 
 function gameLoop(now) {
 
+    const enMiniJuego = tejoJuego && tejoJuego.activo;
+    
     const dt = Math.min(0.05, (now - nuevoAhora) / 1000);
     nuevoAhora = now;
-
+    
     bgm.play();
-    jugador.inputTeclado(dt, keys);
-    jugador.mantenerEnPantalla(LIMITE_AGUA.y);
-    jugador.update(dt);
+    if (!enMiniJuego) {
+        jugador.inputTeclado(dt, keys);
+        jugador.mantenerEnPantalla(LIMITE_AGUA.y);
+        jugador.update(dt);
+    }
+
     actualizarCielo();
     actualizarAstros();
-
 
     for (let i = 0; i < arrayDeNpc.length; i++){
         const npc = arrayDeNpc[i];
 
-        npc.update();
+        if (!enMiniJuego) {
+            npc.update();
+        }
     }
+    console.log("MiniJuego activo:", enMiniJuego);
+
+    portalTejo.update(jugador);
     
     requestAnimationFrame(gameLoop);
 }
