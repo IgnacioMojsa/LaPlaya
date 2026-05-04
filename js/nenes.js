@@ -16,9 +16,7 @@ class Nenes extends Npc{
 
   estaPerdido(){
     //if (this.adulto == null)
-    return this.perdido === true;
-
-
+    return this.perdido == true;
   }
 
 mantenerCercaDeAdulto(){
@@ -60,7 +58,14 @@ mantenerCercaDeAdulto(){
   }
 
   update(){
-    this.mantenerCercaDeAdulto();
-    super.update();
+    if (!this.estaPerdido()){
+      this.cambiarDeSpriteDeDireccion();
+      this.mantenerCercaDeAdulto();
+      super.update();
+    }
+    else{
+      this.cambiarAnimacion("cry");
+      this.render();
+    }
   }
 };

@@ -9,9 +9,9 @@ class Jugador {
     this.vy = 0;
 
     //Para cambiar la fuidez del movimiento, modifiquen aceleracion o vel maxima
-    this.aceleracion = 200;
+    this.aceleracion = 100;
     this.friccion = 1;
-    this.velMaxima = 200;
+    this.velMaxima = 150;
 
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
@@ -56,6 +56,7 @@ class Jugador {
   update(dt){
     this.container.x += this.vx * dt;
     this.container.y += this.vy * dt;
+    this.cambiarDeSpriteDeDireccion()
   }
 
   cargarSpritesAnimados(spritesACargar){
@@ -84,10 +85,10 @@ class Jugador {
   }
 
   cambiarDeSpriteDeDireccion(){
-    if (this.velocidad.x > 0) {
+    if (this.vx > 0) {
       this.cambiarAnimacion("der");
     }
-    else if (this.velocidad.x < 0) {
+    else if (this.vx < 0) {
       this.cambiarAnimacion("izq");
     }
   }

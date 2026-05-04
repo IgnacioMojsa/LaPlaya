@@ -1,103 +1,382 @@
 {
-  "frames": {
-    "nene0.png": {
-      "frame": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene1.png": {
-      "frame": { "x": 64, "y": 0, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene2.png": {
-      "frame": { "x": 128, "y": 0, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene3.png": {
-      "frame": { "x": 192, "y": 0, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene4.png": {
-      "frame": { "x": 0, "y": 64, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene5.png": {
-      "frame": { "x": 64, "y": 64, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene6.png": {
-      "frame": { "x": 128, "y": 64, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene7.png": {
-      "frame": { "x": 192, "y": 64, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene8.png": {
-      "frame": { "x": 0, "y": 128, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene9.png": {
-      "frame": { "x": 64, "y": 128, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene10.png": {
-      "frame": { "x": 128, "y": 128, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    },
-    "nene11.png": {
-      "frame": { "x": 192, "y": 128, "w": 64, "h": 64 },
-      "rotated": false,
-      "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
-      "sourceSize": { "w": 64, "h": 64 }
-    }
-  },
-  "animations": {
-    "izq": [
-      "nene1.png"
-    ],
-    "der": [
-      "nene2.png"
-    ]
-  },
-  "meta": {
-    "app": "https://github.com/piskelapp/piskel/",
-    "version": "1.0",
-    "image": "nene.png",
-    "format": "RGBA8888",
-    "size": { "w": 256, "h": 192 }
-  }
+	"frames": {
+		"nene_left_1.png": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_left_2.png": {
+			"frame": {
+				"x": 67,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_left_3.png": {
+			"frame": {
+				"x": 133,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_left_4.png": {
+			"frame": {
+				"x": 199,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_left_5.png": {
+			"frame": {
+				"x": 1,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_left_6.png": {
+			"frame": {
+				"x": 67,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_llorando_1.png": {
+			"frame": {
+				"x": 133,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_llorando_2.png": {
+			"frame": {
+				"x": 199,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_llorando_3.png": {
+			"frame": {
+				"x": 1,
+				"y": 133,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_llorando_4.png": {
+			"frame": {
+				"x": 67,
+				"y": 133,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_llorando_5.png": {
+			"frame": {
+				"x": 133,
+				"y": 133,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_right_1.png": {
+			"frame": {
+				"x": 199,
+				"y": 133,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_right_2.png": {
+			"frame": {
+				"x": 1,
+				"y": 199,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_right_3.png": {
+			"frame": {
+				"x": 67,
+				"y": 199,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_right_4.png": {
+			"frame": {
+				"x": 133,
+				"y": 199,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_right_5.png": {
+			"frame": {
+				"x": 199,
+				"y": 199,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_right_6.png": {
+			"frame": {
+				"x": 265,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		}
+	},
+
+	"animations": {
+		"izq":[
+			"nene_left_1.png",
+			"nene_left_2.png",
+			"nene_left_3.png",
+			"nene_left_4.png",
+			"nene_left_5.png",
+			"nene_left_6.png"
+		],
+		"der":[
+			"nene_right_1.png",
+			"nene_right_2.png",
+			"nene_right_3.png",
+			"nene_right_4.png",
+			"nene_right_5.png",
+			"nene_right_6.png"
+		],
+		"cry":[
+			"nene_llorando_1.png",
+			"nene_llorando_2.png",
+			"nene_llorando_3.png",
+			"nene_llorando_4.png",
+			"nene_llorando_5.png"
+		]
+	},
+
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "nene.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 330,
+			"h": 264
+		},
+		"scale": "1"
+	}
 }
