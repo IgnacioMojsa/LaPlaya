@@ -26,11 +26,18 @@ const keys = {
      a:false,
      s:false,
      d:false,
+     f:false,
      W:false,
      A:false,
      S:false,
-     D:false
+     D:false,
+     F:false
 };
+
+const keysProcesadas = {
+    f: false,
+    F: false
+}
 
 //comprende cuando una tecla es presionada
 window.addEventListener('keydown', (e) => {
@@ -39,6 +46,16 @@ window.addEventListener('keydown', (e) => {
     e.preventDefault();
     }
 });
+
+function unaTeclaFuePresionada(key){
+    if (keys[key] && !keysProcessed[key]){
+        keysProcessed[key] = true;
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
 //comprende cuando una tecla es soltada
 window.addEventListener('keyup', (e) => {
@@ -174,6 +191,7 @@ function gameLoop(now) {
         jugador.update(dt);
     }
 
+    
     actualizarCielo();
     actualizarAstros();
 

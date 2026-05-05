@@ -23,6 +23,7 @@ class Jugador {
     const der    = keys.d || keys.D;
     const arriba = keys.w || keys.W;
     const abajo  = keys.s || keys.S;
+    const interactuar = (keys.f && !keysProcesadas.f) || (keys.F && !keysProcesadas.F);
 
 
     if (izq) this.vx -= this.aceleracion * dt;
@@ -39,6 +40,23 @@ class Jugador {
       this.vx *= limite;
       this.vy *= limite;
       }
+    
+    if (interactuar && this.estaCercaDeNenePerdido()){
+      if (keys.f) keysProcesadas.f = true;
+      if (keys.F) keysProcesadas.F = true;
+      
+      const nenePerdido = totalNenes.find(nene => nene.perdido)
+      
+      console.log("interactuando con nene perdido");
+      nenePerdido.adulto = this;
+      nenePerdido.perdido = false;
+    } 
+  }
+
+  estaCercaDeNenePerdido(){
+      const nenePerdido = totalNenes.find(nene => nene.perdido)
+
+      return distancia(this.container.x, nenePerdido.container.x, this.container.y, nenePerdido.container.y) < 40
   }
 
   aplicarFriccion(dt, v){

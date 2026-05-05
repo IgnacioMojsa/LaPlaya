@@ -19,34 +19,34 @@ class Nenes extends Npc{
     return this.perdido == true;
   }
 
-mantenerCercaDeAdulto(){
-  if (this.estaPerdido()) return;
+  mantenerCercaDeAdulto(){
+    if (this.estaPerdido()) return;
 
-  const targetX = this.adulto.container.x + this.separacion.x;
-  const targetY = this.adulto.container.y + this.separacion.y;
+    const targetX = this.adulto.container.x + this.separacion.x;
+    const targetY = this.adulto.container.y + this.separacion.y;
 
-  this.targetNene.x += (targetX - this.targetNene.x) * this.suavizado;
-  this.targetNene.y += (targetY - this.targetNene.y) * this.suavizado;
+    this.targetNene.x += (targetX - this.targetNene.x) * this.suavizado;
+    this.targetNene.y += (targetY - this.targetNene.y) * this.suavizado;
 
-  const d = distancia(this.container.x, this.targetNene.x, this.container.y, this.targetNene.y);
-  if(d === 0) return;
+    const d = distancia(this.container.x, this.targetNene.x, this.container.y, this.targetNene.y);
+    if(d === 0) return;
 
-  if(d > this.distanciaMaxAdulto){
-    const dX = (this.targetNene.x - this.container.x) / d;
-    const dY = (this.targetNene.y - this.container.y) / d;
-    let intensidad = (d - this.distanciaMaxAdulto) * 0.05;
-    intensidad = Math.min(intensidad, this.aceleracionMax);
-    this.sumarAceleracion(dX * intensidad, dY * intensidad);
+    if(d > this.distanciaMaxAdulto){
+      const dX = (this.targetNene.x - this.container.x) / d;
+      const dY = (this.targetNene.y - this.container.y) / d;
+      let intensidad = (d - this.distanciaMaxAdulto) * 0.05;
+      intensidad = Math.min(intensidad, this.aceleracionMax);
+      this.sumarAceleracion(dX * intensidad, dY * intensidad);
+    }
+    else if(d < this.distanciaMinAdulto){
+      const dX = (this.container.x - this.targetNene.x) / d;
+      const dY = (this.container.y - this.targetNene.y) / d;
+      this.sumarAceleracion(dX * 0.05, dY * 0.05);
+    }
+    else {
+      this.sumarAceleracion((this.adulto.velocidad.x - this.velocidad.x) * 0.05, (this.adulto.velocidad.y - this.velocidad.y) * 0.05);
+    }
   }
-  else if(d < this.distanciaMinAdulto){
-    const dX = (this.container.x - this.targetNene.x) / d;
-    const dY = (this.container.y - this.targetNene.y) / d;
-    this.sumarAceleracion(dX * 0.05, dY * 0.05);
-  }
-  else {
-    this.sumarAceleracion((this.adulto.velocidad.x - this.velocidad.x) * 0.05, (this.adulto.velocidad.y - this.velocidad.y) * 0.05);
-  }
-}
 
   render(){
     if(this.estaPerdido()){
@@ -68,4 +68,5 @@ mantenerCercaDeAdulto(){
       this.render();
     }
   }
+
 };
