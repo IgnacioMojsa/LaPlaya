@@ -185,28 +185,27 @@ function gameLoop(now) {
     nuevoAhora = now;
     
     bgm.play();
+
     if (!enMiniJuego) {
         jugador.inputTeclado(dt, keys);
         jugador.mantenerEnPantalla(LIMITE_AGUA.y);
         jugador.update(dt);
     }
 
-    
-    actualizarCielo();
-    actualizarAstros();
+    if (enMiniJuego) {
+        tejoJuego.update();
+    } else {
+        actualizarCielo();
+        actualizarAstros();
 
-    for (let i = 0; i < arrayDeNpc.length; i++){
-        const npc = arrayDeNpc[i];
-
-        if (!enMiniJuego) {
-            npc.update();
+        for (let i = 0; i < arrayDeNpc.length; i++){
+            arrayDeNpc[i].update();
         }
-    }
-    console.log("MiniJuego activo:", enMiniJuego);
 
-    portalTejo.update(jugador);
-    
-    requestAnimationFrame(gameLoop);
+        portalTejo.update(jugador);
+    }
+
+    requestAnimationFrame(gameLoop); // 🔥 SIEMPRE SE LLAMA
 }
 
 arrancar()
