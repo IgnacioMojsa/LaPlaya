@@ -13,9 +13,14 @@ class Jugador {
     this.friccion = 1;
     this.velMaxima = 150;
 
+    this.mensaje = new PIXI.Text("Pulsa F para rescatar al nene", { fill: "white", fontSize: 24});
+    this.mensaje.anchor.set(0.5);
+    this.mensaje.visible = false;
+
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
     window.__PIXI_APP__.stage.addChild(this.container);
+    window.__PIXI_APP__.stage.addChild(this.mensaje);
   }
 
   inputTeclado(dt, keys) {
@@ -54,9 +59,14 @@ class Jugador {
   }
 
   estaCercaDeNenePerdido(){
-      const nenePerdido = totalNenes.find(nene => nene.perdido)
+      const nenePerdido = totalNenes.find(nene => nene.perdido);
 
-      return distancia(this.container.x, nenePerdido.container.x, this.container.y, nenePerdido.container.y) < 40
+      if(!nenePerdido){
+        return false
+      }
+      else{
+        return distancia(this.container.x, nenePerdido.container.x, this.container.y, nenePerdido.container.y) < 40
+      }
   }
 
   aplicarFriccion(dt, v){
@@ -71,10 +81,25 @@ class Jugador {
     }
   }
 
+  mostrarmensajeDeRescate(){
+    //const mensaje = new PIXI.Text("Pulsa F para rescatar al nene", { fill: "white", fontSize: 24});
+    
+    if(this.estaCercaDeNenePerdido()){
+      console.log("Estas cerca de un nene perdido")
+      this.mensaje.visible = true;
+      this.mensaje.x = this.container.x;
+      this.mensaje.y = this.container.y + 20
+    }
+    else{
+      this.mensaje.visible = false;
+    }
+  }
+
   update(dt){
     this.container.x += this.vx * dt;
     this.container.y += this.vy * dt;
-    this.cambiarDeSpriteDeDireccion()
+    this.cambiarDeSpriteDeDireccion();
+    this.mostrarmensajeDeRescate()
   }
 
   cargarSpritesAnimados(spritesACargar){

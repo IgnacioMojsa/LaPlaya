@@ -11,7 +11,7 @@ class TejoPortal {
     }
 
     async init() {
-        const textura = await PIXI.Assets.load('assets/enterTejo.png');
+        const textura = await PIXI.Assets.load('assets/tejo.png');
         this.sprite = new PIXI.Sprite(textura);
 
         this.sprite.x = this.x;
