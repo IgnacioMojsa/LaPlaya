@@ -8,12 +8,13 @@ class Jugador {
     this.vx = 0;
     this.vy = 0;
 
-    //Para cambiar la fuidez del movimiento, modifiquen aceleracion o vel maxima
-    this.aceleracion = 100;
-    this.friccion = 1;
-    this.velMaxima = 150;
+    this.velMaxima = 80;
+    this.aceleracion = 80;
+    this.friccion = 0.95;
+    
+    this.input = {izq: false, der: false, arriba: false, abajo: false }; //Me gustó más la forma
 
-    this.mensaje = new PIXI.Text("Pulsa F para rescatar al nene", { fill: "white", fontSize: 24});
+    this.mensaje = new PIXI.Text("Pulsa F para rescatar al nene", {fill: "white", fontSize: 24});
     this.mensaje.anchor.set(0.5);
     this.mensaje.visible = false;
 
@@ -23,21 +24,26 @@ class Jugador {
     window.__PIXI_APP__.stage.addChild(this.mensaje);
   }
 
-  inputTeclado(dt, keys) {
-    const izq    = keys.a || keys.A;
-    const der    = keys.d || keys.D;
-    const arriba = keys.w || keys.W;
-    const abajo  = keys.s || keys.S;
-    const interactuar = (keys.f && !keysProcesadas.f) || (keys.F && !keysProcesadas.F);
+  inputTeclado(dt, keys){
+    this.input.izq    = keys.a || keys.A;
+    this.input.der    = keys.d || keys.D;
+    this.input.arriba = keys.w || keys.W;
+    this.input.abajo  = keys.s || keys.S;
+    
+    let aceleracionX = 0, aceleracionY = 0;
+    if (this.input.izq)    aceleracionX -= this.aceleracion;
+    if (this.input.der)    aceleracionX += this.aceleracion;
+    if (this.input.arriba) aceleracionY -= this.aceleracion;
+    if (this.input.abajo)  aceleracionY += this.aceleracion;
 
+    this.vx += aceleracionX * dt;
+    this.vy += aceleracionY * dt;
+    
+    if (aceleracionX === 0) this.vx *= this.friccion;
+    if (aceleracionY === 0) this.vy *= this.friccion;
 
-    if (izq) this.vx -= this.aceleracion * dt;
-    else if (der) this.vx += this.aceleracion * dt;
-    else this.vx = this.aplicarFriccion(this.vx, dt);
-
-    if (arriba) this.vy -= this.aceleracion * dt;
-    else if (abajo) this.vy += this.aceleracion * dt;
-    else this.vy = this.aplicarFriccion(this.vy, dt);
+    this.container.x += this.vx * dt;
+    this.container.y += this.vy * dt;
 
     const velocidad = Math.hypot(this.vx, this.vy);
     if (velocidad > this.velMaxima){
@@ -46,6 +52,9 @@ class Jugador {
       this.vy *= limite;
       }
     
+    //Interaccion
+    const interactuar = (keys.f && !keysProcesadas.f) || (keys.F && !keysProcesadas.F);
+
     if (interactuar && this.estaCercaDeNenePerdido()){
       if (keys.f) keysProcesadas.f = true;
       if (keys.F) keysProcesadas.F = true;
@@ -69,7 +78,7 @@ class Jugador {
       }
   }
 
-  aplicarFriccion(dt, v){
+/*   aplicarFriccion(dt, v){
     if (v) return 0;
     const signo = Math.sign(v);
     const nueva = Math.abs(v) - this.friccion * dt;
@@ -79,7 +88,7 @@ class Jugador {
     else {
       return 0;
     }
-  }
+  } */
 
   mostrarmensajeDeRescate(){
     //const mensaje = new PIXI.Text("Pulsa F para rescatar al nene", { fill: "white", fontSize: 24});
