@@ -10,9 +10,17 @@ class TejoJuego {
         this.fuerza = 0;
         this.altura = 0;
 
-        this.maxCarga = 100;
+        this.maxCarga = 150;
 
         this.tejin = null;
+        this.velocidadMovimiento = 5;
+        this.intentosTejin = 3;
+
+        this.tejinValido = false;
+
+        this.lanzando = false;
+
+        this.ladoActual = "izquierda";
     }
 
     async iniciar() {
@@ -29,18 +37,55 @@ class TejoJuego {
         this.cancha.anchor.set(0.5);
         this.cancha.x = window.innerWidth / 2;
         this.cancha.y = window.innerHeight / 2;
+
+        const anchoDeseado = window.innerWidth * 0.9;
+
+        const escalaCancha = anchoDeseado / this.cancha.width;
+
+        this.cancha.scale.set(escalaCancha);
         
         this.container.addChild(this.cancha);
+
+        // ------------------------
+        // INSTRUCCIONES
+        // ------------------------
+            
+        this.textoInstrucciones = new PIXI.Text({
+            text:
+                "W/S: MOVER | F: FUERZA | A: ALTURA | ESC: SALIR",
+            
+            style: {
+                fill: "#ffffff",
+                fontSize: window.innerWidth * 0.018,
+                fontFamily: "Arial",
+                fontWeight: "bold",
+                align: "center"
+            }
+        });
+        
+        this.textoInstrucciones.anchor.set(0.5);
+        
+        // centrado horizontal
+        this.textoInstrucciones.x = window.innerWidth / 2;
+        
+        // arriba de la cancha
+        this.textoInstrucciones.y =
+            this.cancha.y - this.cancha.height * 0.43;
+        
+        this.container.addChild(this.textoInstrucciones);
+
+        this.limiteSuperior = this.cancha.height / 2 + 210;
+        this.limiteInferior = this.cancha.y + this.cancha.height * 0.365;        
         
         // TEJIN
         const texturaTejin = await PIXI.Assets.load('assets/tejin.png');
         this.tejin = new PIXI.Sprite(texturaTejin);
         
         this.tejin.anchor.set(0.5);
-        this.tejin.x = window.innerWidth / 2;
-        this.tejin.y = window.innerHeight - 100;
+        this.tejin.x = this.cancha.x / 5;
+        this.tejin.y = this.cancha.y + this.cancha.height * 0.25;
 
-        const tamañoDeseado = 80; // 👈 tamaño en píxeles
+        const tamañoDeseado = window.innerWidth * 0.05;
         const escala = tamañoDeseado / this.tejin.width;
         this.tejin.scale.set(escala);
 
@@ -61,19 +106,20 @@ class TejoJuego {
 
     crearInputs() {
         window.addEventListener("keydown", (e) => {
-            if (!this.activo) return;
+
+            if (!this.activo || this.tejinValido) return;
 
             if (e.key.toLowerCase() === "f") this.cargandoFuerza = true;
             if (e.key.toLowerCase() === "a") this.cargandoAltura = true;
         });
 
         window.addEventListener("keyup", (e) => {
-            if (!this.activo) return;
-
+        
+            if (!this.activo || this.tejinValido) return;
+        
             if (e.key.toLowerCase() === "f") this.cargandoFuerza = false;
             if (e.key.toLowerCase() === "a") this.cargandoAltura = false;
-
-            // cuando soltás → tirar
+        
             if (e.key.toLowerCase() === "f" || e.key.toLowerCase() === "a") {
                 this.lanzarTejin();
             }
@@ -81,44 +127,214 @@ class TejoJuego {
     }
 
     lanzarTejin() {
-        // cálculo simple
-        const distancia = this.fuerza * 3;
-        const elevacion = this.altura * 2;
 
-        // destino en Y (más fuerza = más arriba)
-        const destinoY = this.tejin.y - distancia;
+        if (this.lanzando) return;
 
-        // animación simple
-        const velocidad = 0.1;
+        this.lanzando = true;
 
-        const mover = () => {
-            this.tejin.y += (destinoY - this.tejin.y) * velocidad;
+        const inicioX = this.tejin.x;
+        const inicioY = this.tejin.y;
 
-            if (Math.abs(this.tejin.y - destinoY) > 1) {
-                requestAnimationFrame(mover);
+        // -----------------------------------
+        // DISTANCIA REAL
+        // -----------------------------------
+
+        // ancho util de la cancha
+        const anchoCancha = this.cancha.width;
+
+        // fuerza responsive
+        const distanciaHorizontal =
+            (this.fuerza / this.maxCarga)
+            * anchoCancha
+            * 1.4;
+
+        // dirección
+        let direccion = 1;
+
+        if (this.ladoActual === "derecha") {
+            direccion = -1;
+        }
+
+        const destinoX = inicioX + (distanciaHorizontal * direccion);
+
+        const destinoY = inicioY;
+
+        // -----------------------------------
+        // ALTURA
+        // -----------------------------------
+
+        const alturaParabola =
+            (this.altura / this.maxCarga)
+            * window.innerHeight
+            * 0.35;
+
+        // -----------------------------------
+        // DURACION
+        // -----------------------------------
+
+        const duracion = 90;
+
+        let tiempo = 0;
+
+        const animar = () => {
+
+            tiempo++;
+
+            let t = tiempo / duracion;
+
+            if (t > 1) t = 1;
+
+            // movimiento horizontal
+            this.tejin.x = inicioX + (destinoX - inicioX) * t;
+
+            // parábola
+            const parabola =
+                -4 * alturaParabola * (t - 0.5) * (t - 0.5)
+                + alturaParabola;
+
+            this.tejin.y = destinoY - parabola;
+
+            if (t < 1) {
+                requestAnimationFrame(animar);
+            }
+            else {
+
+                this.lanzando = false;
+
+                this.verificarTejin();
             }
         };
 
-        mover();
+        animar();
 
-        // reset
         this.fuerza = 0;
         this.altura = 0;
+    }
+
+    verificarTejin() {
+
+        // RECTANGULO OBJETIVO
+
+        let objetivoMinX;
+        let objetivoMaxX;
+
+        // si tira desde izquierda
+        if (this.ladoActual === "izquierda") {
+
+            objetivoMinX = this.cancha.x;
+            objetivoMaxX = this.cancha.x + this.cancha.width * 0.45;
+        }
+        else {
+
+            objetivoMinX = this.cancha.x - this.cancha.width * 0.45;
+            objetivoMaxX = this.cancha.x;
+        }
+
+        // verificar si cayó dentro
+        const valido =
+            this.tejin.x >= objetivoMinX &&
+            this.tejin.x <= objetivoMaxX;
+
+        // -----------------------------------
+        // SI ES VALIDO
+        // -----------------------------------
+
+        if (valido) {
+
+            this.tejinValido = true;
+
+            console.log("TEJIN VALIDO");
+
+            // ACÁ después empieza la ronda de tejos
+        }
+
+        // -----------------------------------
+        // SI FALLÓ
+        // -----------------------------------
+
+        else {
+
+            this.intentosTejin--;
+
+            console.log("FALLÓ EL TEJIN");
+
+            // reset posición
+            if (this.ladoActual === "izquierda") {
+
+                this.tejin.x = this.cancha.x / 5;
+            }
+            else {
+
+                this.tejin.x =
+                    window.innerWidth - (this.cancha.x / 5);
+            }
+
+            // si perdió los intentos
+            if (this.intentosTejin <= 0) {
+
+                console.log("CAMBIO DE LADO");
+
+                this.cambiarLado();
+            }
+        }
+    }
+
+    cambiarLado() {
+
+        if (this.ladoActual === "izquierda") {
+
+            this.ladoActual = "derecha";
+
+            this.tejin.x =
+                window.innerWidth - (this.cancha.x / 5);
+        }
+        else {
+
+            this.ladoActual = "izquierda";
+
+            this.tejin.x = this.cancha.x / 5;
+        }
+
+        this.intentosTejin = 3;
+
+        this.tejinValido = false;
     }
 
     update() {
         if (!this.activo) return;
         if (!this.barraFuerza || !this.barraAltura) return;
 
-        if (this.cargandoFuerza) {
-            this.fuerza = Math.min(this.maxCarga, this.fuerza + 1);
-        }
+        if (!this.tejinValido) {
 
-        if (this.cargandoAltura) {
-            this.altura = Math.min(this.maxCarga, this.altura + 1);
+            if (this.cargandoFuerza) {
+                this.fuerza = Math.min(this.maxCarga, this.fuerza + 1);
+            }
+        
+            if (this.cargandoAltura) {
+                this.altura = Math.min(this.maxCarga, this.altura + 1);
+            }
         }
 
         this.dibujarBarras();
+
+        if (!this.tejinValido && !this.lanzando) {
+
+            if (keys["w"] || keys["W"]) {
+                this.tejin.y -= this.velocidadMovimiento;
+            }
+        
+            if (keys["s"] || keys["S"]) {
+                this.tejin.y += this.velocidadMovimiento;
+            }
+        }
+
+        if (this.tejin.y < this.limiteSuperior) {
+            this.tejin.y = this.limiteSuperior;
+        }
+        
+        if (this.tejin.y > this.limiteInferior) {
+            this.tejin.y = this.limiteInferior;
+        }
     }
 
     dibujarBarras() {
@@ -137,13 +353,44 @@ class TejoJuego {
     }
 
     salir() {
+
         this.activo = false;
+
         this.container.visible = false;
 
-        // 🔥 RESET IMPORTANTE
+        // ----------------------------
+        // RESET BARRAS
+        // ----------------------------
+
         this.cargandoFuerza = false;
         this.cargandoAltura = false;
+
         this.fuerza = 0;
         this.altura = 0;
+
+        // ----------------------------
+        // RESET TEJIN
+        // ----------------------------
+
+        this.tejinValido = false;
+
+        this.lanzando = false;
+
+        this.intentosTejin = 3;
+
+        this.ladoActual = "izquierda";
+
+        // posición inicial
+        if (this.tejin) {
+
+            this.tejin.x = this.cancha.x / 5;
+
+            this.tejin.y =
+                this.cancha.y + this.cancha.height * 0.25;
+        }
+
+        // limpiar barras visuales
+        if (this.barraFuerza) this.barraFuerza.clear();
+        if (this.barraAltura) this.barraAltura.clear();
     }
 }
