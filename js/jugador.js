@@ -20,8 +20,6 @@ class Jugador {
 
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
-    window.__PIXI_APP__.stage.addChild(this.container);
-    window.__PIXI_APP__.stage.addChild(this.mensaje);
   }
 
   inputTeclado(dt, keys){
@@ -59,7 +57,7 @@ class Jugador {
       if (keys.f) keysProcesadas.f = true;
       if (keys.F) keysProcesadas.F = true;
       
-      const nenePerdido = totalNenes.find(nene => nene.perdido)
+      const nenePerdido = miJuego.totalNenes.find(nene => nene.perdido)
       
       console.log("interactuando con nene perdido");
       nenePerdido.adulto = this;
@@ -68,7 +66,7 @@ class Jugador {
   }
 
   estaCercaDeNenePerdido(){
-      const nenePerdido = totalNenes.find(nene => nene.perdido);
+      const nenePerdido = miJuego.totalNenes.find(nene => nene.perdido);
 
       if(!nenePerdido){
         return false
@@ -146,13 +144,13 @@ class Jugador {
   }
 
   //PARAMETRO QUE TOMA EN MAIN.JS PARA QUE NO PASE EL LIMITE DE AGUA
-  mantenerEnPantalla(limiteAguaY) {
+  mantenerEnPantalla(limiteAguaY, anchoFondo, altoFondo) {
     const mitadW = this.container.width / 2;
     const mitadH = this.container.height / 2;
 
     // límites normales de pantalla
-    this.container.x = Math.max(mitadW, Math.min(window.innerWidth - mitadW, this.container.x));
-    this.container.y = Math.max(mitadH, Math.min(window.innerHeight - mitadH, this.container.y));
+    this.container.x = Math.max(mitadW, Math.min(anchoFondo - mitadW, this.container.x));
+    this.container.y = Math.max(mitadH, Math.min(altoFondo - mitadH, this.container.y));
       
     // agua (misma lógica que NPC)
     if (this.container.y + mitadH < limiteAguaY) {

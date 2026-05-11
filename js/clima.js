@@ -13,7 +13,7 @@ let luna;
 let texturaSol;
 let texturaLuna;
 
-async function cargarSolYLuna() {
+async function cargarSolYLuna(app) {
     texturaSol = await PIXI.Assets.load('assets/sol.png');
     texturaLuna = await PIXI.Assets.load('assets/luna.png');
 
@@ -24,8 +24,9 @@ async function cargarSolYLuna() {
     sol.scale.set(0.15);
     luna.scale.set(0.12);
 
-    pixiApp.stage.addChild(sol);
-    pixiApp.stage.addChild(luna);
+    app.addChild(sol);
+    app.addChild(luna);
+    
 }
 
 function resetearAstros() {
@@ -74,38 +75,37 @@ function actualizarAstros() {
     }
 }
 
-function ajustarFondo() {
-    if (!fondo) return;
+function ajustarFondo(fondoNuevo) {
+    if (!fondoNuevo) return;
 
     const screenW = window.innerWidth;
     const screenH = window.innerHeight;
 
-    const texW = fondo.texture.width;
-    const texH = fondo.texture.height;
+    const texW = fondoNuevo.texture.width;
+    const texH = fondoNuevo.texture.height;
 
     const escalaX = screenW / texW;
     const escalaY = screenH / texH;
 
     const escala = Math.max(escalaX, escalaY); // cover
 
-    fondo.scale.set(escala);
+    fondoNuevo.scale.set(escala);
 
-    fondo.x = (screenW - fondo.width) / 2;
-    fondo.y = (screenH - fondo.height) / 2;
+    fondoNuevo.x = (screenW - fondoNuevo.width) / 2;
+    fondoNuevo.y = (screenH - fondoNuevo.height) / 2;
 
     // CALCULAR LIMITE DINÁMICO DEL AGUA
-    LIMITE_AGUA.y = fondo.y + (AGUA_Y_EN_IMAGEN * escala);
+    LIMITE_AGUA.y = fondoNuevo.y + (AGUA_Y_EN_IMAGEN * escala);
 }
 
-async function cargarCielo() {
-    const textura = await PIXI.Assets.load('assets/cielo.png'); // tu imagen
+async function cargarCielo(app) {
+    const textura = await PIXI.Assets.load('assets/cielo.png'); 
 
     cielo = new PIXI.Sprite(textura);
 
     ajustarCielo();
 
-    pixiApp.stage.addChildAt(cielo, 1); 
-    // 👆 arriba del fondo (que está en 0)
+    app.stage.addChildAt(cielo, 0); 
 }
 
 function ajustarCielo() {
@@ -130,10 +130,10 @@ function ajustarCielo() {
     // posicion arriba
     cielo.y = 0;
 
-    // 👇 RECORTE si sobra altura
-    if (cielo.height > alturaCielo) {
-        cielo.height = alturaCielo;
-    }
+    // RECORTE si sobra altura
+    //if (cielo.height > alturaCielo) {
+    //    cielo.height = alturaCielo;
+    //}
 }
 
 function lerpColor(a, b, t) {
@@ -159,7 +159,7 @@ const coloresDia = {
     noche: 0x0a0a2a
 };
 
-function actualizarCielo() {
+function actualizarCielo(fondo) {
     // avanzar tiempo
     tiempoDelDia += velocidadTiempo;
     if (tiempoDelDia > 1) tiempoDelDia = 0;
@@ -171,13 +171,11 @@ function actualizarCielo() {
         let t = tiempoDelDia / 0.25;
         colorBase = lerpColor(coloresDia.amanecer, coloresDia.dia, t);
         cielo.alpha = 1;
-        fondo.alpha = 0.8;
         console.log("Tiempo del día: amanecer");
 
     } else if (tiempoDelDia < 0.5) {
         colorBase = coloresDia.dia;
         cielo.alpha = 1;
-        fondo.alpha = 1;
         console.log("Tiempo del día: mañana");
 
     } else if (tiempoDelDia < 0.75) {
@@ -185,7 +183,6 @@ function actualizarCielo() {
         let t = (tiempoDelDia - 0.5) / 0.25;
         colorBase = lerpColor(coloresDia.dia, coloresDia.atardecer, t);
         cielo.alpha = 1;
-        fondo.alpha = 0.8;
         console.log("Tiempo del día: atardecer");
 
     } else {
@@ -193,7 +190,6 @@ function actualizarCielo() {
         let t = (tiempoDelDia - 0.75) / 0.25;
         colorBase = lerpColor(coloresDia.atardecer, coloresDia.noche, t);
         cielo.alpha = 1;
-        fondo.alpha = 0.6;
         console.log("Tiempo del día: anochecer");
     }
 
@@ -201,13 +197,11 @@ function actualizarCielo() {
     if (climaActual === "nublado") {
         colorBase = lerpColor(colorBase, 0x888888, 0.5);
         cielo.alpha = 0.9;
-        fondo.alpha = 0.7;
     }
 
     if (climaActual === "lluvia") {
         colorBase = lerpColor(colorBase, 0x444466, 0.7);
         cielo.alpha = 1;
-        fondo.alpha = 0.6;
     }
 
     cielo.tint = colorBase;
@@ -227,11 +221,11 @@ function iniciarSistemaDeClima() {
 // =======================
 // RESIZE
 // =======================
-function onResize() {
+function onResize(app) {
     const newW = window.innerWidth;
     const newH = window.innerHeight;
 
-    pixiApp.renderer.resize(newW, newH);
+    app.renderer.resize(newW, newH);
 
     ajustarFondo();
     ajustarCielo();

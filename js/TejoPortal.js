@@ -1,6 +1,7 @@
 class TejoPortal {
     constructor(x, y, app, juego) {
         this.app = app;
+        this.mundo = miJuego.mundo;
         this.juego = juego;
         this.x = x;
         this.y = y;
@@ -22,9 +23,9 @@ class TejoPortal {
         const escala = tamañoDeseado / this.sprite.width;
         this.sprite.scale.set(escala);
 
-        this.app.stage.addChild(this.sprite);
+        this.mundo.addChild(this.sprite);
 
-        this.mensaje = new PIXI.Text("Pulsa T para jugar al tejo", {
+        this.mensaje = new PIXI.Text("Pulsa F para jugar al tejo", {
             fill: "white",
             fontSize: 24
         });
@@ -35,7 +36,7 @@ class TejoPortal {
         this.app.stage.addChild(this.mensaje);
 
         window.addEventListener("keydown", (e) => {
-            if (e.key.toLowerCase() === "t" && this.jugadorCerca) {
+            if (e.key.toLowerCase() === "f" && this.jugadorCerca) {
                 this.juego.iniciar();
             }
         });

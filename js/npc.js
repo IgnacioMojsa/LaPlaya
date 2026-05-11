@@ -11,7 +11,6 @@ class Npc {
 
         this.cargarSpritesAnimados(animacion);
         this.cambiarAnimacion(Object.keys(animacion.animations)[0]);
-        window.__PIXI_APP__.stage.addChild(this.container);
     }
 
 /*     mantenerEnLimites(){
@@ -36,10 +35,10 @@ class Npc {
 
     mantenerEnLimites(){
         if (this.container.x < 0) { this.container.x = 0; this.velocidad.x *= -1; }
-        if (this.container.x > window.innerWidth) { this.container.x = window.innerWidth; this.velocidad.x *= -1; }
+        if (this.container.x > miJuego.fondo.width) { this.container.x = miJuego.fondo.width; this.velocidad.x *= -1; }
 
         if (this.container.y < 300) { this.evitarAgua() }
-        if (this.container.y > window.innerHeight) { this.container.y = window.innerHeight; this.velocidad.y *= -1; }
+        if (this.container.y > miJuego.fondo.height) { this.container.y =  miJuego.fondo.height; this.velocidad.y *= -1; }
     }
 
     sumarAceleracion(x, y) {
@@ -232,7 +231,7 @@ class Npc {
         this.render();
         this.cambiarDeSpriteDeDireccion();
         this.mantenerEnLimites();
-        this.agrupar(arrayDeNpc)
+        this.agrupar(miJuego.arrayDeNpc)
         this.nadar()
         //this.evitarAgua();
     }

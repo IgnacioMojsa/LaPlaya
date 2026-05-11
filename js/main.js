@@ -1,3 +1,206 @@
+class Juego{
+    constructor(){
+        this.app = null;
+        this.mundo = null;
+        this.jugador = null;
+        this.enMiniJuego = false;
+        this.tejoJuego = null;
+        this.portalTejo = null;
+        this.bgm = new Audio("assets/bgm.wav");
+        this.nuevoAhora = performance.now();
+
+        this.cantAdultos = 10;
+        this.cantNenes = 3;
+        this.arrayDeNpc = [];
+        this.totalAdultos = [];
+        this.totalNenes = [];
+        this.perdidos = 1;
+        this.cantidadTotalDeNpc = this.cantAdultos + this.cantNenes + this.perdidos
+
+        this.bgm.loop = true;
+    }
+
+    async arrancar() {
+        const opcionesDePixi = {
+            width: window.innerWidth,
+            height: window.innerHeight,
+            background: "#000000"
+        };
+        
+        console.log("arrancando");
+        this.app = new PIXI.Application();
+        console.log("app de pixi creada");
+        await this.app.init(opcionesDePixi);
+
+        window.__PIXI_APP__ = this.app;
+
+        document.body.appendChild(this.app.canvas);
+        
+        this.mundo = new PIXI.Container();
+        this.app.stage.addChild(this.mundo);
+
+        await this.precargarAssets();
+        await this.prepararEscena();
+
+        //Empieza el loop
+        this.app.ticker.add(() => this.gameLoop());
+    }
+
+    async precargarAssets() {
+        this.hombreAssets = await PIXI.Assets.load("assets/spritesheets/hombre.json");
+        this.mujerAssets = await PIXI.Assets.load("assets/spritesheets/mujer.json");
+        this.neneAssets = await PIXI.Assets.load("assets/spritesheets/nene.json");
+        this.jugadorAssets = await PIXI.Assets.load('assets/spritesheets/player.json');
+        this.playaTextura = await PIXI.Assets.load('assets/playa2.png');
+    }
+
+    async cargarJugador() {
+        const coordenadaXdeJugador = window.innerWidth / 2
+        const coordenadaYdeJugador = window.innerHeight / 2
+
+        //Se crea el jugador
+        this.jugador = new Jugador(coordenadaXdeJugador, coordenadaYdeJugador, this.jugadorAssets);
+        
+        //Se lo agrega en el mundo, no en el stage
+        this.mundo.addChild(this.jugador.container);
+        this.app.stage.addChild(this.jugador.mensaje);
+    }
+
+    async cargarUnPersonajeNoJugable(unPersonaje, unaImagen, cantidad) {
+        let datosParaNPC = unaImagen;
+
+        for (let i = 0; i < cantidad; i++) {
+            const coordenadaXDeNPC = Math.random() * window.innerWidth;
+            const coordenadaYDeNPC = LIMITE_AGUA.y + Math.random() * window.innerHeight;
+            const instanciaDeNPC = new unPersonaje(coordenadaXDeNPC, coordenadaYDeNPC, datosParaNPC, i)
+            
+            this.arrayDeNpc.push(instanciaDeNPC);
+            this.mundo.addChild(instanciaDeNPC.container);
+
+            if (instanciaDeNPC instanceof Nenes) this.totalNenes.push(instanciaDeNPC);
+            else this.totalAdultos.push(instanciaDeNPC);
+        }
+
+        if (unPersonaje === Nenes && this.perdidos > 0) {
+            const primerosNenes = this.totalNenes.length - cantidad;
+            
+            for (let contador = 0; contador < Math.min(this.perdidos, cantidad); contador++) {
+                const nenesActuales = primerosNenes + contador;
+
+                this.totalNenes[nenesActuales].perdido = true;
+                this.totalNenes[nenesActuales].adulto = null;
+                }
+
+            //Asignar adulto a nenes
+            const adultosDisponibles = this.totalAdultos.filter(a => a instanceof Npc);
+
+            if(adultosDisponibles.length > 0){
+                    for (let contador = 0; contador < cantidad; contador++){
+                        const nenesActuales = primerosNenes + contador;
+                        const nene = this.totalNenes[nenesActuales];
+
+                        if (nene.perdido) continue;
+
+                        const adulto = adultosDisponibles[Math.floor(Math.random() * adultosDisponibles.length)];
+                        nene.adulto = adulto;
+                }
+            }
+        }
+    }
+
+    async cargarFondo() {
+        this.fondo = new PIXI.Sprite(this.playaTextura);
+
+        //ajustarFondo(this.fondo);
+
+        this.mundo.addChildAt(this.fondo, 2);
+}
+
+    async prepararEscena(){
+        await cargarCielo(this.app);
+        await cargarSolYLuna(this.mundo); 
+        await this.cargarFondo();
+        resetearAstros(); 
+    
+        await this.cargarJugador();
+        this.cargarUnPersonajeNoJugable(Hombre, this.hombreAssets, this.cantAdultos);
+        this.cargarUnPersonajeNoJugable(Mujer, this.mujerAssets, this.cantAdultos);
+        this.cargarUnPersonajeNoJugable(Nenes, this.neneAssets, (this.cantNenes + this.perdidos));
+        console.log("assets cargados")
+
+        window.addEventListener('resize', onResize);
+
+        this.tejoJuego = new TejoJuego(this.app);
+
+        this.portalTejo = new TejoPortal(
+            window.innerWidth * 0.7,
+            window.innerHeight * 0.7,
+            this.app,
+            this.tejoJuego
+        );
+
+        this.portalTejo.init();
+
+        // Aca va el cambio de clima
+        iniciarSistemaDeClima();
+        window.addEventListener("resize", () => onResize(this.app))
+    }
+
+    actualizarCamara(){
+        if (!this.jugador) return;
+
+        const centroX = window.innerWidth / 2;
+        const centroY = window.innerHeight / 2;
+
+        let targetX = centroX - this.jugador.container.x;
+        let targetY = centroY - this.jugador.container.y;
+
+        // Límites para que la cámara no muestre el "vacío" negro
+        const limiteDerecho = -(this.fondo.width - window.innerWidth);
+        const limiteInferior = -(this.fondo.height - window.innerHeight);
+
+        this.mundo.x = Math.max(limiteDerecho, Math.min(0, targetX));
+        this.mundo.y = Math.max(limiteInferior, Math.min(0, targetY));
+    }
+
+    gameLoop() {
+        const ahora = performance.now();
+        if(!this.nuevoAhora) this.nuevoAhora = ahora;
+
+        const enMiniJuego = this.tejoJuego && this.tejoJuego.activo;
+        
+        
+        const dt = Math.min(0.05, (ahora - this.nuevoAhora) / 1000);
+        if (isNaN(dt) || dt > 0.1) dt = 1/60;
+        this.nuevoAhora = ahora;
+        
+        this.bgm.play();
+
+        if (!enMiniJuego) {
+            this.jugador.inputTeclado(dt, keys);
+            this.jugador.mantenerEnPantalla(LIMITE_AGUA.y, this.fondo.width, this.fondo.height);
+            this.jugador.update(dt);
+            
+            this.actualizarCamara();
+            actualizarCielo(this.fondo);
+            actualizarAstros();
+
+            for (let i = 0; i < this.arrayDeNpc.length; i++){
+                this.arrayDeNpc[i].update();
+            }
+
+            this.portalTejo.update(this.jugador);
+        }
+
+        else if (enMiniJuego) {
+            this.tejoJuego.update();
+        }
+
+        requestAnimationFrame(this.gameLoop); // SIEMPRE SE LLAMA
+    }
+}
+
+/*
 let pixiApp;
 let jugador;
 let pixiInicializado = false;
@@ -11,14 +214,10 @@ let totalNenes = [];
 let perdidos = 1
 
 let cantidadTotalDeNpc = cantAdultos + cantNenes + perdidos
+*/
 
-//MUSICA
-let bgm = new Audio("assets/bgm.wav");
-bgm.loop = true;
 
-//TEJO
-let portalTejo;
-let tejoJuego;
+const miJuego = new Juego()
 
 //contemplo mayusculas y minusculas pq sino no funca
 const keys = {
@@ -66,117 +265,12 @@ window.addEventListener('keyup', (e) => {
 });
 
 window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && tejoJuego.activo) {
-        tejoJuego.salir();
+    if (e.key === "Escape" && miJuego.tejoJuego.activo) {
+        miJuego.tejoJuego.salir();
     }
 });
 
-async function precargarAssets() {
-    this.hombreAssets = await PIXI.Assets.load("assets/spritesheets/hombre.json");
-    this.mujerAssets = await PIXI.Assets.load("assets/spritesheets/mujer.json");
-    this.neneAssets = await PIXI.Assets.load("assets/spritesheets/nene.json");
-    this.jugadorAssets = await await PIXI.Assets.load('assets/spritesheets/player.json')
-}
-
-async function arrancar() {
-    console.log("arrancando");
-    pixiApp = new PIXI.Application()
-    console.log("app de pixi creada");
-
-    const opcionesDePixi = {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        background: "#000000"
-    };
-
-    await pixiApp.init(opcionesDePixi);
-    window.__PIXI_APP__ = pixiApp
-    document.body.appendChild(pixiApp.canvas);
-    pixiInicializado = true;
-
-    await cargarFondo();
-    await cargarCielo(); // 👈 después del fondo
-    await cargarSolYLuna(); 
-    await resetearAstros(); 
-    await precargarAssets();
-    console.log("assets cargados")
-    cargarJugador()
-    cargarUnPersonajeNoJugable(Hombre, hombreAssets, cantAdultos)
-    cargarUnPersonajeNoJugable(Mujer, mujerAssets, cantAdultos)
-    cargarUnPersonajeNoJugable(Nenes, neneAssets, (cantNenes + perdidos))
-
-    window.addEventListener('resize', onResize);
-
-    tejoJuego = new TejoJuego(pixiApp);
-
-    portalTejo = new TejoPortal(
-        window.innerWidth * 0.7,
-        window.innerHeight * 0.7,
-        pixiApp,
-        tejoJuego
-    );
-
-    await portalTejo.init();
-
-    // 👇 ACÁ va el cambio de clima
-    iniciarSistemaDeClima();
-}
-
-async function cargarUnPersonajeNoJugable(unPersonaje, unaImagen, cantidad) {
-    let datosParaNPC = unaImagen;
-    for (let i = 0; i < cantidad; i++) {
-        const coordenadaXDeNPC = Math.random() * window.innerWidth;
-        const coordenadaYDeNPC = LIMITE_AGUA.y + Math.random() * window.innerHeight;
-        const instanciaDeNPC = new unPersonaje(coordenadaXDeNPC, coordenadaYDeNPC, datosParaNPC, i)
-        arrayDeNpc.push(instanciaDeNPC);
-        if (instanciaDeNPC instanceof Nenes) totalNenes.push(instanciaDeNPC);
-        else totalAdultos.push(instanciaDeNPC);
-    }
-
-    if (unPersonaje === Nenes && perdidos > 0) {
-    const primerosNenes = totalNenes.length - cantidad;
-    for (let contador = 0; contador < Math.min(perdidos, cantidad); contador++) {
-        const nenesActuales = primerosNenes + contador;
-        totalNenes[nenesActuales].perdido = true;
-        totalNenes[nenesActuales].adulto = null;
-        }
-    
-    //Asignar adulto a nenes
-    const adultosDisponibles = totalAdultos.filter(a => a instanceof Npc);
-    if(adultosDisponibles.length > 0){
-        for (let contador = 0; contador < cantidad; contador++){
-        const nenesActuales = primerosNenes + contador;
-        const nene = totalNenes[nenesActuales];
-        if (nene.perdido) continue;
-        const adulto = adultosDisponibles[Math.floor(Math.random() * adultosDisponibles.length)];
-        nene.adulto = adulto;
-        }
-        }
-    }
-
-}
-
-async function cargarJugador() {
-    const coordenadaXdeJugador = window.innerWidth / 2
-    const coordenadaYdeJugador = window.innerHeight / 2
-
-    //const
-    jugador = new Jugador(coordenadaXdeJugador, coordenadaYdeJugador, jugadorAssets);
-    requestAnimationFrame(gameLoop);
-}
-
-async function cargarFondo() {
-    const textura = await PIXI.Assets.load('assets/playa.png');
-
-    fondo = new PIXI.Sprite(textura);
-
-    ajustarFondo();
-
-    pixiApp.stage.addChildAt(fondo, 0);
-}
-
-let nuevoAhora = performance.now();
-
+/*
 function gameLoop(now) {
 
     const enMiniJuego = tejoJuego && tejoJuego.activo;
@@ -207,5 +301,6 @@ function gameLoop(now) {
 
     requestAnimationFrame(gameLoop); // 🔥 SIEMPRE SE LLAMA
 }
+*/
 
-arrancar()
+miJuego.arrancar()
