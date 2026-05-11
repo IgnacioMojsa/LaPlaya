@@ -18,6 +18,8 @@ class Jugador {
     this.mensaje.anchor.set(0.5);
     this.mensaje.visible = false;
 
+    miJuego.app.stage.addChild(this.mensaje);
+
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
   }
@@ -88,14 +90,14 @@ class Jugador {
     }
   } */
 
-  mostrarmensajeDeRescate(){
+  mostrarMensajeDeRescate(){
     //const mensaje = new PIXI.Text("Pulsa F para rescatar al nene", { fill: "white", fontSize: 24});
     
     if(this.estaCercaDeNenePerdido()){
       console.log("Estas cerca de un nene perdido")
       this.mensaje.visible = true;
       this.mensaje.x = this.container.x;
-      this.mensaje.y = this.container.y + 20
+      this.mensaje.y = this.container.y - 10;
     }
     else{
       this.mensaje.visible = false;
@@ -106,7 +108,7 @@ class Jugador {
     this.container.x += this.vx * dt;
     this.container.y += this.vy * dt;
     this.cambiarDeSpriteDeDireccion();
-    this.mostrarmensajeDeRescate()
+    this.mostrarMensajeDeRescate()
   }
 
   cargarSpritesAnimados(spritesACargar){

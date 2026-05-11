@@ -17,6 +17,9 @@ class Juego{
         this.perdidos = 1;
         this.cantidadTotalDeNpc = this.cantAdultos + this.cantNenes + this.perdidos
 
+        this.orillaDelMar = 690;
+        this.horizonte = 600;
+
         this.bgm.loop = true;
     }
 
@@ -56,7 +59,7 @@ class Juego{
 
     async cargarJugador() {
         const coordenadaXdeJugador = window.innerWidth / 2
-        const coordenadaYdeJugador = window.innerHeight / 2
+        const coordenadaYdeJugador = this.orillaDelMar + window.innerHeight / 2
 
         //Se crea el jugador
         this.jugador = new Jugador(coordenadaXdeJugador, coordenadaYdeJugador, this.jugadorAssets);
@@ -71,7 +74,7 @@ class Juego{
 
         for (let i = 0; i < cantidad; i++) {
             const coordenadaXDeNPC = Math.random() * window.innerWidth;
-            const coordenadaYDeNPC = LIMITE_AGUA.y + Math.random() * window.innerHeight;
+            const coordenadaYDeNPC = this.orillaDelMar + Math.random() * window.innerHeight;
             const instanciaDeNPC = new unPersonaje(coordenadaXDeNPC, coordenadaYDeNPC, datosParaNPC, i)
             
             this.arrayDeNpc.push(instanciaDeNPC);
@@ -134,7 +137,7 @@ class Juego{
 
         this.portalTejo = new TejoPortal(
             window.innerWidth * 0.7,
-            window.innerHeight * 0.7,
+            this.orillaDelMar + window.innerHeight * 0.7,
             this.app,
             this.tejoJuego
         );

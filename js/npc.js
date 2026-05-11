@@ -47,11 +47,11 @@ class Npc {
     }
 
     evitarAgua(){
-        if(this.container.y < LIMITE_AGUA.y + 0.5){
+        if(this.container.y < 600 + 0.5){
             this.sumarAceleracion(0, 0.5)
         }
         else if(this.container.y){
-
+            
         }
     }
 
@@ -196,7 +196,7 @@ class Npc {
     }
 
     estaNadando(){
-        return this.container.y < LIMITE_AGUA.y + 8
+        return this.container.y < miJuego.horizonte || this.container.y < miJuego.orillaDelMar
     }
 
     nadar(){
