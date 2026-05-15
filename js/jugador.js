@@ -11,6 +11,7 @@ class Jugador {
     this.velMaxima = 80;
     this.aceleracion = 80;
     this.friccion = 0.95;
+    this.ultimaDireccion = "der";
     
     this.input = {izq: false, der: false, arriba: false, abajo: false }; //Me gustó más la forma
 
@@ -65,6 +66,14 @@ class Jugador {
       nenePerdido.adulto = this;
       nenePerdido.perdido = false;
     } 
+  }
+
+  estaNadando(){
+    return this.container.y < miJuego.horizonte || this.container.y < miJuego.orillaDelMar
+  }
+
+  estaQuieto(){
+    return Math.abs(this.vx) < 0.1 && Math.abs(this.vy) < 0.1;
   }
 
   estaCercaDeNenePerdido(){
@@ -137,11 +146,28 @@ class Jugador {
   }
 
   cambiarDeSpriteDeDireccion(){
-    if (this.vx > 0) {
+    if (this.vx > 0) this.ultimaDireccion = "der";
+    if (this.vx < 0) this.ultimaDireccion = "izq";
+    
+    if(this.estaQuieto() && this.ultimaDireccion === "der"){
+      this.cambiarAnimacion("idle_der")
+    }
+    else if(this.estaQuieto() && this.ultimaDireccion === "izq"){
+      this.cambiarAnimacion("idle_izq")
+    }
+    
+    if (this.vx > 0 && !this.estaQuieto()) {
       this.cambiarAnimacion("der");
     }
-    else if (this.vx < 0) {
+    else if (this.vx < 0 && !this.estaQuieto()) {
       this.cambiarAnimacion("izq");
+    }
+
+    if (this.estaNadando() && this.vx > 0){
+      this.cambiarAnimacion("swim_der")
+    }
+    else if (this.estaNadando() && this.vx < 0){
+      this.cambiarAnimacion("swim_izq")
     }
   }
 
