@@ -19,8 +19,6 @@ class Jugador {
     this.mensaje.anchor.set(0.5);
     this.mensaje.visible = false;
 
-    miJuego.app.stage.addChild(this.mensaje);
-
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
   }
@@ -56,11 +54,11 @@ class Jugador {
     //Interaccion
     const interactuar = (keys.f && !keysProcesadas.f) || (keys.F && !keysProcesadas.F);
 
-    if (interactuar && this.estaCercaDeNenePerdido()){
+    if (interactuar && this.estaCercaDeAlgunNenePerdido()){
       if (keys.f) keysProcesadas.f = true;
       if (keys.F) keysProcesadas.F = true;
       
-      const nenePerdido = miJuego.totalNenes.find(nene => nene.perdido)
+      const nenePerdido = this.nenePerdidoMasCercano()
       
       console.log("interactuando con nene perdido");
       nenePerdido.adulto = this;
@@ -76,15 +74,18 @@ class Jugador {
     return Math.abs(this.vx) < 0.1 && Math.abs(this.vy) < 0.1;
   }
 
-  estaCercaDeNenePerdido(){
-      const nenePerdido = miJuego.totalNenes.find(nene => nene.perdido);
+  estaCercaDeAlgunNenePerdido(){
+    // Devuelve un booleano. Es verdadero si el personaje esta cerca de algun nene perdido, sino devuelve falso
 
-      if(!nenePerdido){
-        return false
-      }
-      else{
-        return distancia(this.container.x, nenePerdido.container.x, this.container.y, nenePerdido.container.y) < 40
-      }
+    return miJuego.totalNenes.some(nene => nene.perdido && distancia(this.container.x, nene.container.x, this.container.y, nene.container.y) < 15)
+  }
+
+  nenePerdidoMasCercano(){
+    // Devuelve al nene perdido que mas cerca se encuentra del jugador
+    
+    const nenePerdido = miJuego.totalNenes.find(nene => nene.perdido && distancia(this.container.x, nene.container.x, this.container.y, nene.container.y) < 15);
+
+    return nenePerdido
   }
 
 /*   aplicarFriccion(dt, v){
@@ -102,11 +103,11 @@ class Jugador {
   mostrarMensajeDeRescate(){
     //const mensaje = new PIXI.Text("Pulsa F para rescatar al nene", { fill: "white", fontSize: 24});
     
-    if(this.estaCercaDeNenePerdido()){
+    if(this.estaCercaDeAlgunNenePerdido()){
       console.log("Estas cerca de un nene perdido")
       this.mensaje.visible = true;
       this.mensaje.x = this.container.x;
-      this.mensaje.y = this.container.y - 10;
+      this.mensaje.y = this.container.y - 5;
     }
     else{
       this.mensaje.visible = false;

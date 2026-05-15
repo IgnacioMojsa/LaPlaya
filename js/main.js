@@ -2,19 +2,19 @@ class Juego{
     constructor(){
         this.app = null;
         this.mundo = null;
-        this.jugador = null;
         this.enMiniJuego = false;
         this.tejoJuego = null;
         this.portalTejo = null;
         this.bgm = new Audio("assets/bgm.wav");
         this.nuevoAhora = performance.now();
+        this.listaDeTareas = new PIXI.Container();
 
-        this.cantAdultos = 10;
+        this.cantAdultos = 30;
         this.cantNenes = 3;
         this.arrayDeNpc = [];
         this.totalAdultos = [];
         this.totalNenes = [];
-        this.perdidos = 1;
+        this.perdidos = obtenerNumeroAleatorio(2, 5);
         this.cantidadTotalDeNpc = this.cantAdultos + this.cantNenes + this.perdidos
 
         this.orillaDelMar = 690;
@@ -117,13 +117,31 @@ class Juego{
         //ajustarFondo(this.fondo);
 
         this.mundo.addChildAt(this.fondo, 2);
-}
+    }
+
+    async cargarInterfaz(){
+        let tareasPendientes = new PIXI.Text({
+            text: "Encontrar " + this.perdidos + " nenes perdidos",
+            style: {
+                fill: "#ffffff",
+                fontSize: 25,
+                fontFamily: "Arial",
+            },
+        })
+
+        
+        this.listaDeTareas.addChild(tareasPendientes)
+        
+        this.app.stage.addChild(this.listaDeTareas)
+    }
 
     async prepararEscena(){
         await cargarCielo(this.app);
         await cargarSolYLuna(this.mundo); 
         await this.cargarFondo();
         resetearAstros(); 
+
+        await this.cargarInterfaz();
     
         await this.cargarJugador();
         this.cargarUnPersonajeNoJugable(Hombre, this.hombreAssets, this.cantAdultos);

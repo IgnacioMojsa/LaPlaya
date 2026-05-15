@@ -3,3 +3,10 @@ function distancia(x1, x2, y1, y2){
     // esto lo hace a traves del teorema de pitagoras
     return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
 }
+
+function obtenerNumeroAleatorio(min, max){
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
