@@ -66,7 +66,7 @@ class Juego{
         
         //Se lo agrega en el mundo, no en el stage
         this.mundo.addChild(this.jugador.container);
-        this.app.stage.addChild(this.jugador.mensaje);
+        //this.app.stage.addChild(this.jugador.mensaje);
     }
 
     async cargarUnPersonajeNoJugable(unPersonaje, unaImagen, cantidad) {

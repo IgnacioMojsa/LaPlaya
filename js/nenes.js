@@ -12,6 +12,20 @@ class Nenes extends Npc{
         this.aceleracionMax = 0.05;
 
         console.log("nenes creados")
+
+        this.mensaje = new PIXI.Text({
+          text: "Pulsa F para rescatar",
+          style: {
+            fill: "white",
+            fontSize: 18
+          }
+        });
+        
+        this.mensaje.anchor.set(0.5);
+        this.mensaje.y = -50;
+        this.mensaje.visible = false;
+        
+        this.container.addChild(this.mensaje);
     }
 
   estaPerdido(){

@@ -27,13 +27,16 @@ class TejoPortal {
 
         this.mensaje = new PIXI.Text("Pulsa F para jugar al tejo", {
             fill: "white",
-            fontSize: 24
+            fontSize: 24,
         });
 
         this.mensaje.anchor.set(0.5);
         this.mensaje.visible = false;
+        this.mensaje.x = this.sprite.x;
+        this.mensaje.y = this.sprite.y;
+        
 
-        this.app.stage.addChild(this.mensaje);
+        this.mundo.addChild(this.mensaje);
 
         window.addEventListener("keydown", (e) => {
             if (e.key.toLowerCase() === "f" && this.jugadorCerca) {

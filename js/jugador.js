@@ -15,9 +15,9 @@ class Jugador {
     
     this.input = {izq: false, der: false, arriba: false, abajo: false }; //Me gustó más la forma
 
-    this.mensaje = new PIXI.Text("Pulsa F para rescatar al nene", {fill: "white", fontSize: 24});
-    this.mensaje.anchor.set(0.5);
-    this.mensaje.visible = false;
+    //this.mensaje = new PIXI.Text("Pulsa F para rescatar al nene", {fill: "white", fontSize: 24});
+    //this.mensaje.anchor.set(0.5);
+    //this.mensaje.visible = false;
 
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
@@ -88,6 +88,41 @@ class Jugador {
     return nenePerdido
   }
 
+  actualizarMensajesDeNenes(){
+  
+    // Si ya tengo un nene conmigo, no mostrar mensajes
+    const tieneNeneRescatado = miJuego.totalNenes.some(
+      nene => nene.adulto === this
+    );
+
+    for(const nene of miJuego.totalNenes){
+
+      // Resetear
+      nene.mensaje.visible = false;
+
+      // Solo mostrar si:
+      // - está perdido
+      // - estoy cerca
+      // - NO tengo otro nene siguiéndome
+
+      const cerca =
+        distancia(
+          this.container.x,
+          nene.container.x,
+          this.container.y,
+          nene.container.y
+        ) < 15;
+
+      if(
+        nene.perdido &&
+        cerca &&
+        !tieneNeneRescatado
+      ){
+        nene.mensaje.visible = true;
+      }
+    }
+  }
+
 /*   aplicarFriccion(dt, v){
     if (v) return 0;
     const signo = Math.sign(v);
@@ -100,7 +135,7 @@ class Jugador {
     }
   } */
 
-  mostrarMensajeDeRescate(){
+ /*  mostrarMensajeDeRescate(){
     //const mensaje = new PIXI.Text("Pulsa F para rescatar al nene", { fill: "white", fontSize: 24});
     
     if(this.estaCercaDeAlgunNenePerdido()){
@@ -112,13 +147,14 @@ class Jugador {
     else{
       this.mensaje.visible = false;
     }
-  }
+  } */
 
   update(dt){
     this.container.x += this.vx * dt;
     this.container.y += this.vy * dt;
     this.cambiarDeSpriteDeDireccion();
-    this.mostrarMensajeDeRescate()
+    //this.mostrarMensajeDeRescate()
+    this.actualizarMensajesDeNenes();
   }
 
   cargarSpritesAnimados(spritesACargar){
