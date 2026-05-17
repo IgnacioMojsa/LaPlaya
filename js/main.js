@@ -24,12 +24,16 @@ class Juego{
     }
 
     async arrancar() {
-        const opcionesDePixi = {
+        /* const opcionesDePixi = {
             width: window.innerWidth,
             height: window.innerHeight,
             background: "#000000"
-        };
+        }; */
         
+        const opcionesDePixi = {
+            resizeTo: window,
+            background: "#000000"
+        };
         console.log("arrancando");
         this.app = new PIXI.Application();
         console.log("app de pixi creada");
@@ -217,7 +221,7 @@ class Juego{
             this.tejoJuego.update();
         }
 
-        requestAnimationFrame(this.gameLoop); // SIEMPRE SE LLAMA
+        //requestAnimationFrame(this.gameLoop); // SIEMPRE SE LLAMA
     }
 }
 

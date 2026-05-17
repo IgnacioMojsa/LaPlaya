@@ -24,6 +24,115 @@ class TejoJuego {
         this.lanzando = false;
 
         this.ladoActual = "izquierda";
+
+        window.addEventListener("resize", () => {
+            if (this.activo) {
+                this.resize();
+            }
+        });
+        this.app.stage.addChild(this.container);
+    }
+    resize() {
+
+        if (!this.cancha) return;
+
+        this.velocidadMovimiento =
+            this.app.screen.height * 0.005;
+
+        // ------------------------
+        // CANCHA
+        // ------------------------
+
+        this.cancha.x = this.app.screen.width / 2;
+        this.cancha.y = this.app.screen.height / 2;
+
+        const anchoDeseado = Math.min(
+            this.app.screen.width * 0.9,
+            this.app.screen.height * 1.4
+        );
+        const escalaCancha = anchoDeseado / this.cancha.texture.width;
+
+        this.cancha.scale.set(escalaCancha);
+
+        // ------------------------
+        // INSTRUCCIONES
+        // ------------------------
+
+        if (this.textoInstrucciones) {
+
+            this.textoInstrucciones.x =
+                this.app.screen.width / 2;
+
+            this.textoInstrucciones.y =
+                this.cancha.y - this.cancha.height * 0.36;
+
+            this.textoInstrucciones.style.fontSize =
+                this.app.screen.width * 0.018;
+        }
+
+        // ------------------------
+        // TEXTO INTENTOS
+        // ------------------------
+
+        if (this.textoIntentos) {
+            this.textoIntentos.x = this.app.screen.width / 2.7;
+
+            this.textoIntentos.y =
+                this.cancha.y - this.cancha.height * 0.33;
+
+            this.textoIntentos.style.fontSize =
+                this.app.screen.width * 0.02;
+        }
+        // ------------------------
+        // TEXTO TEJIN VALIDO
+        // ------------------------
+
+        if (this.textoTejinValido) {
+            this.textoTejinValido.x = this.app.screen.width / 2;
+
+            this.textoTejinValido.y =
+                this.cancha.y - this.cancha.height * 0.42;
+
+            this.textoTejinValido.style.fontSize =
+                this.app.screen.width * 0.03;
+        }
+        // ------------------------
+        // TEJIN
+        // ------------------------
+
+        if (this.tejin) {
+        
+            const tamañoDeseado = this.app.screen.width * 0.05;
+        
+            const escalaTejin =
+                tamañoDeseado / this.tejin.texture.width;
+        
+            this.tejin.scale.set(escalaTejin);
+        
+            if (this.ladoActual === "izquierda") {
+            
+                this.tejin.x = this.cancha.x / 5;
+            }
+            else {
+            
+                this.tejin.x =
+                    this.app.screen.width - (this.cancha.x / 5);
+            }
+        
+            this.tejin.y =
+                this.cancha.y + this.cancha.height * 0.25;
+        }
+
+
+        // ------------------------
+        // LIMITES
+        // ------------------------
+
+        this.limiteSuperior =
+            this.cancha.y + this.cancha.height * 0.05;
+
+        this.limiteInferior =
+            this.cancha.y + this.cancha.height * 0.36;
     }
 
     async iniciar() {
@@ -54,14 +163,7 @@ class TejoJuego {
         this.cancha = new PIXI.Sprite(texturaCancha);
         
         this.cancha.anchor.set(0.5);
-        this.cancha.x = window.innerWidth / 2;
-        this.cancha.y = window.innerHeight / 2;
 
-        const anchoDeseado = window.innerWidth * 0.9;
-
-        const escalaCancha = anchoDeseado / this.cancha.width;
-
-        this.cancha.scale.set(escalaCancha);
         
         this.container.addChild(this.cancha);
 
@@ -75,7 +177,7 @@ class TejoJuego {
             
             style: {
                 fill: "#ffffff",
-                fontSize: window.innerWidth * 0.018,
+                fontSize: this.app.screen.width * 0.018,
                 fontFamily: "Arial",
                 fontWeight: "bold",
                 align: "center"
@@ -85,7 +187,7 @@ class TejoJuego {
         this.textoInstrucciones.anchor.set(0.5);
         
         // centrado horizontal
-        this.textoInstrucciones.x = window.innerWidth / 2;
+        this.textoInstrucciones.x = this.app.screen.width / 2;
         
         // arriba de la cancha
         this.textoInstrucciones.y =
@@ -99,45 +201,44 @@ class TejoJuego {
             text: `Intentos de tejín restantes: ${this.intentosTejin}`,
             style: {
                 fill: "#ffffff",
-                fontSize: window.innerWidth * 0.02,
+                fontSize: this.app.screen.width * 0.02,
                 fontFamily: "Arial",
                 fontWeight: "bold"
             }
         });
 
-        this.textoIntentos.x = window.innerWidth / 2.7;
+        this.textoIntentos.x = this.app.screen.width / 2.7;
         this.textoIntentos.y = this.cancha.y - this.cancha.height * 0.33;
 
         this.container.addChild(this.textoIntentos);
 
+        
         // ------------------------
         // TEXTO TEJIN VALIDO
         // ------------------------
-
+        
         this.textoTejinValido = new PIXI.Text({
             text: "TEJIN EN POSICION VALIDA",
             style: {
                 fill: "#ffffff",
-                fontSize: window.innerWidth * 0.03,
+                fontSize: this.app.screen.width * 0.03,
                 fontFamily: "Arial",
                 fontWeight: "bold"
             }
         });
-
+        
         this.textoTejinValido.anchor.set(0.5);
-
-        this.textoTejinValido.x = window.innerWidth / 2;
+        
+        this.textoTejinValido.x = this.app.screen.width / 2;
         this.textoTejinValido.y = this.cancha.y - this.cancha.height * 0.42;
-
+        
         // empieza oculto
         this.textoTejinValido.visible = false;
-
+        
         this.container.addChild(this.textoTejinValido);    
         
         this.container.addChild(this.textoInstrucciones);
-
-        this.limiteSuperior = this.cancha.height / 2 + 210;
-        this.limiteInferior = this.cancha.y + this.cancha.height * 0.365;        
+              
         
         // TEJIN
         const texturaTejin = await PIXI.Assets.load('assets/tejin.png');
@@ -146,59 +247,25 @@ class TejoJuego {
         this.tejin.anchor.set(0.5);
         this.tejin.x = this.cancha.x / 5;
         this.tejin.y = this.cancha.y + this.cancha.height * 0.25;
-
-        const tamañoDeseado = window.innerWidth * 0.05;
-        const escala = tamañoDeseado / this.tejin.width;
+        
+        const tamañoDeseado = this.app.screen.width * 0.05;
+        const escala =
+            tamañoDeseado / this.tejin.texture.width;
         this.tejin.scale.set(escala);
-
-
+        
+        
         this.container.addChild(this.tejin);
-
+        
         // BARRAS
         this.barraFuerza = new PIXI.Graphics();
         this.barraAltura = new PIXI.Graphics();
-
+        
         this.container.addChild(this.barraFuerza);
         this.container.addChild(this.barraAltura);
-
-        /* if (!this.inputsCreados) {
-            this.crearInputs();
-            this.inputsCreados = true;
-        } */
-
-        this.app.stage.addChild(this.container);
+        
+        this.resize();
     }
 
-    /* crearInputs() {
-        window.addEventListener("keydown", (e) => {
-
-        
-            if (
-                !this.activo ||
-                !this.puedeRecibirInput ||
-                this.tejinValido
-            ) return;
-
-            if (e.key.toLowerCase() === "f") this.cargandoFuerza = true;
-            if (e.key.toLowerCase() === "a") this.cargandoAltura = true;
-        });
-
-        window.addEventListener("keyup", (e) => {
-        
-            if (
-                !this.activo ||
-                !this.puedeRecibirInput ||
-                this.tejinValido
-            ) return;
-        
-            if (e.key.toLowerCase() === "f") this.cargandoFuerza = false;
-            if (e.key.toLowerCase() === "a") this.cargandoAltura = false;
-        
-            if (e.key.toLowerCase() === "f" || e.key.toLowerCase() === "a") {
-                this.lanzarTejin();
-            }
-        });
-    } */
 
     lanzarTejin() {
 
@@ -241,7 +308,7 @@ class TejoJuego {
 
         const alturaParabola =
             (this.altura / this.maxCarga)
-            * window.innerHeight
+            * this.app.screen.height
             * 0.35;
 
         // -----------------------------------
@@ -260,28 +327,27 @@ class TejoJuego {
 
             if (t > 1) t = 1;
 
-            // movimiento horizontal
-            this.tejin.x = inicioX + (destinoX - inicioX) * t;
+            this.tejin.x =
+                inicioX + (destinoX - inicioX) * t;
 
-            // parábola
             const parabola =
                 -4 * alturaParabola * (t - 0.5) * (t - 0.5)
                 + alturaParabola;
 
             this.tejin.y = destinoY - parabola;
 
-            if (t < 1) {
-                requestAnimationFrame(animar);
-            }
-            else {
-
+            if (t >= 1) {
+            
+                this.app.ticker.remove(animar);
+            
                 this.lanzando = false;
-
+            
                 this.verificarTejin();
             }
         };
 
-        animar();
+        this.app.ticker.add(animar);
+
 
         this.fuerza = 0;
         this.altura = 0;
@@ -319,6 +385,7 @@ class TejoJuego {
 
             this.tejinValido = true;
             this.textoTejinValido.visible = true;
+            this.textoIntentos.visible = false;
 
             console.log("TEJIN VALIDO");
 
@@ -334,7 +401,7 @@ class TejoJuego {
             this.intentosTejin--;
 
             this.textoIntentos.text =
-                `Intentos restantes: ${this.intentosTejin}`;
+                `Intentos de tejín restantes: ${this.intentosTejin}`;
 
             console.log("FALLÓ EL TEJIN");
 
@@ -346,7 +413,7 @@ class TejoJuego {
             else {
 
                 this.tejin.x =
-                    window.innerWidth - (this.cancha.x / 5);
+                    this.app.screen.width - (this.cancha.x / 5);
             }
 
             // si perdió los intentos
@@ -366,7 +433,7 @@ class TejoJuego {
             this.ladoActual = "derecha";
 
             this.tejin.x =
-                window.innerWidth - (this.cancha.x / 5);
+                this.app.screen.width - (this.cancha.x / 5);
         }
         else {
 
@@ -378,7 +445,7 @@ class TejoJuego {
         this.intentosTejin = 3;
 
         this.textoIntentos.text =
-            `Intentos restantes: ${this.intentosTejin}`;
+            `Intentos de tejín restantes: ${this.intentosTejin}`;
 
         this.tejinValido = false;
     }
@@ -459,17 +526,51 @@ class TejoJuego {
     }
 
     dibujarBarras() {
+
         if (!this.barraFuerza || !this.barraAltura) return;
 
         this.barraFuerza.clear();
         this.barraAltura.clear();
 
+        const margenX = this.app.screen.width * 0.03;
+
+        const barraY1 = this.app.screen.height * 0.90;
+        const barraY2 = this.app.screen.height * 0.85;
+
+        const alturaBarra = this.app.screen.height * 0.02;
+
+        const anchoMax = this.app.screen.width * 0.25;
+
+        const anchoFuerza =
+            (this.fuerza / this.maxCarga) * anchoMax;
+
+        const anchoAltura =
+            (this.altura / this.maxCarga) * anchoMax;
+
+        // FUERZA
+
         this.barraFuerza.beginFill(0xff0000);
-        this.barraFuerza.drawRect(50, window.innerHeight - 50, this.fuerza * 2, 20);
+
+        this.barraFuerza.drawRect(
+            margenX,
+            barraY1,
+            anchoFuerza,
+            alturaBarra
+        );
+
         this.barraFuerza.endFill();
 
+        // ALTURA
+
         this.barraAltura.beginFill(0x00ff00);
-        this.barraAltura.drawRect(50, window.innerHeight - 80, this.altura * 2, 20);
+
+        this.barraAltura.drawRect(
+            margenX,
+            barraY2,
+            anchoAltura,
+            alturaBarra
+        );
+
         this.barraAltura.endFill();
     }
 
