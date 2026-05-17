@@ -25,7 +25,7 @@ class TejoPortal {
 
         this.mundo.addChild(this.sprite);
 
-        this.mensaje = new PIXI.Text("Pulsa F para jugar al tejo", {
+        this.mensaje = new PIXI.Text("Pulsa E para jugar al tejo", {
             fill: "white",
             fontSize: 24,
         });
@@ -39,7 +39,7 @@ class TejoPortal {
         this.mundo.addChild(this.mensaje);
 
         window.addEventListener("keydown", (e) => {
-            if (e.key.toLowerCase() === "f" && this.jugadorCerca) {
+            if (e.key.toLowerCase() === "e" && this.jugadorCerca) {
                 this.juego.iniciar();
             }
         });

@@ -14,7 +14,7 @@ class Nenes extends Npc{
         console.log("nenes creados")
 
         this.mensaje = new PIXI.Text({
-          text: "Pulsa F para rescatar",
+          text: "Pulsa E para rescatar",
           style: {
             fill: "white",
             fontSize: 18

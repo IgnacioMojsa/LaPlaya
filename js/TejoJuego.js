@@ -5,8 +5,9 @@ class TejoJuego {
         this.activo = false;
 
         // carga
-        this.cargandoFuerza = false;
-        this.cargandoAltura = false;
+        
+        this.fPresionadaAntes = false;
+        this.aPresionadaAntes = false;
         this.fuerza = 0;
         this.altura = 0;
 
@@ -17,6 +18,8 @@ class TejoJuego {
         this.intentosTejin = 3;
 
         this.tejinValido = false;
+        this.textoIntentos = null;
+        this.textoTejinValido = null;
 
         this.lanzando = false;
 
@@ -24,7 +27,23 @@ class TejoJuego {
     }
 
     async iniciar() {
+
+        // ------------------------
+        // RESETEO INPUTS
+        // ------------------------
+        keys["f"] = false;
+        keys["F"] = false;
+
+        keys["a"] = false;
+        keys["A"] = false;
+
         this.activo = true;
+
+
+        this.fuerza = 0;
+        this.altura = 0;
+
+        
         this.container.visible = true;
 
         this.container.removeChildren();
@@ -70,7 +89,50 @@ class TejoJuego {
         
         // arriba de la cancha
         this.textoInstrucciones.y =
-            this.cancha.y - this.cancha.height * 0.43;
+            this.cancha.y - this.cancha.height * 0.36;
+
+        // ------------------------
+        // TEXTO INTENTOS
+        // ------------------------
+
+        this.textoIntentos = new PIXI.Text({
+            text: `Intentos de tejín restantes: ${this.intentosTejin}`,
+            style: {
+                fill: "#ffffff",
+                fontSize: window.innerWidth * 0.02,
+                fontFamily: "Arial",
+                fontWeight: "bold"
+            }
+        });
+
+        this.textoIntentos.x = window.innerWidth / 2.7;
+        this.textoIntentos.y = this.cancha.y - this.cancha.height * 0.33;
+
+        this.container.addChild(this.textoIntentos);
+
+        // ------------------------
+        // TEXTO TEJIN VALIDO
+        // ------------------------
+
+        this.textoTejinValido = new PIXI.Text({
+            text: "TEJIN EN POSICION VALIDA",
+            style: {
+                fill: "#ffffff",
+                fontSize: window.innerWidth * 0.03,
+                fontFamily: "Arial",
+                fontWeight: "bold"
+            }
+        });
+
+        this.textoTejinValido.anchor.set(0.5);
+
+        this.textoTejinValido.x = window.innerWidth / 2;
+        this.textoTejinValido.y = this.cancha.y - this.cancha.height * 0.42;
+
+        // empieza oculto
+        this.textoTejinValido.visible = false;
+
+        this.container.addChild(this.textoTejinValido);    
         
         this.container.addChild(this.textoInstrucciones);
 
@@ -99,15 +161,23 @@ class TejoJuego {
         this.container.addChild(this.barraFuerza);
         this.container.addChild(this.barraAltura);
 
-        this.crearInputs();
+        /* if (!this.inputsCreados) {
+            this.crearInputs();
+            this.inputsCreados = true;
+        } */
 
         this.app.stage.addChild(this.container);
     }
 
-    crearInputs() {
+    /* crearInputs() {
         window.addEventListener("keydown", (e) => {
 
-            if (!this.activo || this.tejinValido) return;
+        
+            if (
+                !this.activo ||
+                !this.puedeRecibirInput ||
+                this.tejinValido
+            ) return;
 
             if (e.key.toLowerCase() === "f") this.cargandoFuerza = true;
             if (e.key.toLowerCase() === "a") this.cargandoAltura = true;
@@ -115,7 +185,11 @@ class TejoJuego {
 
         window.addEventListener("keyup", (e) => {
         
-            if (!this.activo || this.tejinValido) return;
+            if (
+                !this.activo ||
+                !this.puedeRecibirInput ||
+                this.tejinValido
+            ) return;
         
             if (e.key.toLowerCase() === "f") this.cargandoFuerza = false;
             if (e.key.toLowerCase() === "a") this.cargandoAltura = false;
@@ -124,11 +198,13 @@ class TejoJuego {
                 this.lanzarTejin();
             }
         });
-    }
+    } */
 
     lanzarTejin() {
 
         if (this.lanzando) return;
+
+        if (this.fuerza <= 0 && this.altura <= 0) return;
 
         this.lanzando = true;
 
@@ -242,6 +318,7 @@ class TejoJuego {
         if (valido) {
 
             this.tejinValido = true;
+            this.textoTejinValido.visible = true;
 
             console.log("TEJIN VALIDO");
 
@@ -255,6 +332,9 @@ class TejoJuego {
         else {
 
             this.intentosTejin--;
+
+            this.textoIntentos.text =
+                `Intentos restantes: ${this.intentosTejin}`;
 
             console.log("FALLÓ EL TEJIN");
 
@@ -297,6 +377,9 @@ class TejoJuego {
 
         this.intentosTejin = 3;
 
+        this.textoIntentos.text =
+            `Intentos restantes: ${this.intentosTejin}`;
+
         this.tejinValido = false;
     }
 
@@ -304,14 +387,28 @@ class TejoJuego {
         if (!this.activo) return;
         if (!this.barraFuerza || !this.barraAltura) return;
 
-        if (!this.tejinValido) {
+        if (!this.tejinValido && !this.lanzando) {
 
-            if (this.cargandoFuerza) {
-                this.fuerza = Math.min(this.maxCarga, this.fuerza + 1);
+            // ------------------------
+            // CARGAR FUERZA
+            // ------------------------
+
+            if (keys["f"] || keys["F"]) {
+                this.fuerza = Math.min(
+                    this.maxCarga,
+                    this.fuerza + 1
+                );
             }
         
-            if (this.cargandoAltura) {
-                this.altura = Math.min(this.maxCarga, this.altura + 1);
+            // ------------------------
+            // CARGAR ALTURA
+            // ------------------------
+        
+            if (keys["a"] || keys["A"]) {
+                this.altura = Math.min(
+                    this.maxCarga,
+                    this.altura + 1
+                );
             }
         }
 
@@ -335,6 +432,30 @@ class TejoJuego {
         if (this.tejin.y > this.limiteInferior) {
             this.tejin.y = this.limiteInferior;
         }
+
+        // --------------------------------
+        // DETECTAR SOLTAR F
+        // --------------------------------
+
+        const fApretada = keys["f"] || keys["F"];
+
+        if (this.fPresionadaAntes && !fApretada) {
+            this.lanzarTejin();
+        }
+
+        this.fPresionadaAntes = fApretada;
+
+        // --------------------------------
+        // DETECTAR SOLTAR A
+        // --------------------------------
+
+        const aApretada = keys["a"] || keys["A"];
+
+        if (this.aPresionadaAntes && !aApretada) {
+            this.lanzarTejin();
+        }
+
+        this.aPresionadaAntes = aApretada;
     }
 
     dibujarBarras() {

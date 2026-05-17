@@ -221,22 +221,6 @@ class Juego{
     }
 }
 
-/*
-let pixiApp;
-let jugador;
-let pixiInicializado = false;
-let ahora = 0;
-
-let cantAdultos = 10; //Se puede crear cant. de hombres y mujeres tambien
-let cantNenes = 3;
-let arrayDeNpc = [];
-let totalAdultos = [];
-let totalNenes = [];
-let perdidos = 1
-
-let cantidadTotalDeNpc = cantAdultos + cantNenes + perdidos
-*/
-
 
 const miJuego = new Juego()
 
@@ -246,18 +230,18 @@ const keys = {
      a:false,
      s:false,
      d:false,
-     f:false,
+     e:false,
      W:false,
      A:false,
      S:false,
      D:false,
-     F:false
+     E:false
 };
 
 const keysProcesadas = {
-    f: false,
-    F: false
-}
+    e: false,
+    E: false
+};
 
 //comprende cuando una tecla es presionada
 window.addEventListener('keydown', (e) => {
@@ -268,8 +252,8 @@ window.addEventListener('keydown', (e) => {
 });
 
 function unaTeclaFuePresionada(key){
-    if (keys[key] && !keysProcessed[key]){
-        keysProcessed[key] = true;
+    if (keys[key] && !keysProcesadas[key]){
+        keysProcesadas[key] = true;
         return true;
     }
     else{
@@ -290,38 +274,5 @@ window.addEventListener("keydown", (e) => {
         miJuego.tejoJuego.salir();
     }
 });
-
-/*
-function gameLoop(now) {
-
-    const enMiniJuego = tejoJuego && tejoJuego.activo;
-    
-    const dt = Math.min(0.05, (now - nuevoAhora) / 1000);
-    nuevoAhora = now;
-    
-    bgm.play();
-
-    if (!enMiniJuego) {
-        jugador.inputTeclado(dt, keys);
-        jugador.mantenerEnPantalla(LIMITE_AGUA.y);
-        jugador.update(dt);
-    }
-
-    if (enMiniJuego) {
-        tejoJuego.update();
-    } else {
-        actualizarCielo();
-        actualizarAstros();
-
-        for (let i = 0; i < arrayDeNpc.length; i++){
-            arrayDeNpc[i].update();
-        }
-
-        portalTejo.update(jugador);
-    }
-
-    requestAnimationFrame(gameLoop); // 🔥 SIEMPRE SE LLAMA
-}
-*/
 
 miJuego.arrancar()
