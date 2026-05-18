@@ -96,8 +96,8 @@ class Juego{
         let datosParaNPC = unaImagen;
 
         for (let i = 0; i < cantidad; i++) {
-            const coordenadaXDeNPC = Math.random() * window.innerWidth;
-            const coordenadaYDeNPC = this.orillaDelMar + Math.random() * window.innerHeight;
+            const coordenadaXDeNPC = Math.min(Math.random() * this.fondo.width, this.fondo.width);
+            const coordenadaYDeNPC = Math.min(this.orillaDelMar + Math.random() * this.fondo.height, this.fondo.height);
             const instanciaDeNPC = new unPersonaje(coordenadaXDeNPC, coordenadaYDeNPC, datosParaNPC, i)
             
             this.arrayDeNpc.push(instanciaDeNPC);
@@ -159,13 +159,25 @@ class Juego{
 
     async cargarGarita(){
         this.garita = new PIXI.Sprite(this.garitaTextura);
+
+        this.mensajeDeGarita = new PIXI.Text({
+            text: "Pulsa E para resguardar al nene",
+            style: { fill: "white", fontSize: 18 }
+        });
         
         this.mundo.addChild(this.garita);
+        this.mundo.addChild(this.mensajeDeGarita);
 
         this.garita.anchor.set(0.5, 0.9);
         this.garita.y = this.orillaDelMar + 200;
         this.garita.x = this.orillaDelMar + Math.random();
         this.garita.zIndex = this.garita.y;
+
+        this.mensajeDeGarita.anchor.set(0.5);
+        this.mensajeDeGarita.x = this.garita.x;
+        this.mensajeDeGarita.y = this.garita.y - 120; 
+        this.mensajeDeGarita.zIndex = this.garita.zIndex + 1;
+        this.mensajeDeGarita.visible = false;
     }
 
     async prepararEscena(){
@@ -228,6 +240,18 @@ class Juego{
         this.tareasPendientes.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
     }
 
+    mostrarMensajeDeGarita(){
+        if(this.jugador.estaCercaDeLaGarita() && this.jugador.neneRescatado instanceof Nenes){
+            console.log("mostrar mensaje de garita");
+        
+            this.mensajeDeGarita.visible = true;
+        }
+        
+        else{
+            this.mensajeDeGarita.visible = false;
+        }
+    }
+
     gameLoop() {
         const ahora = performance.now();
         if(!this.nuevoAhora) this.nuevoAhora = ahora;
@@ -250,6 +274,7 @@ class Juego{
             
             this.actualizarCamara();
             this.actualizarInterfaz();
+            this.mostrarMensajeDeGarita();
             actualizarCielo(this.fondo);
             actualizarAstros();
 

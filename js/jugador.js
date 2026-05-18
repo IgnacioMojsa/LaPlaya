@@ -55,23 +55,42 @@ class Jugador {
     
     //Interaccion
     const interactuar = (keys.e && !keysProcesadas.e) || (keys.E && !keysProcesadas.E);
+      
+    if (interactuar && !this.neneRescatado && this.estaCercaDeAlgunNenePerdido()){
+      const nenePerdido = this.nenePerdidoMasCercano();
 
-    if (interactuar && this.estaCercaDeAlgunNenePerdido()){
-      if (keys.e) keysProcesadas.e = true;
-      if (keys.E) keysProcesadas.E = true;
-      
-      const nenePerdido = this.nenePerdidoMasCercano()
-      
       console.log("interactuando con nene perdido");
+      this.neneRescatado = nenePerdido;
       nenePerdido.adulto = this;
       nenePerdido.perdido = false;
+      nenePerdido.rescatado = true;
     }
+
+    else if (this.neneRescatado && this.neneRescatado.rescatado && interactuar && this.estaCercaDeLaGarita()) {
+        console.log("nene resguardado en la garita");
+        
+        this.neneRescatado.container.x = miJuego.garita.x + ((Math.random() * 40) - 20);
+        this.neneRescatado.container.y = miJuego.garita.y + 10;
+
+        this.neneRescatado.resguardado = true;
+        this.neneRescatado.rescatado = false;
+        this.neneRescatado.adulto = null;
+
+        this.neneRescatado.velocidad.x = 0;
+        this.neneRescatado.velocidad.y = 0;
+        this.neneRescatado.aceleracion.x = 0;
+        this.neneRescatado.aceleracion.y = 0;
+
+        this.neneRescatado.cambiarAnimacion("idle_der");
+
+        this.neneRescatado = null;
+      }
   }
 
-tocarSilbato(){
+  tocarSilbato(){
   const silbido = this.silbato.cloneNode(false);
   silbido.play()
-}
+  }
 
   estaNadando(){
     return this.container.y < miJuego.horizonte || this.container.y < miJuego.orillaDelMar
@@ -81,16 +100,20 @@ tocarSilbato(){
     return Math.abs(this.vx) < 0.1 && Math.abs(this.vy) < 0.1;
   }
 
+  estaCercaDeLaGarita(){
+    return distancia(this.container.x, miJuego.garita.x, this.container.y, miJuego.garita.y) < 60;
+  }
+
   estaCercaDeAlgunNenePerdido(){
     // Devuelve un booleano. Es verdadero si el personaje esta cerca de algun nene perdido, sino devuelve falso
 
-    return miJuego.totalNenes.some(nene => nene.perdido && distancia(this.container.x, nene.container.x, this.container.y, nene.container.y) < 15)
+    return miJuego.totalNenes.some(nene => nene.perdido && distancia(this.container.x, nene.container.x, this.container.y, nene.container.y) < 20)
   }
 
   nenePerdidoMasCercano(){
     // Devuelve al nene perdido que mas cerca se encuentra del jugador
     
-    const nenePerdido = miJuego.totalNenes.find(nene => nene.perdido && distancia(this.container.x, nene.container.x, this.container.y, nene.container.y) < 15);
+    const nenePerdido = miJuego.totalNenes.find(nene => nene.perdido && distancia(this.container.x, nene.container.x, this.container.y, nene.container.y) < 20);
 
     return nenePerdido
   }

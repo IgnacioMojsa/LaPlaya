@@ -1,9 +1,209 @@
 {
 	"frames": {
-		"nene_left_1.png": {
+		"idle_left_1.png": {
 			"frame": {
 				"x": 1,
 				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"idle_left_2.png": {
+			"frame": {
+				"x": 67,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"idle_left_3.png": {
+			"frame": {
+				"x": 133,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"idle_left_4.png": {
+			"frame": {
+				"x": 199,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"idle_left_5.png": {
+			"frame": {
+				"x": 265,
+				"y": 1,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"idle_right_1.png": {
+			"frame": {
+				"x": 1,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"idle_right_2.png": {
+			"frame": {
+				"x": 67,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"idle_right_3.png": {
+			"frame": {
+				"x": 133,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"idle_right_4.png": {
+			"frame": {
+				"x": 199,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"idle_right_5.png": {
+			"frame": {
+				"x": 265,
+				"y": 67,
+				"w": 64,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 64,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 64,
+				"h": 64
+			}
+		},
+		"nene_left_1.png": {
+			"frame": {
+				"x": 1,
+				"y": 133,
 				"w": 64,
 				"h": 64
 			},
@@ -23,7 +223,7 @@
 		"nene_left_2.png": {
 			"frame": {
 				"x": 67,
-				"y": 1,
+				"y": 133,
 				"w": 64,
 				"h": 64
 			},
@@ -43,7 +243,7 @@
 		"nene_left_3.png": {
 			"frame": {
 				"x": 133,
-				"y": 1,
+				"y": 133,
 				"w": 64,
 				"h": 64
 			},
@@ -63,7 +263,7 @@
 		"nene_left_4.png": {
 			"frame": {
 				"x": 199,
-				"y": 1,
+				"y": 133,
 				"w": 64,
 				"h": 64
 			},
@@ -82,8 +282,8 @@
 		},
 		"nene_left_5.png": {
 			"frame": {
-				"x": 1,
-				"y": 67,
+				"x": 265,
+				"y": 133,
 				"w": 64,
 				"h": 64
 			},
@@ -102,8 +302,8 @@
 		},
 		"nene_left_6.png": {
 			"frame": {
-				"x": 67,
-				"y": 67,
+				"x": 1,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -122,8 +322,8 @@
 		},
 		"nene_llorando_1.png": {
 			"frame": {
-				"x": 133,
-				"y": 67,
+				"x": 67,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -142,8 +342,8 @@
 		},
 		"nene_llorando_2.png": {
 			"frame": {
-				"x": 199,
-				"y": 67,
+				"x": 133,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -162,8 +362,8 @@
 		},
 		"nene_llorando_3.png": {
 			"frame": {
-				"x": 1,
-				"y": 133,
+				"x": 199,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -182,8 +382,8 @@
 		},
 		"nene_llorando_4.png": {
 			"frame": {
-				"x": 67,
-				"y": 133,
+				"x": 265,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -202,8 +402,8 @@
 		},
 		"nene_llorando_5.png": {
 			"frame": {
-				"x": 133,
-				"y": 133,
+				"x": 1,
+				"y": 265,
 				"w": 64,
 				"h": 64
 			},
@@ -222,8 +422,8 @@
 		},
 		"nene_right_1.png": {
 			"frame": {
-				"x": 199,
-				"y": 133,
+				"x": 67,
+				"y": 265,
 				"w": 64,
 				"h": 64
 			},
@@ -242,8 +442,8 @@
 		},
 		"nene_right_2.png": {
 			"frame": {
-				"x": 1,
-				"y": 199,
+				"x": 133,
+				"y": 265,
 				"w": 64,
 				"h": 64
 			},
@@ -262,8 +462,8 @@
 		},
 		"nene_right_3.png": {
 			"frame": {
-				"x": 67,
-				"y": 199,
+				"x": 199,
+				"y": 265,
 				"w": 64,
 				"h": 64
 			},
@@ -282,8 +482,8 @@
 		},
 		"nene_right_4.png": {
 			"frame": {
-				"x": 133,
-				"y": 199,
+				"x": 265,
+				"y": 265,
 				"w": 64,
 				"h": 64
 			},
@@ -302,8 +502,8 @@
 		},
 		"nene_right_5.png": {
 			"frame": {
-				"x": 199,
-				"y": 199,
+				"x": 331,
+				"y": 1,
 				"w": 64,
 				"h": 64
 			},
@@ -322,8 +522,8 @@
 		},
 		"nene_right_6.png": {
 			"frame": {
-				"x": 265,
-				"y": 1,
+				"x": 331,
+				"y": 67,
 				"w": 64,
 				"h": 64
 			},
@@ -342,8 +542,8 @@
 		},
 		"swim_der_1.png": {
 			"frame": {
-				"x": 265,
-				"y": 67,
+				"x": 331,
+				"y": 133,
 				"w": 64,
 				"h": 64
 			},
@@ -362,8 +562,8 @@
 		},
 		"swim_der_2.png": {
 			"frame": {
-				"x": 265,
-				"y": 133,
+				"x": 331,
+				"y": 199,
 				"w": 64,
 				"h": 64
 			},
@@ -382,8 +582,8 @@
 		},
 		"swim_der_3.png": {
 			"frame": {
-				"x": 265,
-				"y": 199,
+				"x": 331,
+				"y": 265,
 				"w": 64,
 				"h": 64
 			},
@@ -403,7 +603,7 @@
 		"swim_izq_1.png": {
 			"frame": {
 				"x": 1,
-				"y": 265,
+				"y": 331,
 				"w": 64,
 				"h": 64
 			},
@@ -423,7 +623,7 @@
 		"swim_izq_2.png": {
 			"frame": {
 				"x": 67,
-				"y": 265,
+				"y": 331,
 				"w": 64,
 				"h": 64
 			},
@@ -443,7 +643,7 @@
 		"swim_izq_3.png": {
 			"frame": {
 				"x": 133,
-				"y": 265,
+				"y": 331,
 				"w": 64,
 				"h": 64
 			},
@@ -495,6 +695,20 @@
 			"swim_der_1.png",
 			"swim_der_2.png",
 			"swim_der_3.png"
+		],
+		"idle_der":[
+			"idle_right_1.png",
+			"idle_right_2.png",
+			"idle_right_3.png",
+			"idle_right_4.png",
+			"idle_right_5.png"	
+		],
+		"idle_izq":[
+			"idle_left_1.png",
+			"idle_left_2.png",
+			"idle_left_3.png",
+			"idle_left_4.png",
+			"idle_left_5.png"	
 		]
 	},
 
@@ -504,8 +718,8 @@
 		"image": "nene.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 330,
-			"h": 330
+			"w": 396,
+			"h": 396
 		},
 		"scale": "1"
 	}

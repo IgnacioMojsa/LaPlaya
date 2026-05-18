@@ -3,9 +3,12 @@ class Nenes extends Npc{
         super(x, y, animacion, i)
         this.adulto = adulto;
         this.perdido = false;
+        this.rescatado = false;
+        this.resguardado = false;
         this.separacion = {x: 50, y: 50};
         this.distanciaMaxAdulto = 10;
         this.distanciaMinAdulto = 10;
+        this.ultimaDir = "izq";
 
         this.targetNene = {x: this.container.x, y: this.container.y};
         this.suavizado = 1;
@@ -33,8 +36,12 @@ class Nenes extends Npc{
     return this.perdido == true;
   }
 
+  estaResguardado(){
+    return this.resguardado == true;
+  }
+
   mantenerCercaDeAdulto(){
-    if (this.estaPerdido()) return;
+    if (this.estaPerdido() || this.resguardado || !this.adulto) return;
 
     const targetX = this.adulto.container.x + this.separacion.x;
     const targetY = this.adulto.container.y + this.separacion.y;
@@ -52,20 +59,33 @@ class Nenes extends Npc{
       intensidad = Math.min(intensidad, this.aceleracionMax);
       this.sumarAceleracion(dX * intensidad, dY * intensidad);
     }
+
     else if(d < this.distanciaMinAdulto){
       const dX = (this.container.x - this.targetNene.x) / d;
       const dY = (this.container.y - this.targetNene.y) / d;
       this.sumarAceleracion(dX * 0.05, dY * 0.05);
     }
+
     else {
       this.sumarAceleracion((this.adulto.velocidad.x - this.velocidad.x) * 0.05, (this.adulto.velocidad.y - this.velocidad.y) * 0.05);
     }
   }
 
+  actualizarUltimaDir(){
+    if(this.velocidad.x > 0){
+      this.ultimaDir = "der"
+    }
+    else if(this.velocidad.x < 0){
+      this.ultimaDir = "izq"
+    }
+  }
+
   render(){
-    if(this.estaPerdido()){
+    if(this.estaPerdido() || this.estaResguardado()){
       this.aceleracion.x = 0;
       this.aceleracion.y = 0;
+      this.velocidad.x = 0;
+      this.velocidad.y = 0;
       return;
     }
     super.render();
@@ -76,6 +96,10 @@ class Nenes extends Npc{
       this.cambiarDeSpriteDeDireccion();
       this.mantenerCercaDeAdulto();
       super.update();
+    }
+    else if(this.estaResguardado()){
+      this.actualizarUltimaDir();
+      this.render();
     }
     else{
       this.cambiarAnimacion("cry");
