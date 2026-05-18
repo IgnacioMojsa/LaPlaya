@@ -50,6 +50,18 @@ class Juego{
         await this.precargarAssets();
         await this.prepararEscena();
 
+        //Espera a que el usuario interactúe con el documento antes de reproducir la música, y no lanza error en la consola
+        this.bgmIniciada = false;
+        const iniciarBgm = () => {
+            this.bgm.play()
+            .then(() => {this.bgmIniciada = true;})
+            .catch(() => {});
+            document.removeEventListener('click', iniciarBgm);
+            document.removeEventListener('keydown', iniciarBgm);
+        };
+        document.addEventListener('click', iniciarBgm);
+        document.addEventListener('keydown', iniciarBgm);
+
         //Empieza el loop
         this.app.ticker.add(() => this.gameLoop());
     }
@@ -135,7 +147,6 @@ class Juego{
             },
         })
 
-        
         this.listaDeTareas.addChild(this.tareasPendientes)
         
         this.app.stage.addChild(this.listaDeTareas)
@@ -220,7 +231,9 @@ class Juego{
         if (isNaN(dt) || dt > 0.1) dt = 1/60;
         this.nuevoAhora = ahora;
         
-        this.bgm.play();
+        if (!this.bgmIniciada){
+        this.bgm.play().then(() => {this.bgmIniciada = true;}).catch(()=>{});
+        }
 
         if (!enMiniJuego) {
             this.jugador.inputTeclado(dt, keys);
