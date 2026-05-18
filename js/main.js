@@ -5,7 +5,7 @@ class Juego{
         this.enMiniJuego = false;
         this.tejoJuego = null;
         this.portalTejo = null;
-        this.bgm = new Audio("assets/bgm.wav");
+        this.bgm = new Audio("assets/audio/bgm.wav");
         this.nuevoAhora = performance.now();
         this.listaDeTareas = new PIXI.Container();
 
@@ -287,13 +287,23 @@ const keys = {
 
 const keysProcesadas = {
     e: false,
-    E: false
+    E: false,
+    q: false,
+    Q: false
 };
 
 //comprende cuando una tecla es presionada
 window.addEventListener('keydown', (e) => {
   if (e.key in keys){
     keys[e.key] = true;
+    e.preventDefault();
+    }
+});
+
+//comprende cuando una tecla es soltada
+window.addEventListener('keyup', (e) => {
+  if (e.key in keys){
+    keys[e.key] = false;
     e.preventDefault();
     }
 });
@@ -307,14 +317,6 @@ function unaTeclaFuePresionada(key){
         return false;
     }
 }
-
-//comprende cuando una tecla es soltada
-window.addEventListener('keyup', (e) => {
-  if (e.key in keys){
-    keys[e.key] = false;
-    e.preventDefault();
-    }
-});
 
 window.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && miJuego.tejoJuego.activo) {

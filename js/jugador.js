@@ -1,4 +1,3 @@
-// Clase Jugador para PIXI
 class Jugador {
   constructor(x, y, texture) {
     this.container = new PIXI.Container();
@@ -13,7 +12,14 @@ class Jugador {
     this.friccion = 0.95;
     this.ultimaDireccion = "der";
     
-    this.input = {izq: false, der: false, arriba: false, abajo: false }; //Me gustó más la forma
+    this.input = {izq: false, der: false, arriba: false, abajo: false};
+
+    this.silbato = new Audio("assets/audio/silbato3.mp3");
+    this.silbato.preload = "auto";
+
+    window.addEventListener("keydown", (e) => {
+    if (e.key && e.key.toLowerCase() === "q"){
+    this.tocarSilbato();}});
 
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
@@ -59,8 +65,13 @@ class Jugador {
       console.log("interactuando con nene perdido");
       nenePerdido.adulto = this;
       nenePerdido.perdido = false;
-    } 
+    }
   }
+
+tocarSilbato(){
+  const silbido = this.silbato.cloneNode(false);
+  silbido.play()
+}
 
   estaNadando(){
     return this.container.y < miJuego.horizonte || this.container.y < miJuego.orillaDelMar
