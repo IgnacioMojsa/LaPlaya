@@ -119,10 +119,10 @@ class Jugador {
     }
   }
 
-
   update(dt){
     this.container.x += this.vx * dt;
     this.container.y += this.vy * dt;
+    this.container.zIndex = this.container.y;
     this.cambiarDeSpriteDeDireccion();
     //this.mostrarMensajeDeRescate()
     this.actualizarMensajesDeNenes();
@@ -189,8 +189,8 @@ class Jugador {
     this.container.y = Math.max(mitadH, Math.min(altoFondo - mitadH, this.container.y));
       
     // agua (misma lógica que NPC)
-    if (this.container.y + mitadH < limiteAguaY) {
-      this.container.y = limiteAguaY - mitadH;
+    if (this.container.y < limiteAguaY) {
+      this.container.y = limiteAguaY - 0.5;
     }
   }
 

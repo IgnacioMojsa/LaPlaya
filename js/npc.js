@@ -47,7 +47,7 @@ class Npc {
     }
 
     evitarAgua(){
-        if(this.container.y < 600 + 0.5){
+        if(this.container.y < miJuego.horizonte + 0.5){
             this.sumarAceleracion(0, 0.5)
         }
         else if(this.container.y){
@@ -161,6 +161,22 @@ class Npc {
        this.separar(boids);
     }
 
+    evitarAlgo(posicionX, posicionY){
+        let dx = posicionX - this.container.x;
+        let dy = posicionY - this.container.y;
+
+        const dist = Math.hypot(dx, dy);
+        
+        if (dist < 80){
+            const ratio = dist / 100;
+
+            const vx = dx / dist;
+            const vy = dy / dist
+                
+            this.sumarAceleracion(-vx * ratio, -vy * ratio)
+        }
+    }
+
     cambiarAnimacion(nuevaAnimacion){
         this.animacionActual = nuevaAnimacion
         for (let key of Object.keys(this.spritesAnimados)) {
@@ -221,6 +237,7 @@ class Npc {
         
         this.container.x += this.velocidad.x;
         this.container.y += this.velocidad.y;
+        this.container.zIndex = this.container.y;
 
         this.aceleracion.x = 0;
         this.aceleracion.y = 0;
@@ -232,6 +249,7 @@ class Npc {
         this.cambiarDeSpriteDeDireccion();
         this.mantenerEnLimites();
         this.agrupar(miJuego.arrayDeNpc)
+        this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
         this.nadar()
         //this.evitarAgua();
     }

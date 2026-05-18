@@ -44,6 +44,7 @@ class Juego{
         document.body.appendChild(this.app.canvas);
         
         this.mundo = new PIXI.Container();
+        this.mundo.sortableChildren = true;
         this.app.stage.addChild(this.mundo);
 
         await this.precargarAssets();
@@ -59,6 +60,7 @@ class Juego{
         this.neneAssets = await PIXI.Assets.load("assets/spritesheets/nene.json");
         this.jugadorAssets = await PIXI.Assets.load('assets/spritesheets/player.json');
         this.playaTextura = await PIXI.Assets.load('assets/playa2.png');
+        this.garitaTextura = await PIXI.Assets.load('assets/garitaGuardavidas.png')
     }
 
     async cargarJugador() {
@@ -124,7 +126,7 @@ class Juego{
     }
 
     async cargarInterfaz(){
-        let tareasPendientes = new PIXI.Text({
+        this.tareasPendientes = new PIXI.Text({
             text: "Encontrar " + this.perdidos + " nenes perdidos",
             style: {
                 fill: "#ffffff",
@@ -134,9 +136,20 @@ class Juego{
         })
 
         
-        this.listaDeTareas.addChild(tareasPendientes)
+        this.listaDeTareas.addChild(this.tareasPendientes)
         
         this.app.stage.addChild(this.listaDeTareas)
+    }
+
+    async cargarGarita(){
+        this.garita = new PIXI.Sprite(this.garitaTextura);
+        
+        this.mundo.addChild(this.garita);
+
+        this.garita.anchor.set(0.5, 0.9);
+        this.garita.y = this.orillaDelMar + 200;
+        this.garita.x = this.orillaDelMar + Math.random();
+        this.garita.zIndex = this.garita.y;
     }
 
     async prepararEscena(){
@@ -155,6 +168,8 @@ class Juego{
 
         window.addEventListener('resize', onResize);
 
+        await this.cargarGarita();
+        
         this.tejoJuego = new TejoJuego(this.app);
 
         this.portalTejo = new TejoPortal(
@@ -188,6 +203,12 @@ class Juego{
         this.mundo.y = Math.max(limiteInferior, Math.min(0, targetY));
     }
 
+    actualizarInterfaz(){
+        const cantNenesPerdidos = this.totalNenes.filter(nene => nene.perdido).length
+        
+        this.tareasPendientes.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
+    }
+
     gameLoop() {
         const ahora = performance.now();
         if(!this.nuevoAhora) this.nuevoAhora = ahora;
@@ -203,10 +224,11 @@ class Juego{
 
         if (!enMiniJuego) {
             this.jugador.inputTeclado(dt, keys);
-            this.jugador.mantenerEnPantalla(LIMITE_AGUA.y, this.fondo.width, this.fondo.height);
+            this.jugador.mantenerEnPantalla(300, this.fondo.width, this.fondo.height);
             this.jugador.update(dt);
             
             this.actualizarCamara();
+            this.actualizarInterfaz();
             actualizarCielo(this.fondo);
             actualizarAstros();
 
