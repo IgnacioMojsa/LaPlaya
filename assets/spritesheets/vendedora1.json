@@ -1,0 +1,277 @@
+
+{
+  "frames": {
+    "vendedora10.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora11.png": {
+      "frame": {
+        "x": 66,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora12.png": {
+      "frame": {
+        "x": 132,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora13.png": {
+      "frame": {
+        "x": 198,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora14.png": {
+      "frame": {
+        "x": 0,
+        "y": 66,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora15.png": {
+      "frame": {
+        "x": 66,
+        "y": 66,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora16.png": {
+      "frame": {
+        "x": 132,
+        "y": 66,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora17.png": {
+      "frame": {
+        "x": 198,
+        "y": 66,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora18.png": {
+      "frame": {
+        "x": 0,
+        "y": 132,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora19.png": {
+      "frame": {
+        "x": 66,
+        "y": 132,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora110.png": {
+      "frame": {
+        "x": 132,
+        "y": 132,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    },
+    "vendedora111.png": {
+      "frame": {
+        "x": 198,
+        "y": 132,
+        "w": 66,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 66,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 66,
+        "h": 66
+      }
+    }
+  },
+  "animations":{
+		"idle_izq":[
+			"vendedora10.png",
+            "vendedora11.png"
+		],
+		"idle_der":[
+			"vendedora16.png",
+            "vendedora17.png"
+		],
+		"izq":[
+			"vendedora12.png",
+            "vendedora13.png",
+            "vendedora14.png",
+            "vendedora15.png"
+		],
+		"der":[
+			"vendedora18.png",
+            "vendedora19.png",
+            "vendedora110.png",
+            "vendedora111.png"
+        ]
+	},
+  "meta": {
+    "app": "https://github.com/piskelapp/piskel/",
+    "version": "1.0",
+    "image": "vendedora1.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 264,
+      "h": 198
+    }
+  }
+}

@@ -222,10 +222,7 @@ function iniciarSistemaDeClima() {
 // RESIZE
 // =======================
 function onResize(app) {
-    const newW = window.innerWidth;
-    const newH = window.innerHeight;
-
-    app.renderer.resize(newW, newH);
+    
 
     ajustarFondo();
     ajustarCielo();

@@ -14,8 +14,9 @@ class Juego{
         this.arrayDeNpc = [];
         this.totalAdultos = [];
         this.totalNenes = [];
+        this.vendedores = 1
         this.perdidos = obtenerNumeroAleatorio(2, 5);
-        this.cantidadTotalDeNpc = this.cantAdultos + this.cantNenes + this.perdidos
+        this.cantidadTotalDeNpc = this.cantAdultos + this.cantNenes + this.perdidos + this.vendedores
 
         this.orillaDelMar = 690;
         this.horizonte = 600;
@@ -71,6 +72,10 @@ class Juego{
         this.mujerAssets = await PIXI.Assets.load("assets/spritesheets/mujer.json");
         this.neneAssets = await PIXI.Assets.load("assets/spritesheets/nene.json");
         this.jugadorAssets = await PIXI.Assets.load('assets/spritesheets/player.json');
+        this.churrosAssets = await PIXI.Assets.load("assets/spritesheets/vendedora1.json")
+        //Para armar después
+        //this.choclosAssets = await PIXI.Assets.load("assets/spritesheets/vendedor2.json")
+        //this.pochocloAssets = await PIXI.Assets.load("assets/spritesheets/vendedor3.json")
         this.playaTextura = await PIXI.Assets.load('assets/playa2.png');
         this.garitaTextura = await PIXI.Assets.load('assets/garitaGuardavidas.png')
     }
@@ -175,6 +180,9 @@ class Juego{
         this.cargarUnPersonajeNoJugable(Hombre, this.hombreAssets, this.cantAdultos);
         this.cargarUnPersonajeNoJugable(Mujer, this.mujerAssets, this.cantAdultos);
         this.cargarUnPersonajeNoJugable(Nenes, this.neneAssets, (this.cantNenes + this.perdidos));
+        this.cargarUnPersonajeNoJugable(VendedoraChurros, this.churrosAssets, (this.vendedores));
+        //this.cargarUnPersonajeNoJugable(VendedorChoclos, this.chocloAssets, (this.vendedores));
+        //this.cargarUnPersonajeNoJugable(VendedorPochoclos, this.pochocloAssets, (this.vendedores));
         console.log("assets cargados")
 
         window.addEventListener('resize', onResize);
