@@ -14,6 +14,7 @@ class Juego{
         this.arrayDeNpc = [];
         this.totalAdultos = [];
         this.totalNenes = [];
+        this.nenesRescatados = [];
         this.vendedores = 1
         this.perdidos = obtenerNumeroAleatorio(2, 5);
         this.cantidadTotalDeNpc = this.cantAdultos + this.cantNenes + this.perdidos + this.vendedores
