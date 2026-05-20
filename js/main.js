@@ -69,7 +69,9 @@ class Juego{
 
     async precargarAssets() {
         this.hombreAssets = await PIXI.Assets.load("assets/spritesheets/hombre.json");
-        this.mujerAssets = await PIXI.Assets.load("assets/spritesheets/mujer.json");
+        this.mujer1 = await PIXI.Assets.load("assets/spritesheets/mujer.json");
+        this.mujer2 = await PIXI.Assets.load("assets/spritesheets/mujer2.json");
+        this.mujer4 = await PIXI.Assets.load("assets/spritesheets/mujer4.json");
         this.neneAssets = await PIXI.Assets.load("assets/spritesheets/nene.json");
         this.jugadorAssets = await PIXI.Assets.load('assets/spritesheets/player.json');
         this.churrosAssets = await PIXI.Assets.load("assets/spritesheets/vendedora1.json")
@@ -190,7 +192,10 @@ class Juego{
     
         await this.cargarJugador();
         this.cargarUnPersonajeNoJugable(Hombre, this.hombreAssets, this.cantAdultos);
-        this.cargarUnPersonajeNoJugable(Mujer, this.mujerAssets, this.cantAdultos);
+        //Tengo que ver como barajar los assets de mujeres acá... pero no sé si es mucho más fácil ponerlo de esta forma.
+        this.cargarUnPersonajeNoJugable(Mujer, this.mujer1, this.cantAdultos);
+        this.cargarUnPersonajeNoJugable(Mujer, this.mujer2, this.cantAdultos);
+        this.cargarUnPersonajeNoJugable(Mujer, this.mujer4, this.cantAdultos);
         this.cargarUnPersonajeNoJugable(Nenes, this.neneAssets, (this.cantNenes + this.perdidos));
         this.cargarUnPersonajeNoJugable(VendedoraChurros, this.churrosAssets, (this.vendedores));
         //this.cargarUnPersonajeNoJugable(VendedorChoclos, this.chocloAssets, (this.vendedores));
@@ -216,6 +221,7 @@ class Juego{
         iniciarSistemaDeClima();
         window.addEventListener("resize", () => onResize(this.app))
     }
+
 
     actualizarCamara(){
         if (!this.jugador) return;

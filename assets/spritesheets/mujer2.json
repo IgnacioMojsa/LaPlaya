@@ -1,0 +1,34 @@
+{"frames":{"mujer20.png":{"frame":{"x":0,"y":0,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer21.png":{"frame":{"x":66,"y":0,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer22.png":{"frame":{"x":132,"y":0,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer23.png":{"frame":{"x":198,"y":0,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer24.png":{"frame":{"x":0,"y":66,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer25.png":{"frame":{"x":66,"y":66,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer26.png":{"frame":{"x":132,"y":66,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer27.png":{"frame":{"x":198,"y":66,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer28.png":{"frame":{"x":0,"y":132,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer29.png":{"frame":{"x":66,"y":132,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer210.png":{"frame":{"x":132,"y":132,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer211.png":{"frame":{"x":198,"y":132,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer212.png":{"frame":{"x":0,"y":198,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer213.png":{"frame":{"x":66,"y":198,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer214.png":{"frame":{"x":132,"y":198,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer215.png":{"frame":{"x":198,"y":198,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer216.png":{"frame":{"x":0,"y":264,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer217.png":{"frame":{"x":66,"y":264,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer218.png":{"frame":{"x":132,"y":264,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"mujer219.png":{"frame":{"x":198,"y":264,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}}},
+	
+"animations":{
+		"izq":[
+			"mujer20.png",
+			"mujer21.png",
+			"mujer22.png",
+			"mujer23.png",
+			"mujer24.png"
+		],
+		"der":[
+			"mujer25.png",
+			"mujer26.png",
+			"mujer27.png",
+			"mujer28.png",
+			"mujer29.png"
+		],
+		"swim_izq":[
+			"mujer210.png",
+			"mujer211.png",
+			"mujer212.png",
+			"mujer213.png",
+			"mujer214.png"
+		],
+		"swim_der":[
+			"mujer215.png",
+			"mujer216.png",
+			"mujer217.png",
+			"mujer218.png",
+			"mujer219.png"
+		]
+	},
+
+"meta":{"app":"https://github.com/piskelapp/piskel/","version":"1.0","image":"mujer2.png","format":"RGBA8888","size":{"w":264,"h":330}}}
