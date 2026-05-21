@@ -82,12 +82,17 @@ class Nenes extends Npc{
 
   render(){
     if(this.estaPerdido() || this.estaResguardado()){
+      this.container.visible = true; 
       this.aceleracion.x = 0;
       this.aceleracion.y = 0;
       this.velocidad.x = 0;
       this.velocidad.y = 0;
       return;
     }
+    else if(this.rescatado){
+      this.container.visible = false;
+    }
+    
     super.render();
   }
 

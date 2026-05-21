@@ -1420,18 +1420,16 @@
 			"swim_right_9.png"
 		],
 		"idle_con_nene_izq": [
-			"idle_left_1.png",
-			"idle_left_2.png",
-			"idle_left_3.png",
-			"idle_left_4.png",
-			"idle_left_5.png"
+			"idle_with_child_left_1.png",
+			"idle_with_child_left_2.png",
+			"idle_with_child_left_3.png",
+			"idle_with_child_left_4.png"
 		],
 		"idle_con_nene_der": [
-			"idle_right_1.png",
-			"idle_right_2.png",
-			"idle_right_3.png",
-			"idle_right_4.png",
-			"idle_right_5.png"
+			"idle_with_child_right_1.png",
+			"idle_with_child_right_2.png",
+			"idle_with_child_right_3.png",
+			"idle_with_child_right_4.png"
 		],
 		"izq_con_nene": [
 			"left_with_child_1.png",
@@ -1454,7 +1452,6 @@
 			"right_with_child_8.png"
 		]
 	},
-
 
 	"meta": {
 		"app": "http://www.codeandweb.com/texturepacker",

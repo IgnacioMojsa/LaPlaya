@@ -223,7 +223,6 @@ class Juego{
         window.addEventListener("resize", () => onResize(this.app))
     }
 
-
     actualizarCamara(){
         if (!this.jugador) return;
 

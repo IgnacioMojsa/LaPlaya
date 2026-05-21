@@ -11,6 +11,7 @@ class Jugador {
     this.aceleracion = 80;
     this.friccion = 0.95;
     this.ultimaDireccion = "der";
+    this.neneRescatado = null;
     
     this.input = {izq: false, der: false, arriba: false, abajo: false};
 
@@ -153,6 +154,10 @@ class Jugador {
     }
   }
 
+  estaCargandoUnNene(){
+    return this.neneRescatado && this.neneRescatado.rescatado 
+  }
+
   update(dt){
     this.container.x += this.vx * dt;
     this.container.y += this.vy * dt;
@@ -191,10 +196,10 @@ class Jugador {
     if (this.vx > 0) this.ultimaDireccion = "der";
     if (this.vx < 0) this.ultimaDireccion = "izq";
     
-    if(this.estaQuieto() && this.ultimaDireccion === "der"){
+    if(!this.estaCargandoUnNene() && this.estaQuieto() && this.ultimaDireccion === "der"){
       this.cambiarAnimacion("idle_der")
     }
-    else if(this.estaQuieto() && this.ultimaDireccion === "izq"){
+    else if(!this.estaCargandoUnNene() && this.estaQuieto() && this.ultimaDireccion === "izq"){
       this.cambiarAnimacion("idle_izq")
     }
     
@@ -210,6 +215,20 @@ class Jugador {
     }
     else if (this.estaNadando() && this.vx < 0){
       this.cambiarAnimacion("swim_izq")
+    }
+
+    if(this.estaCargandoUnNene() && this.estaQuieto() && this.ultimaDireccion === "der"){
+      this.cambiarAnimacion("idle_con_nene_der")
+    }
+    else if(this.estaCargandoUnNene() && this.estaQuieto() && this.ultimaDireccion === "izq"){
+      this.cambiarAnimacion("idle_con_nene_izq")
+    }
+
+    if(this.estaCargandoUnNene() && !this.estaQuieto() && this.vx > 0){
+      this.cambiarAnimacion("der_con_nene")
+    }
+    else if(this.estaCargandoUnNene() && !this.estaQuieto() && this.vx < 0){
+      this.cambiarAnimacion("izq_con_nene")
     }
   }
 
