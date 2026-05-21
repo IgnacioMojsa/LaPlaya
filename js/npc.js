@@ -7,7 +7,7 @@ class Npc {
         this.aceleracion = {x: 0, y: 0};
         this.velocidadMax = 1;
         this.fuerzaMax = 0.25;
-
+        this.temerosidad = obtenerNumeroAleatorio(1, 5);
 
         this.cargarSpritesAnimados(animacion);
         this.cambiarAnimacion(Object.keys(animacion.animations)[0]);

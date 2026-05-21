@@ -1,448 +1,662 @@
 {
-	"frames": {
-		"hombre_swim_left_1.png": {
-			"frame": {
-				"x": 1,
-				"y": 1,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"hombre_swim_left_2.png": {
-			"frame": {
-				"x": 67,
-				"y": 1,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"hombre_swim_left_3.png": {
-			"frame": {
-				"x": 133,
-				"y": 1,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"hombre_swim_left_4.png": {
-			"frame": {
-				"x": 199,
-				"y": 1,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"hombre_swim_left_5.png": {
-			"frame": {
-				"x": 1,
-				"y": 67,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"hombre_swim_right_1.png": {
-			"frame": {
-				"x": 67,
-				"y": 67,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"hombre_swim_right_2.png": {
-			"frame": {
-				"x": 133,
-				"y": 67,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"hombre_swim_right_3.png": {
-			"frame": {
-				"x": 199,
-				"y": 67,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"hombre_swim_right_4.png": {
-			"frame": {
-				"x": 1,
-				"y": 133,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"hombre_swim_right_5.png": {
-			"frame": {
-				"x": 67,
-				"y": 133,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"left_1.png": {
-			"frame": {
-				"x": 133,
-				"y": 133,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"left_2.png": {
-			"frame": {
-				"x": 199,
-				"y": 133,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"left_3.png": {
-			"frame": {
-				"x": 1,
-				"y": 199,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"left_4.png": {
-			"frame": {
-				"x": 67,
-				"y": 199,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"left_5.png": {
-			"frame": {
-				"x": 133,
-				"y": 199,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"right_1.png": {
-			"frame": {
-				"x": 199,
-				"y": 199,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"right_2.png": {
-			"frame": {
-				"x": 265,
-				"y": 1,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"right_3.png": {
-			"frame": {
-				"x": 265,
-				"y": 67,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"right_4.png": {
-			"frame": {
-				"x": 265,
-				"y": 133,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		},
-		"right_5.png": {
-			"frame": {
-				"x": 265,
-				"y": 199,
-				"w": 64,
-				"h": 64
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 64,
-				"h": 64
-			},
-			"sourceSize": {
-				"w": 64,
-				"h": 64
-			}
-		}
-	},
+    "frames": {
+        "hombre_drown_left_1": {
+            "frame": {
+                "x": 1,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_drown_left_2": {
+            "frame": {
+                "x": 67,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_drown_left_3": {
+            "frame": {
+                "x": 133,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_drown_left_4": {
+            "frame": {
+                "x": 199,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_drown_left_5": {
+            "frame": {
+                "x": 265,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_drown_right_1": {
+            "frame": {
+                "x": 1,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_drown_right_2": {
+            "frame": {
+                "x": 67,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_drown_right_3": {
+            "frame": {
+                "x": 133,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_drown_right_4": {
+            "frame": {
+                "x": 199,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_drown_right_5": {
+            "frame": {
+                "x": 265,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_swim_left_1": {
+            "frame": {
+                "x": 1,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_swim_left_2": {
+            "frame": {
+                "x": 67,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_swim_left_3": {
+            "frame": {
+                "x": 133,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_swim_left_4": {
+            "frame": {
+                "x": 199,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_swim_left_5": {
+            "frame": {
+                "x": 265,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_swim_right_1": {
+            "frame": {
+                "x": 1,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_swim_right_2": {
+            "frame": {
+                "x": 67,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_swim_right_3": {
+            "frame": {
+                "x": 133,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_swim_right_4": {
+            "frame": {
+                "x": 199,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_swim_right_5": {
+            "frame": {
+                "x": 265,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "left_1": {
+            "frame": {
+                "x": 1,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "left_2": {
+            "frame": {
+                "x": 67,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "left_3": {
+            "frame": {
+                "x": 133,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "left_4": {
+            "frame": {
+                "x": 199,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "left_5": {
+            "frame": {
+                "x": 265,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "right_1": {
+            "frame": {
+                "x": 331,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "right_2": {
+            "frame": {
+                "x": 331,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "right_3": {
+            "frame": {
+                "x": 331,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "right_4": {
+            "frame": {
+                "x": 331,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "right_5": {
+            "frame": {
+                "x": 331,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        }
+    },
 
-	"animations":{
+    "animations":{
 		"izq": [
-			"left_1.png",
-			"left_2.png",
-			"left_3.png",
-			"left_4.png",
-			"left_5.png"
+			"left_1",
+			"left_2",
+			"left_3",
+			"left_4",
+			"left_5"
 		],
 		"der": [
-			"right_1.png",
-			"right_2.png",
-			"right_3.png",
-			"right_4.png",
-			"right_5.png"
+			"right_1",
+			"right_2",
+			"right_3",
+			"right_4",
+			"right_5"
 		],
 		"swim_izq": [
-			"hombre_swim_left_1.png",
-			"hombre_swim_left_2.png",
-			"hombre_swim_left_3.png",
-			"hombre_swim_left_4.png",
-			"hombre_swim_left_5.png"
+			"hombre_swim_left_1",
+			"hombre_swim_left_2",
+			"hombre_swim_left_3",
+			"hombre_swim_left_4",
+			"hombre_swim_left_5"
 		],
 		"swim_der":[
-			"hombre_swim_right_1.png",
-			"hombre_swim_right_2.png",
-			"hombre_swim_right_3.png",
-			"hombre_swim_right_4.png",
-			"hombre_swim_right_5.png"
-		]
+			"hombre_swim_right_1",
+			"hombre_swim_right_2",
+			"hombre_swim_right_3",
+			"hombre_swim_right_4",
+			"hombre_swim_right_5"
+		],
+        "drown_izq":[
+            "hombre_drown_left_1",
+            "hombre_drown_left_2",
+            "hombre_drown_left_3",
+            "hombre_drown_left_4",
+            "hombre_drown_left_5"
+        ],
+        "drown_der":[
+            "hombre_drown_right_1",
+            "hombre_drown_right_2",
+            "hombre_drown_right_3",
+            "hombre_drown_right_4",
+            "hombre_drown_right_5"
+        ]
 	},
 
-
-	"meta": {
-		"app": "http://www.codeandweb.com/texturepacker",
-		"version": "1.0",
-		"image": "hombre.png",
-		"format": "RGBA8888",
-		"size": {
-			"w": 330,
-			"h": 264
-		},
-		"scale": "1"
-	}
+    "meta": {
+        "app": "https://www.codeandweb.com/texturepacker",
+        "version": "1.0",
+        "image": "hombre.png",
+        "format": "RGBA8888",
+        "size": {
+            "w": 396,
+            "h": 330
+        },
+        "scale": "1",
+        "comment": "Created with TexturePacker Online (free version)\nhttps://www.codeandweb.com/texturepacker-online\n\nTexturePacker desktop offers better support for Pixi and Phaser with sprite trimming, better packing algorithms, hardware texture compression, and PNG optimization.\nTry TexturePacker desktop: https://www.codeandweb.com/texturepacker"
+    }
 }
