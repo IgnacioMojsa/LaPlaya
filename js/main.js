@@ -17,10 +17,14 @@ class Juego{
         this.nenesRescatados = [];
         this.vendedores = 1
         this.perdidos = obtenerNumeroAleatorio(2, 5);
+        this.totalPersonasTemerarias = [];
+        this.maxPersonasTemerarias = obtenerNumeroAleatorio(5, 10); 
         this.cantidadTotalDeNpc = this.cantAdultos + this.cantNenes + this.perdidos + this.vendedores
 
         this.orillaDelMar = 690;
-        this.horizonte = 600;
+        this.horizonte = 300;
+        this.limitePermitido = 515;
+        this.zonaPeligrosa = 390;
 
         this.bgm.loop = true;
     }
@@ -108,6 +112,9 @@ class Juego{
 
             if (instanciaDeNPC instanceof Nenes) this.totalNenes.push(instanciaDeNPC);
             else this.totalAdultos.push(instanciaDeNPC);
+
+            if (this.totalPersonasTemerarias.length < this.maxPersonasTemerarias && instanciaDeNPC.esTemerario()) this.totalPersonasTemerarias.push(instanciaDeNPC);
+            else instanciaDeNPC.temerosidad = obtenerNumeroAleatorio(1, 3);
         }
 
         if (unPersonaje === Nenes && this.perdidos > 0) {
@@ -285,7 +292,7 @@ class Juego{
             actualizarAstros();
 
             for (let i = 0; i < this.arrayDeNpc.length; i++){
-                this.arrayDeNpc[i].update();
+                this.arrayDeNpc[i].update(dt);
             }
 
             this.portalTejo.update(this.jugador);

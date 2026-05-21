@@ -8,7 +8,6 @@ class Nenes extends Npc{
         this.separacion = {x: 50, y: 50};
         this.distanciaMaxAdulto = 10;
         this.distanciaMinAdulto = 10;
-        this.ultimaDir = "izq";
 
         this.targetNene = {x: this.container.x, y: this.container.y};
         this.suavizado = 1;

@@ -7,7 +7,10 @@ class Npc {
         this.aceleracion = {x: 0, y: 0};
         this.velocidadMax = 1;
         this.fuerzaMax = 0.25;
+        this.ultimaDir = "izq";
         this.temerosidad = obtenerNumeroAleatorio(1, 5);
+        this.ahogandose = false;
+        this.tiempoEnPeligro = 0;
 
         this.cargarSpritesAnimados(animacion);
         this.cambiarAnimacion(Object.keys(animacion.animations)[0]);
@@ -33,11 +36,17 @@ class Npc {
             this.container.x = 0
         } */
 
-    mantenerEnLimites(){
+    mantenerEnLimites(dt){
         if (this.container.x < 0) { this.container.x = 0; this.velocidad.x *= -1; }
         if (this.container.x > miJuego.fondo.width) { this.container.x = miJuego.fondo.width; this.velocidad.x *= -1; }
 
-        if (this.container.y < 300) { this.evitarAgua() }
+        if(this.estaExcedidoDelLimite()){
+            this.evitarAgua();
+        }
+        else if(this.estaExcedidoDelLimite() && this.esMuyTemerario){
+            this.ahogandose = true;
+        }
+
         if (this.container.y > miJuego.fondo.height) { this.container.y =  miJuego.fondo.height; this.velocidad.y *= -1; }
     }
 
@@ -46,12 +55,36 @@ class Npc {
         this.aceleracion.y += y;
     }
 
-    evitarAgua(){
-        if(this.container.y < miJuego.horizonte + 0.5){
-            this.sumarAceleracion(0, 0.5)
+    estaExcedidoDelLimite(){
+        if(this.esTemerario()){
+            return this.container.y < miJuego.zonaPeligrosa;
         }
-        else if(this.container.y){
-            
+        else if(this.esMuyTemerario()){
+            return this.container.y < miJuego.horizonte;
+        }
+        else{
+            return this.container.y < miJuego.limitePermitido;
+        }
+    }
+
+    evitarAgua(){
+        this.sumarAceleracion(0, 0.5)
+    }
+
+    ahogarse(){
+        this.ahogandose = true;
+        
+        this.velocidad.x = 0;
+        this.velocidad.y = 0;
+        this.aceleracion.x = 0;
+        this.aceleracion.y = 0;
+
+        if(this.ultimaDir === "izq"){ 
+            this.cambiarAnimacion("drown_izq");
+        }
+
+        else if(this.ultimaDir === "der"){
+            this.cambiarAnimacion("drown_der");
         }
     }
 
@@ -215,6 +248,14 @@ class Npc {
         return this.container.y < miJuego.horizonte || this.container.y < miJuego.orillaDelMar
     }
 
+    esTemerario(){
+        return this.temerosidad > 3
+    }
+
+    esMuyTemerario(){
+        return this.temerosidad == 5;
+    }
+
     nadar(){
         if(this.estaNadando() && this.velocidad.x > 0){
             this.cambiarAnimacion("swim_der");
@@ -243,11 +284,15 @@ class Npc {
         this.aceleracion.y = 0;
     }
 
-    update(){
+    update(dt){
         //this.mantenerCercaDelAdulto();
+        if(this.ahogandose && this.esMuyTemerario() && this.estaExcedidoDelLimite()){
+            this.ahogarse();
+        }
+        
         this.render();
         this.cambiarDeSpriteDeDireccion();
-        this.mantenerEnLimites();
+        this.mantenerEnLimites(dt);
         this.agrupar(miJuego.arrayDeNpc)
         this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
         this.nadar()
