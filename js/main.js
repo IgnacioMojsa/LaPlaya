@@ -9,7 +9,7 @@ class Juego{
         this.nuevoAhora = performance.now();
         this.listaDeTareas = new PIXI.Container();
 
-        this.cantAdultos = 30;
+        this.cantAdultos = 60;
         this.cantNenes = 3;
         this.arrayDeNpc = [];
         this.totalAdultos = [];
@@ -85,6 +85,9 @@ class Juego{
         //this.pochocloAssets = await PIXI.Assets.load("assets/spritesheets/vendedor3.json")
         this.playaTextura = await PIXI.Assets.load('assets/playa2.png');
         this.garitaTextura = await PIXI.Assets.load('assets/garitaGuardavidas.png')
+        this.sombrilla1 = await PIXI.Assets.load('assets/sombrilla.png');
+        this.sombrilla2 = await PIXI.Assets.load('assets/sombrilla2.png');
+        this.sombrilla3 = await PIXI.Assets.load('assets/sombrilla3.png');
     }
 
     async cargarJugador() {
@@ -113,8 +116,7 @@ class Juego{
             if (instanciaDeNPC instanceof Nenes) this.totalNenes.push(instanciaDeNPC);
             else this.totalAdultos.push(instanciaDeNPC);
 
-            if (this.totalPersonasTemerarias.length < this.maxPersonasTemerarias && instanciaDeNPC.esTemerario()) this.totalPersonasTemerarias.push(instanciaDeNPC);
-            else instanciaDeNPC.temerosidad = obtenerNumeroAleatorio(1, 3);
+            this.generarTemerosidadEnNpc(instanciaDeNPC)
         }
 
         if (unPersonaje === Nenes && this.perdidos > 0) {
@@ -190,6 +192,24 @@ class Juego{
         this.mensajeDeGarita.visible = false;
     }
 
+    async cargarSombrillas(){
+        const maxSombrillas = 20;
+        const texturasDeSombrilla = [this.sombrilla1, this.sombrilla2, this.sombrilla3];
+
+        this.sombrillas = [];
+
+        for(let i = 0; i < maxSombrillas; i++){
+            const coordenadaXDeSombrilla = Math.min(Math.random() * this.fondo.width, this.fondo.width);
+            const coordenadaYDeSombrilla = Math.min(this.orillaDelMar + Math.random() * this.fondo.height, this.fondo.height);
+            const texturaAleatoria = texturasDeSombrilla[obtenerNumeroAleatorio(0,2)]  ;    
+
+            const sombrillaNueva = new GameObject(coordenadaXDeSombrilla, coordenadaYDeSombrilla, texturaAleatoria, i);
+
+            this.sombrillas.push(sombrillaNueva);
+            this.mundo.addChild(sombrillaNueva.container);
+        }
+    }
+
     async prepararEscena(){
         await cargarCielo(this.app);
         await cargarSolYLuna(this.mundo); 
@@ -213,6 +233,7 @@ class Juego{
         window.addEventListener('resize', onResize);
 
         await this.cargarGarita();
+        await this.cargarSombrillas();
         
         this.tejoJuego = new TejoJuego(this.app);
 
@@ -265,6 +286,25 @@ class Juego{
         }
     }
 
+    generarTemerosidadEnNpc(unNpc){
+        if (this.totalPersonasTemerarias.length < this.maxPersonasTemerarias && unNpc.esTemerario()){
+            this.equipararCantDeTemerarios(unNpc);
+        }
+    }
+
+    equipararCantDeTemerarios(npcAEquiparar){
+        //Evalua que siempre exista la misma o aproximada cantidad de hombres y mujeres temerari@s
+        
+        const maxHombreTemerarios = this.maxPersonasTemerarias/2;
+        
+        if(npcAEquiparar instanceof Hombre && this.totalPersonasTemerarias.length == maxHombreTemerarios){
+            npcAEquiparar.temerosidad = obtenerNumeroAleatorio(1, 3);
+        }
+        else{
+            this.totalPersonasTemerarias.push(npcAEquiparar);
+        }
+    }
+    
     gameLoop() {
         const ahora = performance.now();
         if(!this.nuevoAhora) this.nuevoAhora = ahora;
