@@ -287,17 +287,20 @@ class Juego{
     }
 
     generarTemerosidadEnNpc(unNpc){
-        if (this.totalPersonasTemerarias.length < this.maxPersonasTemerarias && unNpc.esTemerario()){
-            this.equipararCantDeTemerarios(unNpc);
+        if (unNpc.esTemerario() && this.totalPersonasTemerarias.length < this.maxPersonasTemerarias){
+            this.equipararMujeresYHombresTemerarios(unNpc);
+        }
+        else{
+            unNpc.temerosidad = obtenerNumeroAleatorio(1, 3);
         }
     }
 
-    equipararCantDeTemerarios(npcAEquiparar){
+    equipararMujeresYHombresTemerarios(npcAEquiparar){
         //Evalua que siempre exista la misma o aproximada cantidad de hombres y mujeres temerari@s
         
         const maxHombreTemerarios = this.maxPersonasTemerarias/2;
         
-        if(npcAEquiparar instanceof Hombre && this.totalPersonasTemerarias.length == maxHombreTemerarios){
+        if(npcAEquiparar instanceof Hombre && this.totalPersonasTemerarias.length >= maxHombreTemerarios){
             npcAEquiparar.temerosidad = obtenerNumeroAleatorio(1, 3);
         }
         else{
@@ -322,7 +325,7 @@ class Juego{
 
         if (!enMiniJuego) {
             this.jugador.inputTeclado(dt, keys);
-            this.jugador.mantenerEnPantalla(300, this.fondo.width, this.fondo.height);
+            this.jugador.mantenerEnPantalla(300, this.fondo.width, this.fondo.height + 50);
             this.jugador.update(dt);
             
             this.actualizarCamara();

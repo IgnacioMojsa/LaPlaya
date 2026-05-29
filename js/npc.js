@@ -41,11 +41,14 @@ class Npc {
         if (this.container.x > miJuego.fondo.width) { this.container.x = miJuego.fondo.width; this.velocidad.x *= -1; }
 
         if(this.estaExcedidoDelLimite()){
-            this.evitarAgua();
+            if(this.esMuyTemerario()){
+                this.ahogandose = true;
+            }
+            else{
+                this.evitarAgua();
+            }
         }
-        else if(this.estaExcedidoDelLimite() && this.esMuyTemerario){
-            this.ahogandose = true;
-        }
+        
 
         if (this.container.y > miJuego.fondo.height) { this.container.y =  miJuego.fondo.height; this.velocidad.y *= -1; }
     }
@@ -286,8 +289,9 @@ class Npc {
 
     update(dt){
         //this.mantenerCercaDelAdulto();
-        if(this.ahogandose && this.esMuyTemerario() && this.estaExcedidoDelLimite()){
+        if(this.ahogandose){
             this.ahogarse();
+            return;
         }
         
         this.render();
