@@ -21,6 +21,25 @@ class TejoJuego {
         this.textoIntentos = null;
         this.textoTejinValido = null;
 
+        this.textoTurno = null;
+
+        this.tejosBlancos = [];
+        this.tejosRojos = [];
+
+        this.tejosRestantesBlanco = 6;
+        this.tejosRestantesRojo = 6;
+
+        this.puntosBlanco = 0;
+        this.puntosRojo = 0;
+
+        this.textoPuntosBlanco = null;
+        this.textoPuntosRojo = null;
+
+        this.textoTejosRestantes = null;
+
+        this.turnoActual = "tejin";
+        this.objetoActual = null;
+
         this.lanzando = false;
 
         this.ladoActual = "izquierda";
@@ -101,26 +120,23 @@ class TejoJuego {
         // ------------------------
 
         if (this.tejin) {
+
+            const tamañoDeseado = this.app.screen.width * 0.05;
+
+            const escalaTejin =
+                tamañoDeseado / this.tejin.texture.width;
+
+            this.tejin.scale.set(escalaTejin);
+        }
+
+        if (this.tejoBlanco) {
         
             const tamañoDeseado = this.app.screen.width * 0.05;
         
-            const escalaTejin =
-                tamañoDeseado / this.tejin.texture.width;
+            const escalaTejo =
+                tamañoDeseado / this.tejoBlanco.texture.width;
         
-            this.tejin.scale.set(escalaTejin);
-        
-            if (this.ladoActual === "izquierda") {
-            
-                this.tejin.x = this.cancha.x / 5;
-            }
-            else {
-            
-                this.tejin.x =
-                    this.app.screen.width - (this.cancha.x / 5);
-            }
-        
-            this.tejin.y =
-                this.cancha.y + this.cancha.height * 0.25;
+            this.tejoBlanco.scale.set(escalaTejo);
         }
 
 
@@ -152,11 +168,14 @@ class TejoJuego {
         this.fuerza = 0;
         this.altura = 0;
 
+        this.tejosRestantesBlanco = 6;
+        this.tejosRestantesRojo = 6;
+
         
         this.container.visible = true;
 
-        this.container.removeChildren();
-
+        //this.container.removeChildren();
+        this.container.removeChildren().forEach(c => c.destroy());
         
         // FONDO CANCHA
         const texturaCancha = await PIXI.Assets.load('assets/cancha_tejo.png');
@@ -166,6 +185,8 @@ class TejoJuego {
 
         
         this.container.addChild(this.cancha);
+
+        this.resize();
 
         // ------------------------
         // INSTRUCCIONES
@@ -235,18 +256,121 @@ class TejoJuego {
         // empieza oculto
         this.textoTejinValido.visible = false;
         
-        this.container.addChild(this.textoTejinValido);    
+        this.container.addChild(this.textoTejinValido);
+        
+        // ------------------------
+        // TEXTO TURNO
+        // ------------------------
+
+        this.textoTurno = new PIXI.Text({
+            text: "JUEGA TEJO BLANCO",
+            style: {
+                fill: "#ffffff",
+                fontSize: this.app.screen.width * 0.03,
+                fontFamily: "Arial",
+                fontWeight: "bold"
+            }
+        });
+
+        this.textoTurno.anchor.set(0.5);
+
+        this.textoTurno.x = this.app.screen.width / 2;
+
+        this.textoTurno.y =
+            this.cancha.y - this.cancha.height * 0.42;
+
+        // empieza oculto
+        this.textoTurno.visible = false;
+
+        this.container.addChild(this.textoTurno);
+
+        // ------------------------
+        // TEXTO TEJOS RESTANTES
+        // ------------------------
+
+        this.textoTejosRestantes = new PIXI.Text({
+            text: "",
+            style: {
+                fill: "#ffffff",
+                fontSize: this.app.screen.width * 0.022,
+                fontFamily: "Arial",
+                fontWeight: "bold"
+            }
+        });
+
+        this.textoTejosRestantes.anchor.set(0.5);
+
+        this.textoTejosRestantes.x =
+            this.app.screen.width / 2;
+
+        this.textoTejosRestantes.y =
+            this.cancha.y - this.cancha.height * 0.28;
+
+        // oculto hasta empezar los tejos
+        this.textoTejosRestantes.visible = false;
+
+        this.container.addChild(this.textoTejosRestantes);
         
         this.container.addChild(this.textoInstrucciones);
+
+        // ------------------------
+        // PUNTOS BLANCO
+        // ------------------------
+
+        this.textoPuntosBlanco = new PIXI.Text({
+            text: `Jugador 1: ${this.puntosBlanco}`,
+            style: {
+                fill: "#ffffff",
+                fontSize: this.app.screen.width * 0.025,
+                fontFamily: "Arial",
+                fontWeight: "bold"
+            }
+        });
+
+        this.textoPuntosBlanco.x =
+            this.app.screen.width * 0.05;
+
+        this.textoPuntosBlanco.y =
+            this.app.screen.height * 0.05;
+
+        this.container.addChild(this.textoPuntosBlanco);
+
+        // ------------------------
+        // PUNTOS ROJO
+        // ------------------------
+
+        this.textoPuntosRojo = new PIXI.Text({
+            text: `Jugador 2: ${this.puntosRojo}`,
+            style: {
+                fill: "#ffffff",
+                fontSize: this.app.screen.width * 0.025,
+                fontFamily: "Arial",
+                fontWeight: "bold"
+            }
+        });
+
+        this.textoPuntosRojo.x =
+            this.app.screen.width * 0.78;
+
+        this.textoPuntosRojo.y =
+            this.app.screen.height * 0.05;
+
+        this.container.addChild(this.textoPuntosRojo);
               
         
         // TEJIN
         const texturaTejin = await PIXI.Assets.load('assets/tejin.png');
+
         this.tejin = new PIXI.Sprite(texturaTejin);
-        
+
         this.tejin.anchor.set(0.5);
-        this.tejin.x = this.cancha.x / 5;
-        this.tejin.y = this.cancha.y + this.cancha.height * 0.25;
+
+        // POSICION INICIAL
+        this.tejin.x =
+            this.cancha.x - this.cancha.width * 0.45;
+
+        this.tejin.y =
+            this.cancha.y + this.cancha.height * 0.25;
         
         const tamañoDeseado = this.app.screen.width * 0.05;
         const escala =
@@ -255,6 +379,8 @@ class TejoJuego {
         
         
         this.container.addChild(this.tejin);
+        this.objetoActual = this.tejin;
+
         
         // BARRAS
         this.barraFuerza = new PIXI.Graphics();
@@ -263,7 +389,7 @@ class TejoJuego {
         this.container.addChild(this.barraFuerza);
         this.container.addChild(this.barraAltura);
         
-        this.resize();
+        
     }
 
 
@@ -275,8 +401,8 @@ class TejoJuego {
 
         this.lanzando = true;
 
-        const inicioX = this.tejin.x;
-        const inicioY = this.tejin.y;
+        const inicioX = this.objetoActual.x;
+        const inicioY = this.objetoActual.y;
 
         // -----------------------------------
         // DISTANCIA REAL
@@ -327,22 +453,33 @@ class TejoJuego {
 
             if (t > 1) t = 1;
 
-            this.tejin.x =
+            this.objetoActual.x =
                 inicioX + (destinoX - inicioX) * t;
 
             const parabola =
                 -4 * alturaParabola * (t - 0.5) * (t - 0.5)
                 + alturaParabola;
 
-            this.tejin.y = destinoY - parabola;
+            this.objetoActual.y = destinoY - parabola;
 
             if (t >= 1) {
-            
+
                 this.app.ticker.remove(animar);
-            
+
                 this.lanzando = false;
-            
-                this.verificarTejin();
+
+                // -------------------------
+                // SEGUN EL TURNO
+                // -------------------------
+
+                if (this.turnoActual === "tejin") {
+                
+                    this.verificarTejin();
+                }
+                else {
+                
+                    this.verificarTejo();
+                }
             }
         };
 
@@ -384,8 +521,35 @@ class TejoJuego {
         if (valido) {
 
             this.tejinValido = true;
-            this.textoTejinValido.visible = true;
+
             this.textoIntentos.visible = false;
+
+            // mostrar cartel unos segundos
+            this.textoTejinValido.visible = true;
+
+            setTimeout(() => {
+
+                // ocultar cartel tejin valido
+                this.textoTejinValido.visible = false;
+
+                // ------------------------
+                // TURNO BLANCO
+                // ------------------------
+
+                this.turnoActual = "blanco";
+
+                this.textoTejosRestantes.visible = true;
+
+                this.actualizarTextoTejos();
+
+                this.textoTurno.text =
+                    "JUEGA TEJO BLANCO";
+
+                this.textoTurno.visible = true;
+
+                this.crearNuevoTejo("blanco");
+
+            }, 1500);
 
             console.log("TEJIN VALIDO");
 
@@ -408,12 +572,13 @@ class TejoJuego {
             // reset posición
             if (this.ladoActual === "izquierda") {
 
-                this.tejin.x = this.cancha.x / 5;
+                this.objetoActual.x =
+                    this.cancha.x - this.cancha.width * 0.45;
             }
             else {
 
-                this.tejin.x =
-                    this.app.screen.width - (this.cancha.x / 5);
+                this.objetoActual.x =
+                    this.app.screen.width - (this.cancha.x - this.cancha.width * 0.45);
             }
 
             // si perdió los intentos
@@ -426,20 +591,310 @@ class TejoJuego {
         }
     }
 
+    verificarTejo() {
+
+        // -----------------------------------
+        // AREA VALIDA
+        // -----------------------------------
+
+        let objetivoMinX;
+        let objetivoMaxX;
+
+        if (this.ladoActual === "izquierda") {
+
+            objetivoMinX = this.cancha.x;
+            objetivoMaxX = this.cancha.x + this.cancha.width * 0.45;
+        }
+        else {
+
+            objetivoMinX = this.cancha.x - this.cancha.width * 0.45;
+            objetivoMaxX = this.cancha.x;
+        }
+
+        // -----------------------------------
+        // VALIDAR
+        // -----------------------------------
+
+        const valido =
+            this.objetoActual.x >= objetivoMinX &&
+            this.objetoActual.x <= objetivoMaxX;
+
+        // -----------------------------------
+        // SI FALLA
+        // -----------------------------------
+
+        this.objetoActual.valido = valido;
+
+        if (!valido) {
+
+            console.log("TEJO INVALIDO");
+                
+            // gastar tejo igual
+            if (this.turnoActual === "blanco") {
+            
+                this.tejosRestantesBlanco--;
+            }
+            else {
+            
+                this.tejosRestantesRojo--;
+            }
+        
+            this.actualizarTextoTejos();
+        
+            // cambiar turno
+            this.cambiarTurno();
+        
+            return;
+        }
+
+        // -----------------------------------
+        // SI ES VALIDO
+        // -----------------------------------
+
+        console.log("TEJO VALIDO");
+
+        // ------------------------
+        // DESCONTAR TEJO
+        // ------------------------
+
+        if (this.turnoActual === "blanco") {
+        
+            this.tejosRestantesBlanco--;
+        }
+        else {
+        
+            this.tejosRestantesRojo--;
+        }
+
+        this.actualizarTextoTejos();
+
+        // ------------------------
+        // CAMBIO DE TURNO
+        // ------------------------
+
+        this.decidirSiguienteTurno();
+
+        // cambiar turno
+        
+        /* if (this.turnoActual === "blanco") {
+
+            this.turnoActual = "rojo";
+
+            this.tejoRojo.visible = true;
+
+            this.tejoRojo.x =
+                this.ladoActual === "izquierda"
+                ? this.cancha.x - this.cancha.width * 0.45
+                : this.cancha.x + this.cancha.width * 0.45;
+
+            this.tejoRojo.y =
+                this.cancha.y + this.cancha.height * 0.25;
+
+            this.objetoActual = this.tejoRojo;
+
+            this.textoTurno.text =
+                "JUEGA TEJO ROJO";
+
+            console.log("TURNO ROJO");
+        }
+        else {
+
+            this.turnoActual = "blanco";
+
+            this.objetoActual = this.tejoBlanco;
+
+            this.textoTurno.text =
+                "JUEGA TEJO BLANCO";
+
+            console.log("TURNO BLANCO");
+        } */
+    }
+
+    async decidirSiguienteTurno() {
+
+        // -----------------------------------
+        // FIN DE RONDA
+        // -----------------------------------
+
+        if (
+            this.tejosRestantesBlanco <= 0 &&
+            this.tejosRestantesRojo <= 0
+        ) {
+
+            this.calcularPuntos();
+
+            this.cambiarLado();
+
+            return;
+        }
+
+        // -----------------------------------
+        // QUIEN VA GANANDO
+        // -----------------------------------
+
+        const ganador =
+            this.obtenerColorGanador();
+
+        // -----------------------------------
+        // SI NADIE VA GANANDO
+        // -----------------------------------
+
+        if (!ganador) {
+
+            if (this.turnoActual === "blanco") {
+
+                this.turnoActual = "rojo";
+
+                this.textoTurno.text =
+                    "JUEGA TEJO ROJO";
+
+                await this.crearNuevoTejo("rojo");
+            }
+            else {
+
+                this.turnoActual = "blanco";
+
+                this.textoTurno.text =
+                    "JUEGA TEJO BLANCO";
+
+                await this.crearNuevoTejo("blanco");
+            }
+
+            return;
+        }
+
+        // -----------------------------------
+        // SI BLANCO VA GANANDO
+        // -----------------------------------
+
+        if (ganador === "blanco") {
+
+            this.turnoActual = "rojo";
+
+            this.textoTurno.text =
+                "JUEGA TEJO ROJO";
+
+            if (this.tejosRestantesRojo > 0) {
+
+                await this.crearNuevoTejo("rojo");
+            }
+
+            return;
+        }
+
+        // -----------------------------------
+        // SI ROJO VA GANANDO
+        // -----------------------------------
+
+        if (ganador === "rojo") {
+
+            this.turnoActual = "blanco";
+
+            this.textoTurno.text =
+                "JUEGA TEJO BLANCO";
+
+            if (this.tejosRestantesBlanco > 0) {
+
+                await this.crearNuevoTejo("blanco");
+            }
+        }
+    }
+
+    calcularPuntos() {
+
+        const distancias = [];
+        
+        // ------------------------
+        // BLANCOS
+        // ------------------------
+        
+        this.tejosBlancos.forEach(tejo => {
+        
+            if (!tejo.valido) return;
+        
+            distancias.push({
+                color: "blanco",
+                distancia:
+                    this.distanciaAlTejin(tejo)
+            });
+        });
+    
+        // ------------------------
+        // ROJOS
+        // ------------------------
+    
+        this.tejosRojos.forEach(tejo => {
+        
+            if (!tejo.valido) return;
+        
+            distancias.push({
+                color: "rojo",
+                distancia:
+                    this.distanciaAlTejin(tejo)
+            });
+        });
+    
+        // ordenar
+        distancias.sort((a, b) =>
+            a.distancia - b.distancia
+        );
+    
+        if (distancias.length <= 0) return;
+    
+        const ganador =
+            distancias[0].color;
+    
+        let puntos = 0;
+    
+        for (const d of distancias) {
+        
+            if (d.color === ganador) {
+            
+                puntos++;
+            }
+            else {
+            
+                break;
+            }
+        }
+    
+        // sumar puntos
+        if (ganador === "blanco") {
+        
+            this.puntosBlanco += puntos;
+        }
+        else {
+        
+            this.puntosRojo += puntos;
+        }
+    
+        // actualizar UI
+        this.textoPuntosBlanco.text =
+            `BLANCO: ${this.puntosBlanco}`;
+    
+        this.textoPuntosRojo.text =
+            `ROJO: ${this.puntosRojo}`;
+    
+        console.log(
+            `${ganador} suma ${puntos} puntos`
+        );
+    }
+
     cambiarLado() {
 
         if (this.ladoActual === "izquierda") {
 
             this.ladoActual = "derecha";
 
-            this.tejin.x =
-                this.app.screen.width - (this.cancha.x / 5);
+            this.objetoActual.x =
+                this.app.screen.width - (this.cancha.x - this.cancha.width * 0.45);
         }
         else {
 
             this.ladoActual = "izquierda";
 
-            this.tejin.x = this.cancha.x / 5;
+            this.objetoActual.x =
+                this.cancha.x - this.cancha.width * 0.45;
         }
 
         this.intentosTejin = 3;
@@ -448,80 +903,135 @@ class TejoJuego {
             `Intentos de tejín restantes: ${this.intentosTejin}`;
 
         this.tejinValido = false;
+
+        // ------------------------
+        // RESETEAR TEJOS
+        // ------------------------
+
+        this.tejosRestantesBlanco = 6;
+        this.tejosRestantesRojo = 6;
+
+        this.actualizarTextoTejos();
+
+        // eliminar sprites viejos
+        this.tejosBlancos.forEach(t => {
+            this.container.removeChild(t);
+            t.destroy();
+        });
+
+        this.tejosRojos.forEach(t => {
+            this.container.removeChild(t);
+            t.destroy();
+        });
+
+        this.tejosBlancos = [];
+        this.tejosRojos = [];
+
+        // reset tejin
+        this.turnoActual = "tejin";
+
+        this.textoTurno.visible = false;
+
+        this.textoIntentos.visible = true;
+
+        this.textoTejosRestantes.visible = false;
+
+        // reposicionar tejin
+        this.objetoActual = this.tejin;
+
+        this.tejin.x =
+            this.ladoActual === "izquierda"
+            ? this.cancha.x - this.cancha.width * 0.45
+            : this.cancha.x + this.cancha.width * 0.45;
+
+        this.tejin.y =
+            this.cancha.y + this.cancha.height * 0.25;
     }
 
     update() {
+
         if (!this.activo) return;
         if (!this.barraFuerza || !this.barraAltura) return;
-
-        if (!this.tejinValido && !this.lanzando) {
-
-            // ------------------------
-            // CARGAR FUERZA
-            // ------------------------
-
+        if (!this.objetoActual) return;
+        
+        // ------------------------
+        // CARGA FUERZA / ALTURA
+        // ------------------------
+        
+        if (!this.lanzando) {
+        
             if (keys["f"] || keys["F"]) {
+            
                 this.fuerza = Math.min(
                     this.maxCarga,
                     this.fuerza + 1
                 );
             }
         
-            // ------------------------
-            // CARGAR ALTURA
-            // ------------------------
-        
             if (keys["a"] || keys["A"]) {
+            
                 this.altura = Math.min(
                     this.maxCarga,
                     this.altura + 1
                 );
             }
         }
-
+    
+        // ------------------------
+        // BARRAS
+        // ------------------------
+    
         this.dibujarBarras();
-
-        if (!this.tejinValido && !this.lanzando) {
-
+    
+        // ------------------------
+        // MOVIMIENTO
+        // ------------------------
+    
+        if (!this.lanzando) {
+        
             if (keys["w"] || keys["W"]) {
-                this.tejin.y -= this.velocidadMovimiento;
+                this.objetoActual.y -= this.velocidadMovimiento;
             }
         
             if (keys["s"] || keys["S"]) {
-                this.tejin.y += this.velocidadMovimiento;
+                this.objetoActual.y += this.velocidadMovimiento;
             }
         }
-
-        if (this.tejin.y < this.limiteSuperior) {
-            this.tejin.y = this.limiteSuperior;
+    
+        // ------------------------
+        // LIMITES
+        // ------------------------
+    
+        if (this.objetoActual.y < this.limiteSuperior) {
+            this.objetoActual.y = this.limiteSuperior;
         }
-        
-        if (this.tejin.y > this.limiteInferior) {
-            this.tejin.y = this.limiteInferior;
+    
+        if (this.objetoActual.y > this.limiteInferior) {
+            this.objetoActual.y = this.limiteInferior;
         }
-
-        // --------------------------------
-        // DETECTAR SOLTAR F
-        // --------------------------------
-
+    
+        // ------------------------
+        // SOLTAR F
+        // ------------------------
+    
         const fApretada = keys["f"] || keys["F"];
-
+    
         if (this.fPresionadaAntes && !fApretada) {
             this.lanzarTejin();
         }
-
+    
         this.fPresionadaAntes = fApretada;
-
-        // --------------------------------
-        // DETECTAR SOLTAR A
-        // --------------------------------
-
+    
+        // ------------------------
+        // SOLTAR A
+        // ------------------------
+    
         const aApretada = keys["a"] || keys["A"];
-
+    
         if (this.aPresionadaAntes && !aApretada) {
             this.lanzarTejin();
         }
-
+    
         this.aPresionadaAntes = aApretada;
     }
 
@@ -574,6 +1084,128 @@ class TejoJuego {
         this.barraAltura.endFill();
     }
 
+    actualizarTextoTejos() {
+
+        if (!this.textoTejosRestantes) return;
+
+        this.textoTejosRestantes.text =
+            `BLANCO: ${this.tejosRestantesBlanco} | ROJO: ${this.tejosRestantesRojo}`;
+    }
+
+    distanciaAlTejin(tejo) {
+
+        const dx = tejo.x - this.tejin.x;
+        const dy = tejo.y - this.tejin.y;
+
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    obtenerColorGanador() {
+
+        let mejorBlanco = Infinity;
+        let mejorRojo = Infinity;
+
+        // ------------------------
+        // BLANCOS
+        // ------------------------
+
+        this.tejosBlancos.forEach(tejo => {
+
+            if (!tejo.valido) return;
+
+            const d =
+                this.distanciaAlTejin(tejo);
+
+            if (d < mejorBlanco) {
+
+                mejorBlanco = d;
+            }
+        });
+
+        // ------------------------
+        // ROJOS
+        // ------------------------
+
+        this.tejosRojos.forEach(tejo => {
+
+            if (!tejo.valido) return;
+
+            const d =
+                this.distanciaAlTejin(tejo);
+
+            if (d < mejorRojo) {
+
+                mejorRojo = d;
+            }
+        });
+
+        // ------------------------
+        // RESULTADO
+        // ------------------------
+
+        if (mejorBlanco < mejorRojo) {
+
+            return "blanco";
+        }
+
+        if (mejorRojo < mejorBlanco) {
+
+            return "rojo";
+        }
+
+        return null;
+    }
+
+    async crearNuevoTejo(color) {
+
+        let textura;
+
+        if (color === "blanco") {
+
+            textura =
+                await PIXI.Assets.load('assets/tejoBlanco.png');
+        }
+        else {
+
+            textura =
+                await PIXI.Assets.load('assets/tejoRojo.png');
+        }
+
+        const tejo = new PIXI.Sprite(textura);
+
+        tejo.anchor.set(0.5);
+
+        tejo.x =
+            this.ladoActual === "izquierda"
+            ? this.cancha.x - this.cancha.width * 0.45
+            : this.cancha.x + this.cancha.width * 0.45;
+
+        tejo.y =
+            this.cancha.y + this.cancha.height * 0.25;
+
+        const tamañoDeseado =
+            this.app.screen.width * 0.05;
+
+        const escala =
+            tamañoDeseado / tejo.texture.width;
+
+        tejo.scale.set(escala);
+
+        this.container.addChild(tejo);
+
+        // guardar en arrays
+        if (color === "blanco") {
+
+            this.tejosBlancos.push(tejo);
+        }
+        else {
+
+            this.tejosRojos.push(tejo);
+        }
+
+        this.objetoActual = tejo;
+    }
+
     salir() {
 
         this.activo = false;
@@ -605,9 +1237,10 @@ class TejoJuego {
         // posición inicial
         if (this.tejin) {
 
-            this.tejin.x = this.cancha.x / 5;
+            this.objetoActual.x =
+                this.cancha.x - this.cancha.width * 0.45;
 
-            this.tejin.y =
+            this.objetoActual.y =
                 this.cancha.y + this.cancha.height * 0.25;
         }
 
