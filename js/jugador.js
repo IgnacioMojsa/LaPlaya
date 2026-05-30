@@ -12,6 +12,7 @@ class Jugador {
     this.friccion = 0.95;
     this.ultimaDireccion = "der";
     this.neneRescatado = null;
+    this.personaAhogada = null;
     
     this.input = {izq: false, der: false, arriba: false, abajo: false};
 

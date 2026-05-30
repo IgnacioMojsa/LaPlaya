@@ -15,7 +15,8 @@ class Juego{
         this.totalAdultos = [];
         this.totalNenes = [];
         this.nenesRescatados = [];
-        this.vendedores = 1
+        this.vendedores = 1;
+        this.temporizador = 0;
         this.perdidos = obtenerNumeroAleatorio(2, 5);
         this.totalPersonasTemerarias = [];
         this.maxPersonasTemerarias = obtenerNumeroAleatorio(5, 10); 
@@ -307,6 +308,22 @@ class Juego{
             this.totalPersonasTemerarias.push(npcAEquiparar);
         }
     }
+
+    hayPersonasAhogadas(){
+        return this.totalPersonasTemerarias.some(npc => npc.ahogandose)
+    }
+
+    llevarTemerariosAlMar(dt){
+        this.temporizador += dt;
+
+        if(this.temporizador >= 30 && !this.hayPersonasAhogadas()){
+            console.log("Pasaron 20 segundos sin ahogados")
+
+            this.totalPersonasTemerarias[obtenerNumeroAleatorio(1, this.maxPersonasTemerarias)].sumarAceleracion(0, 0.5)
+
+            this.temporizador -= 30;
+        }
+    }
     
     gameLoop() {
         const ahora = performance.now();
@@ -331,6 +348,7 @@ class Juego{
             this.actualizarCamara();
             this.actualizarInterfaz();
             this.mostrarMensajeDeGarita();
+            this.llevarTemerariosAlMar(dt);
             actualizarCielo(this.fondo);
             actualizarAstros();
 
