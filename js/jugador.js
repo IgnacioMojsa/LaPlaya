@@ -158,13 +158,21 @@ class Jugador {
     return this.neneRescatado && this.neneRescatado.rescatado 
   }
 
+  evitarQueEntreAlAguaConNene(){
+    if(this.estaCargandoUnNene() && this.container.y < miJuego.orillaDelMar){
+      this.container.y = miJuego.orillaDelMar;
+    }
+  }
+
   update(dt){
-    this.container.x += this.vx * dt;
-    this.container.y += this.vy * dt;
-    this.container.zIndex = this.container.y;
-    this.cambiarDeSpriteDeDireccion();
-    //this.mostrarMensajeDeRescate()
-    this.actualizarMensajesDeNenes();
+      this.container.x += this.vx * dt;
+      this.container.y += this.vy * dt;
+      this.container.zIndex = this.container.y;
+
+      this.cambiarDeSpriteDeDireccion();
+      this.evitarQueEntreAlAguaConNene();
+      //this.mostrarMensajeDeRescate()
+      this.actualizarMensajesDeNenes();
   }
 
   cargarSpritesAnimados(spritesACargar){
