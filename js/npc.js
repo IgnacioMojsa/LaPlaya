@@ -10,7 +10,10 @@ class Npc {
         this.ultimaDir = "izq";
         this.temerosidad = obtenerNumeroAleatorio(1, 5);
         this.ahogandose = false;
+        this.rescatado = false;
         this.tiempoEnPeligro = 0;
+        this.target = {x: this.container.x, y: this.container.y}
+        this.separacion = {x: 50, y: 50};
 
         this.cargarSpritesAnimados(animacion);
         this.cambiarAnimacion(Object.keys(animacion.animations)[0]);
@@ -41,7 +44,7 @@ class Npc {
         if (this.container.x > miJuego.fondo.width) { this.container.x = miJuego.fondo.width; this.velocidad.x *= -1; }
 
         if(this.estaExcedidoDelLimite()){
-            if(this.esMuyTemerario()){
+            if(this.esMuyTemerario() && !this.rescatado){
                 this.ahogandose = true;
             }
             else{
@@ -247,6 +250,37 @@ class Npc {
         }
     }
 
+    mantenerCercaDe(alguien){
+    if (this.ahogandose) return;
+
+    const targetX = alguien.container.x + this.separacion.x;
+    const targetY = alguien.container.y + this.separacion.y;
+
+    this.target.x += (targetX - this.target.x) * this.suavizado;
+    this.target.y += (targetY - this.target.y) * this.suavizado;
+
+    const d = distancia(this.container.x, this.target.x, this.container.y, this.target.y);
+    if(d === 0) return;
+
+    if(d > this.distanciaMaxAdulto){
+      const dX = (this.target.x - this.container.x) / d;
+      const dY = (this.target.y - this.container.y) / d;
+      let intensidad = (d - this.distanciaMaxAdulto) * 0.05;
+      intensidad = Math.min(intensidad, this.aceleracionMax);
+      this.sumarAceleracion(dX * intensidad, dY * intensidad);
+    }
+
+    else if(d < this.distanciaMinAdulto){
+      const dX = (this.container.x - this.target.x) / d;
+      const dY = (this.container.y - this.target.y) / d;
+      this.sumarAceleracion(dX * 0.05, dY * 0.05);
+    }
+
+    else {
+      this.sumarAceleracion((alguien.velocidad.x - this.velocidad.x) * 0.05, (alguien.velocidad.x - this.velocidad.y) * 0.05);
+    }
+    }
+
     estaNadando(){
         return this.container.y < miJuego.horizonte || this.container.y < miJuego.orillaDelMar
     }
@@ -288,10 +322,12 @@ class Npc {
     }
 
     update(dt){
-        //this.mantenerCercaDelAdulto();
-        if(this.ahogandose){
+        if(this.ahogandose && !this.rescatado){
             this.ahogarse();
             return;
+        }
+        else if(!this.ahogandose && this.rescatado){
+            this.mantenerCercaDe(miJuego.jugador);
         }
         
         this.render();

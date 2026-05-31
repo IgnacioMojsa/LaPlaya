@@ -4,8 +4,7 @@ class Jugador {
     this.container.x = x;
     this.container.y = y;
 
-    this.vx = 0;
-    this.vy = 0;
+    this.velocidad = {x: 0, y: 0};
 
     this.velMaxima = 80;
     this.aceleracion = 80;
@@ -39,20 +38,20 @@ class Jugador {
     if (this.input.arriba) aceleracionY -= this.aceleracion;
     if (this.input.abajo)  aceleracionY += this.aceleracion;
 
-    this.vx += aceleracionX * dt;
-    this.vy += aceleracionY * dt;
+    this.velocidad.x += aceleracionX * dt;
+    this.velocidad.y += aceleracionY * dt;
     
-    if (aceleracionX === 0) this.vx *= this.friccion;
-    if (aceleracionY === 0) this.vy *= this.friccion;
+    if (aceleracionX === 0) this.velocidad.x *= this.friccion;
+    if (aceleracionY === 0) this.velocidad.y *= this.friccion;
 
-    this.container.x += this.vx * dt;
-    this.container.y += this.vy * dt;
+    this.container.x += this.velocidad.x * dt;
+    this.container.y += this.velocidad.y * dt;
 
-    const velocidad = Math.hypot(this.vx, this.vy);
+    const velocidad = Math.hypot(this.velocidad.x, this.velocidad.y);
     if (velocidad > this.velMaxima){
       const limite = this.velMaxima / velocidad;
-      this.vx *= limite;
-      this.vy *= limite;
+      this.velocidad.x *= limite;
+      this.velocidad.y *= limite;
       }
     
     //Interaccion
@@ -87,6 +86,14 @@ class Jugador {
 
         this.neneRescatado = null;
       }
+
+      if(interactuar && !this.personaAhogada && this.estaCercaDeUnAhogado()){
+        const npcAhogadoCercano = this.npcAhogadoMasCercano();
+
+        this.personaAhogada = npcAhogadoCercano;
+        npcAhogadoCercano.rescatado = true;
+        npcAhogadoCercano.ahogandose = false;
+      }
   }
 
   tocarSilbato(){
@@ -99,7 +106,7 @@ class Jugador {
   }
 
   estaQuieto(){
-    return Math.abs(this.vx) < 0.1 && Math.abs(this.vy) < 0.1;
+    return Math.abs(this.velocidad.x) < 0.1 && Math.abs(this.velocidad.y) < 0.1;
   }
 
   estaCercaDeLaGarita(){
@@ -110,6 +117,18 @@ class Jugador {
     // Devuelve un booleano. Es verdadero si el personaje esta cerca de algun nene perdido, sino devuelve falso
 
     return miJuego.totalNenes.some(nene => nene.perdido && distancia(this.container.x, nene.container.x, this.container.y, nene.container.y) < 20)
+  }
+
+  estaCercaDeUnAhogado(){
+    // Devuelve verdadero si el personaje se encuentra cerca de algun npc que se este ahogando
+    
+    return miJuego.totalPersonasTemerarias.some(npc => npc.ahogandose && distancia(this.container.x, npc.container.x, this.container.y, npc.container.y) < 20);
+  }
+
+  npcAhogadoMasCercano(){
+    const npcAhogado = miJuego.totalPersonasTemerarias.find(npc => npc.ahogandose && distancia(this.container.x, npc.container.x, this.container.y, npc.container.y) < 20);
+    
+    return npcAhogado
   }
 
   nenePerdidoMasCercano(){
@@ -166,8 +185,8 @@ class Jugador {
   }
 
   update(dt){
-      this.container.x += this.vx * dt;
-      this.container.y += this.vy * dt;
+      this.container.x += this.velocidad.x * dt;
+      this.container.y += this.velocidad.y * dt;
       this.container.zIndex = this.container.y;
 
       this.cambiarDeSpriteDeDireccion();
@@ -202,8 +221,8 @@ class Jugador {
   }
 
   cambiarDeSpriteDeDireccion(){
-    if (this.vx > 0) this.ultimaDireccion = "der";
-    if (this.vx < 0) this.ultimaDireccion = "izq";
+    if (this.velocidad.x > 0) this.ultimaDireccion = "der";
+    if (this.velocidad.x < 0) this.ultimaDireccion = "izq";
     
     if(!this.estaCargandoUnNene() && this.estaQuieto() && this.ultimaDireccion === "der"){
       this.cambiarAnimacion("idle_der")
@@ -212,17 +231,17 @@ class Jugador {
       this.cambiarAnimacion("idle_izq")
     }
     
-    if (this.vx > 0 && !this.estaQuieto()) {
+    if (this.velocidad.x > 0 && !this.estaQuieto()) {
       this.cambiarAnimacion("der");
     }
-    else if (this.vx < 0 && !this.estaQuieto()) {
+    else if (this.velocidad.x < 0 && !this.estaQuieto()) {
       this.cambiarAnimacion("izq");
     }
 
-    if (this.estaNadando() && this.vx > 0){
+    if (this.estaNadando() && this.velocidad.x > 0){
       this.cambiarAnimacion("swim_der")
     }
-    else if (this.estaNadando() && this.vx < 0){
+    else if (this.estaNadando() && this.velocidad.x < 0){
       this.cambiarAnimacion("swim_izq")
     }
 
@@ -233,10 +252,10 @@ class Jugador {
       this.cambiarAnimacion("idle_con_nene_izq")
     }
 
-    if(this.estaCargandoUnNene() && !this.estaQuieto() && this.vx > 0){
+    if(this.estaCargandoUnNene() && !this.estaQuieto() && this.velocidad.x > 0){
       this.cambiarAnimacion("der_con_nene")
     }
-    else if(this.estaCargandoUnNene() && !this.estaQuieto() && this.vx < 0){
+    else if(this.estaCargandoUnNene() && !this.estaQuieto() && this.velocidad.x < 0){
       this.cambiarAnimacion("izq_con_nene")
     }
   }

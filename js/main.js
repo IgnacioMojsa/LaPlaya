@@ -314,9 +314,11 @@ class Juego{
     }
 
     llevarTemerariosAlMar(dt){
+        // CORREGIR // ---> La consola tira un error, encuentra un undefined dentro de totalPersonasTemerarias, probablemente sea porque esta agarrando a un npc que esta ahogado. A revisar
+        
         this.temporizador += dt;
 
-        if(this.temporizador >= 30 && !this.hayPersonasAhogadas()){
+        if(this.temporizador >= 30 && !this.hayPersonasAhogadas() && this.totalPersonasTemerarias.length > 0){
             console.log("Pasaron 20 segundos sin ahogados")
 
             this.totalPersonasTemerarias[obtenerNumeroAleatorio(1, this.maxPersonasTemerarias)].sumarAceleracion(0, 0.5)
