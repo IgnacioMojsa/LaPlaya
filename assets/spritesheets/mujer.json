@@ -300,9 +300,49 @@
                 "h": 64
             }
         },
-        "mujer_right_1.png": {
+        "mujer_rescatada_left.png": {
             "frame": {
                 "x": 1,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_rescatada_right.png": {
+            "frame": {
+                "x": 67,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_right_1.png": {
+            "frame": {
+                "x": 133,
                 "y": 199,
                 "w": 64,
                 "h": 64
@@ -322,7 +362,7 @@
         },
         "mujer_right_2.png": {
             "frame": {
-                "x": 67,
+                "x": 199,
                 "y": 199,
                 "w": 64,
                 "h": 64
@@ -342,7 +382,7 @@
         },
         "mujer_right_3.png": {
             "frame": {
-                "x": 133,
+                "x": 265,
                 "y": 199,
                 "w": 64,
                 "h": 64
@@ -362,46 +402,6 @@
         },
         "mujer_right_4.png": {
             "frame": {
-                "x": 199,
-                "y": 199,
-                "w": 64,
-                "h": 64
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 64,
-                "h": 64
-            },
-            "sourceSize": {
-                "w": 64,
-                "h": 64
-            }
-        },
-        "mujer_right_5.png": {
-            "frame": {
-                "x": 265,
-                "y": 199,
-                "w": 64,
-                "h": 64
-            },
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 64,
-                "h": 64
-            },
-            "sourceSize": {
-                "w": 64,
-                "h": 64
-            }
-        },
-        "mujer_swim_left_1.png": {
-            "frame": {
                 "x": 1,
                 "y": 265,
                 "w": 64,
@@ -420,7 +420,7 @@
                 "h": 64
             }
         },
-        "mujer_swim_left_2.png": {
+        "mujer_right_5.png": {
             "frame": {
                 "x": 67,
                 "y": 265,
@@ -440,7 +440,7 @@
                 "h": 64
             }
         },
-        "mujer_swim_left_3.png": {
+        "mujer_swim_left_1.png": {
             "frame": {
                 "x": 133,
                 "y": 265,
@@ -460,7 +460,7 @@
                 "h": 64
             }
         },
-        "mujer_swim_left_4.png": {
+        "mujer_swim_left_2.png": {
             "frame": {
                 "x": 199,
                 "y": 265,
@@ -480,7 +480,7 @@
                 "h": 64
             }
         },
-        "mujer_swim_left_5.png": {
+        "mujer_swim_left_3.png": {
             "frame": {
                 "x": 265,
                 "y": 265,
@@ -500,7 +500,7 @@
                 "h": 64
             }
         },
-        "mujer_swim_right_1.png": {
+        "mujer_swim_left_4.png": {
             "frame": {
                 "x": 331,
                 "y": 1,
@@ -520,7 +520,7 @@
                 "h": 64
             }
         },
-        "mujer_swim_right_2.png": {
+        "mujer_swim_left_5.png": {
             "frame": {
                 "x": 331,
                 "y": 67,
@@ -540,7 +540,7 @@
                 "h": 64
             }
         },
-        "mujer_swim_right_3.png": {
+        "mujer_swim_right_1.png": {
             "frame": {
                 "x": 331,
                 "y": 133,
@@ -560,7 +560,7 @@
                 "h": 64
             }
         },
-        "mujer_swim_right_4.png": {
+        "mujer_swim_right_2.png": {
             "frame": {
                 "x": 331,
                 "y": 199,
@@ -580,10 +580,50 @@
                 "h": 64
             }
         },
-        "mujer_swim_right_5.png": {
+        "mujer_swim_right_3.png": {
             "frame": {
                 "x": 331,
                 "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_swim_right_4.png": {
+            "frame": {
+                "x": 1,
+                "y": 331,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_swim_right_5.png": {
+            "frame": {
+                "x": 67,
+                "y": 331,
                 "w": 64,
                 "h": 64
             },
@@ -644,6 +684,12 @@
             "mujer_drown_right_3.png",
             "mujer_drown_right_4.png",
             "mujer_drown_right_5.png"
+        ],
+        "rescatado_izq":[
+            "mujer_rescatada_left.png"
+        ],
+        "rescatado_der":[
+            "mujer_rescatada_right.png"
         ]
 	},
 
@@ -654,7 +700,7 @@
         "format": "RGBA8888",
         "size": {
             "w": 396,
-            "h": 330
+            "h": 396
         },
         "scale": "1",
         "comment": "Created with TexturePacker Online (free version)\nhttps://www.codeandweb.com/texturepacker-online\n\nTexturePacker desktop offers better support for Pixi and Phaser with sprite trimming, better packing algorithms, hardware texture compression, and PNG optimization.\nTry TexturePacker desktop: https://www.codeandweb.com/texturepacker"
