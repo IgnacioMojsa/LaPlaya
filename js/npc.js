@@ -300,6 +300,13 @@ class Npc {
         else if (this.estaNadando() && this.velocidad.x < 0){
             this.cambiarAnimacion("swim_izq");
         }
+
+        if (this.estaNadando() && this.velocidad.x > 0 && this.rescatado) {
+            this.cambiarAnimacion("rescatado_der");
+        }
+        else if (this.estaNadando() && this.velocidad.x < 0 && this.rescatado) {
+            this.cambiarAnimacion("rescatado_izq");
+        }
     }
 
     render(){
