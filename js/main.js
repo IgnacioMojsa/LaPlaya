@@ -16,7 +16,7 @@ class Juego{
         this.totalNenes = [];
         this.nenesRescatados = [];
         this.totalVendedores = [];
-        this.vendedores = 60;
+        this.vendedores = 2;
         this.temporizador = 0;
         this.perdidos = obtenerNumeroAleatorio(2, 5);
         this.totalPersonasTemerarias = [];
