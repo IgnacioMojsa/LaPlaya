@@ -19,18 +19,8 @@ class Vendedor extends Npc {
     this.mensaje.anchor.set(0.5);
     this.mensaje.y = -80;
     this.mensaje.visible = false;
-    this.container.addChild(this.mensaje);
-
-    /* this.menuCompra = new PIXI.Graphics().rect(50,50,50,50).fill(#ffffff)
-
-    this.container.addChild(this.menuCompra); */
-  
-    /* window.addEventListener("keydown", (e) => {
-    if (e.key.toLowerCase() === "e" && this.estaJugadorCerca()){
-    this.menuCompra.visible = true;
-    }else{
-    this.menuCompra.visible = false
-    }}); */
+    this.container.addChild(this.mensaje);    
+    this.infoVenta = null;
   }
 
   // dentro de class Vendedor
@@ -105,17 +95,47 @@ class Vendedor extends Npc {
 class VendedoraChurros extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
-    }
+    this.infoVenta = menuDeCompra(miJuego.app, miJuego,
+      {opcion1: "Media docena de churros - $5000", precio1: 5000,
+       opcion2: "Una docena de churros - $12000", precio2: 12000,
+       dineroDelJugador: miJuego.dineroDelJugador,
+      }
+    );
+  }
 }
 
 class VendedorPochoclos extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
+    this.infoVenta = menuDeCompra(miJuego.app, miJuego,
+      {opcion1: "Pochoclo chico - $2000", precio1: 2000,
+       opcion2: "Pochoclo grande - $5000", precio2: 5000,
+       dineroDelJugador: miJuego.dineroDelJugador,
+      }
+    );
     }
 }
 
 class VendedorChoclos extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
+    this.infoVenta = menuDeCompra(miJuego.app, miJuego,
+      {opcion1: "Un choclo - $2000", precio1: 2000,
+       opcion2: "Dos choclos - $5000", precio2: 5000,
+       dineroDelJugador: miJuego.dineroDelJugador,
+      }
+    );
+    }
+}
+
+class AguaYHelado extends Vendedor{
+  constructor(x, y, animacion, i) {
+    super(x, y, animacion, i);
+    this.infoVenta = menuDeCompra(miJuego.app, miJuego,
+      {opcion1: "Botella de agua - $1000", precio1: 1000,
+       opcion2: "Helado - $2000", precio2: 2000,
+       dineroDelJugador: miJuego.dineroDelJugador,
+      }
+    );
     }
 }

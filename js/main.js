@@ -15,7 +15,8 @@ class Juego{
         this.totalAdultos = [];
         this.totalNenes = [];
         this.nenesRescatados = [];
-        this.vendedores = 1;
+        this.totalVendedores = [];
+        this.vendedores = 60;
         this.temporizador = 0;
         this.perdidos = obtenerNumeroAleatorio(2, 5);
         this.totalPersonasTemerarias = [];
@@ -26,6 +27,8 @@ class Juego{
         this.horizonte = 300;
         this.limitePermitido = 515;
         this.zonaPeligrosa = 390;
+
+        this.dineroDelJugador = 10000;
 
         this.bgm.loop = true;
     }
@@ -115,6 +118,7 @@ class Juego{
             this.mundo.addChild(instanciaDeNPC.container);
 
             if (instanciaDeNPC instanceof Nenes) this.totalNenes.push(instanciaDeNPC);
+            else if (instanciaDeNPC instanceof Vendedor) this.totalVendedores.push(instanciaDeNPC)
             else this.totalAdultos.push(instanciaDeNPC);
 
             this.generarTemerosidadEnNpc(instanciaDeNPC)
@@ -153,21 +157,6 @@ class Juego{
         //ajustarFondo(this.fondo);
 
         this.mundo.addChildAt(this.fondo, 2);
-    }
-
-    async cargarInterfaz(){
-        this.tareasPendientes = new PIXI.Text({
-            text: "Encontrar " + this.perdidos + " nenes perdidos",
-            style: {
-                fill: "#ffffff",
-                fontSize: 25,
-                fontFamily: "Arial",
-            },
-        })
-
-        this.listaDeTareas.addChild(this.tareasPendientes)
-        
-        this.app.stage.addChild(this.listaDeTareas)
     }
 
     async cargarGarita(){
@@ -217,7 +206,7 @@ class Juego{
         await this.cargarFondo();
         resetearAstros(); 
 
-        await this.cargarInterfaz();
+        cargarInterfaz();
     
         await this.cargarJugador();
         this.cargarUnPersonajeNoJugable(Hombre, this.hombreAssets, this.cantAdultos);
