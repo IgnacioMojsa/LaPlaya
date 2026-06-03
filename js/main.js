@@ -9,8 +9,8 @@ class Juego{
         this.nuevoAhora = performance.now();
         this.listaDeTareas = new PIXI.Container();
 
-        this.cantAdultos = 60;
-        this.cantNenes = 3;
+        this.cantAdultos = 100;
+        this.cantNenes = 6;
         this.arrayDeNpc = [];
         this.totalAdultos = [];
         this.totalNenes = [];
@@ -199,6 +199,30 @@ class Juego{
         }
     }
 
+    async cargarMujeres(){
+        const cantAdultos = this.cantAdultos;
+        const texturasNPCS = [this.mujer1, this.mujer2, this.mujer4];
+
+        for(let i = 0; i < cantAdultos; i++){
+            const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,2)]  ;    
+            await this.cargarUnPersonajeNoJugable(Mujer, texturaAleatoria, 1)
+        };
+
+        console.log("mujeres creadas");
+    }
+
+    async cargarHombres(){
+        const cantAdultos = this.cantAdultos;
+        const texturasNPCS = [this.hombreAssets];
+
+        for(let i = 0; i < cantAdultos; i++){
+            const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,0)]  ;    
+            await this.cargarUnPersonajeNoJugable(Hombre, texturaAleatoria, 1)
+        };
+
+        console.log("hombres creados");
+    }
+
     async prepararEscena(){
         await cargarCielo(this.app);
         await cargarSolYLuna(this.mundo); 
@@ -208,11 +232,8 @@ class Juego{
         cargarInterfaz();
     
         await this.cargarJugador();
-        this.cargarUnPersonajeNoJugable(Hombre, this.hombreAssets, this.cantAdultos);
-        //Tengo que ver como barajar los assets de mujeres acá... pero no sé si es mucho más fácil ponerlo de esta forma.
-        this.cargarUnPersonajeNoJugable(Mujer, this.mujer1, this.cantAdultos);
-        this.cargarUnPersonajeNoJugable(Mujer, this.mujer2, this.cantAdultos);
-        this.cargarUnPersonajeNoJugable(Mujer, this.mujer4, this.cantAdultos);
+        this.cargarHombres();
+        this.cargarMujeres();
         this.cargarUnPersonajeNoJugable(Nenes, this.neneAssets, (this.cantNenes + this.perdidos));
         this.cargarUnPersonajeNoJugable(VendedoraChurros, this.churrosAssets, (this.vendedores));
         this.cargarUnPersonajeNoJugable(VendedorChoclos, this.chocloAssets, (this.vendedores));
@@ -303,12 +324,12 @@ class Juego{
 
     llevarTemerariosAlMar(dt){
         // CORREGIR // ---> La consola tira un error, encuentra un undefined dentro de totalPersonasTemerarias, probablemente sea porque esta agarrando a un npc que esta ahogado. A revisar
-        
+
         this.temporizador += dt;
 
         if(this.temporizador >= 30 && !this.hayPersonasAhogadas() && this.totalPersonasTemerarias.length > 0){
             console.log("Pasaron 20 segundos sin ahogados")
-
+            
             this.totalPersonasTemerarias[obtenerNumeroAleatorio(1, this.maxPersonasTemerarias)].sumarAceleracion(0, 0.5)
 
             this.temporizador -= 30;
