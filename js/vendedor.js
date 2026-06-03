@@ -23,7 +23,6 @@ class Vendedor extends Npc {
     this.infoVenta = null;
   }
 
-  // dentro de class Vendedor
   estaJugadorCerca() {
     const jugador = miJuego.jugador;
     return distancia(this.container.x, jugador.container.x, this.container.y, jugador.container.y) < 60;
@@ -125,6 +124,12 @@ class VendedorChoclos extends Vendedor{
        dineroDelJugador: miJuego.dineroDelJugador,
       }
     );
+
+    this.velocidadMax = 0.2;
+    this.pausaTiempo = 0;
+    this.pausaDuracion = 10;
+    this.tiempoCaminando = 60;
+
     }
 }
 
