@@ -108,7 +108,6 @@ class UICompra {
   tryBuySelected(){
     const opc = this.opciones[this.indexOpcion];
     if (this.dineroDelJugador >= opc.price){
-      /* miJuego.dineroDelJugador -= opc.price; */
       this.dineroDelJugador -= opc.price;
       miJuego.dinero.text = "$" + this.dineroDelJugador;
       this.mostrarDinero(this.dineroDelJugador);
@@ -136,23 +135,8 @@ class UICompra {
 
 }
 
-function menuDeCompra(app, juego, opciones = {}) {
-  const jugador = juego.jugador;
-  const vendedores = juego.totalVendedores
+function menuDeCompra(app, juego, opciones) {
   const menu = new UICompra(app, opciones);
-  const keysProcesadas = {};
-  window.addEventListener('keydown', (e) => {
-    const key = e.key.toLowerCase();
-    if (keysProcesadas[key]) return;
-    keysProcesadas[key] = true;
-
-    if (key === 'e') {
-      const near = vendedores.some(v => typeof v.estaJugadorCerca === "function" ? v.estaJugadorCerca() : false);
-      if (near) menu.toggle();
-    }
-  });
-  window.addEventListener('keyup', (e) => {keysProcesadas[e.key.toLowerCase()] = false;});
-
   if (typeof juego.jugadorDinero !== "undefined") menu.mostrarDinero(juego.jugadorDinero);
 
   menu.confirmarCompra = (index, option) => {
@@ -162,6 +146,5 @@ function menuDeCompra(app, juego, opciones = {}) {
     console.log("Compró:", option.label);
     if (opciones.compra) opciones.compra(index, option, juego);
   };
-
-  return {menu};
+return {menu};
 }

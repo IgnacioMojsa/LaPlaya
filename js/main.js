@@ -2,7 +2,7 @@ class Juego{
     constructor(){
         this.app = null;
         this.mundo = null;
-        this.enMiniJuego = false;
+        //this.enMiniJuego = false;
         this.tejoJuego = null;
         this.portalTejo = null;
         this.bgm = new Audio("assets/audio/bgm.wav");
@@ -342,7 +342,6 @@ class Juego{
 
         const enMiniJuego = this.tejoJuego && this.tejoJuego.activo;
         
-        
         const dt = Math.min(0.05, (ahora - this.nuevoAhora) / 1000);
         if (isNaN(dt) || dt > 0.1) dt = 1/60;
         this.nuevoAhora = ahora;
@@ -381,7 +380,6 @@ class Juego{
 
 const miJuego = new Juego()
 
-//contemplo mayusculas y minusculas pq sino no funca
 const keys = {
      w:false,
      a:false,
@@ -402,7 +400,6 @@ const keysProcesadas = {
     Q: false
 };
 
-//comprende cuando una tecla es presionada
 window.addEventListener('keydown', (e) => {
   if (e.key in keys){
     keys[e.key] = true;
@@ -410,13 +407,16 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
-//comprende cuando una tecla es soltada
 window.addEventListener('keyup', (e) => {
   if (e.key in keys){
     keys[e.key] = false;
     e.preventDefault();
     }
 });
+
+window.inputKeys = window.inputKeys || {};
+window.addEventListener('keydown', (e) => { window.inputKeys[e.key.toLowerCase()] = true; });
+window.addEventListener('keyup',   (e) => { window.inputKeys[e.key.toLowerCase()] = false; });
 
 function unaTeclaFuePresionada(key){
     if (keys[key] && !keysProcesadas[key]){

@@ -37,16 +37,27 @@ class Vendedor extends Npc {
 
   update(dt){
     if (this.estaJugadorCerca()){
-      this.pausaTiempo = 1;
-      this.velocidad.x = 0;
-      this.mensaje.visible = true;
-      if (this.direccion >= 0) this.cambiarAnimacion('idle_der');
-      else this.cambiarAnimacion('idle_izq'); 
-      return;
-    }
-    else{
-      this.mensaje.visible = false;
-    }
+    this.pausaTiempo = 1;
+    this.velocidad.x = 0;
+    this.mensaje.visible = true;
+    
+    if (this.direccion >= 0) 
+      this.cambiarAnimacion('idle_der');
+    else 
+      this.cambiarAnimacion('idle_izq');
+    
+    if (window.inputKeys && window.inputKeys['e']){
+      if (!this._ePressedHandled){
+        if (this.infoVenta && this.infoVenta.menu) this.infoVenta.menu.toggle();
+          this._ePressedHandled = true;
+        }
+      } else{
+        this._ePressedHandled = false;
+      }
+    return;
+  } else{
+    this.mensaje.visible = false;
+  }
     
     if (this.pausaTiempo > 0) {
       this.pausaTiempo -= dt;
