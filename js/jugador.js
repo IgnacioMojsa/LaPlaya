@@ -14,6 +14,7 @@ class Jugador {
     this.personaAhogada = null;
     
     this.input = {izq: false, der: false, arriba: false, abajo: false};
+    this.inputBloqueado = false;
 
     this.silbato = new Audio("assets/audio/silbato3.mp3");
     this.silbato.preload = "auto";
@@ -27,6 +28,8 @@ class Jugador {
   }
 
   inputTeclado(dt, keys){
+    if (this.inputBloqueado) return;
+
     this.input.izq    = keys.a || keys.A;
     this.input.der    = keys.d || keys.D;
     this.input.arriba = keys.w || keys.W;
@@ -94,6 +97,10 @@ class Jugador {
         npcAhogadoCercano.rescatado = true;
         npcAhogadoCercano.ahogandose = false;
       }
+  }
+  
+  bloquearInput(estado = true){
+    this.inputBloqueado = !!estado;
   }
 
   tocarSilbato(){

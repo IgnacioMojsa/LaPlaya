@@ -350,8 +350,14 @@ class Juego{
         this.bgm.play().then(() => {this.bgmIniciada = true;}).catch(()=>{});
         }
 
-        if (!enMiniJuego) {
+        if (!enMiniJuego){
+          if (this.jugador.inputBloqueado){
+            this.jugador.velocidad.x = 0;
+            this.jugador.velocidad.y = 0;
+          } else {
             this.jugador.inputTeclado(dt, keys);
+          }
+
             this.jugador.mantenerEnPantalla(300, this.fondo.width, this.fondo.height + 50);
             this.jugador.update(dt);
             

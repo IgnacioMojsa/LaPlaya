@@ -90,9 +90,22 @@ class UICompra {
     this.container.ocultarMenu({children: true});
   }
 
-  abrir(){  this.abierto = true; this.container.visible = true; this.hoverOpcion();}
-  cerrar(){ this.abierto = false; this.container.visible = false;}
-  toggle(){ this.abierto ? this.cerrar() : this.abrir();}
+  abrir(){
+    this.abierto = true;
+    this.container.visible = true;
+    if (miJuego.jugador) miJuego.jugador.inputBloqueado = true;
+    this.hoverOpcion();
+  }
+
+  cerrar(){
+    this.abierto = false;
+    this.container.visible = false;
+    if (miJuego.jugador) miJuego.jugador.inputBloqueado = false;
+  }
+
+  toggle(){
+    this.abierto ? this.cerrar() : this.abrir();
+  }
 
   mostrarDinero(m){miJuego.dineroDelJugador = m; this.textoDinero.text = "Dinero disponible: $" + miJuego.dineroDelJugador;}
 
