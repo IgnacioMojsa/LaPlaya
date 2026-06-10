@@ -4,7 +4,12 @@ const AGUA_Y_EN_IMAGEN = 335; // 👈 AJUSTALO a ojo fino
 let tiempoDelDia = 0; // 0 a 1 (0 = amanecer, 0.5 = mediodía, 1 = noche)
 let velocidadTiempo = 0.0005//0.00005;
 
-let climaActual = "despejado"; // opciones: "despejado", "nublado", "lluvia"
+let climaActual = "despejado"; // opciones: "despejado", "nublado", "lluvia", "tormenta"
+let ultimoPeriodoDelDia = "";
+let intervaloClima = null;
+let relampagoActivo = false;
+let tiempoRelampago = 0;
+let flashRelampago;
 
 //SOL Y LUNA
 let sol;
@@ -130,10 +135,7 @@ function ajustarCielo() {
     // posicion arriba
     cielo.y = 0;
 
-    // RECORTE si sobra altura
-    //if (cielo.height > alturaCielo) {
-    //    cielo.height = alturaCielo;
-    //}
+    
 }
 
 function lerpColor(a, b, t) {
@@ -159,6 +161,13 @@ const coloresDia = {
     noche: 0x0a0a2a
 };
 
+function mostrarCambioDePeriodo(periodo) {
+    if (ultimoPeriodoDelDia !== periodo) {
+        ultimoPeriodoDelDia = periodo;
+        console.log("Tiempo del día:", periodo);
+    }
+}
+
 function actualizarCielo(fondo) {
     // avanzar tiempo
     tiempoDelDia += velocidadTiempo;
@@ -167,55 +176,139 @@ function actualizarCielo(fondo) {
     let colorBase;
 
     if (tiempoDelDia < 0.25) {
-        // amanecer → día
         let t = tiempoDelDia / 0.25;
         colorBase = lerpColor(coloresDia.amanecer, coloresDia.dia, t);
         cielo.alpha = 1;
-        console.log("Tiempo del día: amanecer");
+        
+        mostrarCambioDePeriodo("amanecer");
 
     } else if (tiempoDelDia < 0.5) {
         colorBase = coloresDia.dia;
         cielo.alpha = 1;
-        console.log("Tiempo del día: mañana");
+
+        mostrarCambioDePeriodo("dia");
 
     } else if (tiempoDelDia < 0.75) {
         // día → atardecer
         let t = (tiempoDelDia - 0.5) / 0.25;
         colorBase = lerpColor(coloresDia.dia, coloresDia.atardecer, t);
         cielo.alpha = 1;
-        console.log("Tiempo del día: atardecer");
+
+        mostrarCambioDePeriodo("atardecer");
 
     } else {
         // atardecer → noche
         let t = (tiempoDelDia - 0.75) / 0.25;
         colorBase = lerpColor(coloresDia.atardecer, coloresDia.noche, t);
         cielo.alpha = 1;
-        console.log("Tiempo del día: anochecer");
+
+        mostrarCambioDePeriodo("noche");
     }
 
-    // 🌧️ modificar según clima
+    // ☁️ NUBLADO
     if (climaActual === "nublado") {
-        colorBase = lerpColor(colorBase, 0x888888, 0.5);
-        cielo.alpha = 0.9;
+        colorBase = lerpColor(colorBase, 0x999999, 0.35);
+        cielo.alpha = 0.95;
     }
 
-    if (climaActual === "lluvia") {
-        colorBase = lerpColor(colorBase, 0x444466, 0.7);
+    // 🌧️ LLUVIA
+    else if (climaActual === "lluvia") {
+        colorBase = lerpColor(colorBase, 0x444466, 0.60);
         cielo.alpha = 1;
+    }
+
+    // ⛈️ TORMENTA
+    else if (climaActual === "tormenta") {
+        colorBase = lerpColor(colorBase, 0x1a1a2a, 0.85);
+        cielo.alpha = 1;
+    }
+    
+    if (relampagoActivo) {
+        colorBase = lerpColor(colorBase, 0xffffff, 0.8);
     }
 
     cielo.tint = colorBase;
 }
 
+function crearFlashRelampago(app) {
+
+    flashRelampago = new PIXI.Graphics();
+
+    flashRelampago.rect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+    flashRelampago.fill(0xffffff);
+
+    flashRelampago.alpha = 0;
+
+    app.stage.addChild(flashRelampago);
+}
+
 function iniciarSistemaDeClima() {
-    const climas = ["despejado", "nublado", "lluvia"];
+
+    if (intervaloClima) return;
+
+    const climas = [
+        "despejado",
+        "despejado",
+        "despejado",
+        "nublado",
+        "nublado",
+        "lluvia",
+        "tormenta"
+    ];
+
+    
 
     console.log("Clima actual:", climaActual);
 
-    setInterval(() => {
+    intervaloClima = setInterval(() => {
         climaActual = climas[Math.floor(Math.random() * climas.length)];
         console.log("Nuevo clima:", climaActual);
-    }, 20000); // cada 20 segundos
+    }, 20000);
+}
+
+function actualizarRelampagos() {
+
+    if (climaActual !== "tormenta") {
+        relampagoActivo = false;
+        tiempoRelampago = 0;
+
+        if (flashRelampago) {
+            flashRelampago.alpha = 0;
+        }
+
+        return;
+    }
+
+    if (!relampagoActivo && Math.random() < 0.002) {
+
+        relampagoActivo = true;
+        tiempoRelampago = Math.floor(Math.random() * 10) + 5;
+
+        console.log("⚡ Relámpago");
+    }
+
+    if (relampagoActivo) {
+
+        flashRelampago.alpha = 0.35;
+
+        tiempoRelampago--;
+
+        if (tiempoRelampago <= 0) {
+
+            relampagoActivo = false;
+            flashRelampago.alpha = 0;
+        }
+    }
+    else {
+
+        flashRelampago.alpha = 0;
+    }
 }
 
 // =======================
@@ -226,4 +319,17 @@ function onResize(app) {
 
     ajustarFondo();
     ajustarCielo();
+    if (flashRelampago) {
+
+        flashRelampago.clear();
+
+        flashRelampago.rect(
+            0,
+            0,
+            window.innerWidth,
+            window.innerHeight
+        );
+
+        flashRelampago.fill(0xffffff);
+    }
 }

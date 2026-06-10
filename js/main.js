@@ -227,6 +227,9 @@ class Juego{
         await cargarCielo(this.app);
         await cargarSolYLuna(this.mundo); 
         await this.cargarFondo();
+
+        crearFlashRelampago(this.app);
+        
         resetearAstros(); 
 
         cargarInterfaz();
@@ -367,6 +370,7 @@ class Juego{
             this.llevarTemerariosAlMar(dt);
             actualizarCielo(this.fondo);
             actualizarAstros();
+            actualizarRelampagos();
 
             for (let i = 0; i < this.arrayDeNpc.length; i++){
                 this.arrayDeNpc[i].update(dt);
