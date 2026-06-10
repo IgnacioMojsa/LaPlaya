@@ -204,7 +204,7 @@ class Juego{
         const texturasNPCS = [this.mujer1, this.mujer2, this.mujer4];
 
         for(let i = 0; i < cantAdultos; i++){
-            const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,2)]  ;    
+            const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,0)]  ;    
             await this.cargarUnPersonajeNoJugable(Mujer, texturaAleatoria, 1)
         };
 
