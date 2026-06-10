@@ -120,33 +120,9 @@ class Juego{
             else if (instanciaDeNPC instanceof Vendedor) this.totalVendedores.push(instanciaDeNPC)
             else this.totalAdultos.push(instanciaDeNPC);
 
-            this.generarTemerosidadEnNpc(instanciaDeNPC)
-        }
-
-        if (unPersonaje === Nenes && this.perdidos > 0) {
-            const primerosNenes = this.totalNenes.length - cantidad;
             
-            for (let contador = 0; contador < Math.min(this.perdidos, cantidad); contador++) {
-                const nenesActuales = primerosNenes + contador;
-
-                this.totalNenes[nenesActuales].perdido = true;
-                this.totalNenes[nenesActuales].adulto = null;
-                }
-
-            //Asignar adulto a nenes
-            const adultosDisponibles = this.totalAdultos.filter(a => a instanceof Npc);
-
-            if(adultosDisponibles.length > 0){
-                    for (let contador = 0; contador < cantidad; contador++){
-                        const nenesActuales = primerosNenes + contador;
-                        const nene = this.totalNenes[nenesActuales];
-
-                        if (nene.perdido) continue;
-
-                        const adulto = adultosDisponibles[Math.floor(Math.random() * adultosDisponibles.length)];
-                        nene.adulto = adulto;
-                }
-            }
+            this.generarTemerosidadEnNpc(instanciaDeNPC);
+            
         }
     }
 
@@ -235,11 +211,12 @@ class Juego{
         cargarInterfaz();
     
         await this.cargarJugador();
-        this.cargarHombres();
-        this.cargarMujeres();
-        this.cargarUnPersonajeNoJugable(Nenes, this.neneAssets, (this.cantNenes + this.perdidos));
-        this.cargarUnPersonajeNoJugable(VendedoraChurros, this.churrosAssets, (this.vendedores));
-        this.cargarUnPersonajeNoJugable(VendedorChoclos, this.chocloAssets, (this.vendedores));
+        await this.cargarHombres();
+        await this.cargarMujeres();
+        await this.cargarUnPersonajeNoJugable(Nenes, this.neneAssets, (this.cantNenes + this.perdidos));
+        await this.cargarUnPersonajeNoJugable(VendedoraChurros, this.churrosAssets, (this.vendedores));
+        await this.cargarUnPersonajeNoJugable(VendedorChoclos, this.chocloAssets, (this.vendedores));
+        this.asignarNenesPerdidos((this.cantNenes + this.perdidos))
         //this.cargarUnPersonajeNoJugable(VendedorPochoclos, this.pochocloAssets, (this.vendedores));
         console.log("assets cargados")
 
@@ -300,11 +277,13 @@ class Juego{
     }
 
     generarTemerosidadEnNpc(unNpc){
-        if (unNpc.esTemerario() && this.totalPersonasTemerarias.length < this.maxPersonasTemerarias){
-            this.equipararMujeresYHombresTemerarios(unNpc);
-        }
-        else{
-            unNpc.temerosidad = obtenerNumeroAleatorio(1, 3);
+        if(unNpc instanceof Mujer || unNpc instanceof Hombre){
+            if (unNpc.esTemerario() && this.totalPersonasTemerarias.length < this.maxPersonasTemerarias){
+                this.equipararMujeresYHombresTemerarios(unNpc);
+            }
+            else{
+                unNpc.temerosidad = obtenerNumeroAleatorio(1, 3);
+            }
         }
     }
 
@@ -336,6 +315,36 @@ class Juego{
             this.totalPersonasTemerarias[obtenerNumeroAleatorio(1, this.maxPersonasTemerarias)].sumarAceleracion(0, 0.5)
 
             this.temporizador -= 30;
+        }
+    }
+
+    asignarNenesPerdidos(cantidad){
+        if (this.perdidos > 0) {
+            const primerosNenes = this.totalNenes.length - cantidad;
+            
+            for (let contador = 0; contador < Math.min(this.perdidos, cantidad); contador++) {
+                const nenesActuales = primerosNenes + contador;
+
+                this.totalNenes[nenesActuales].perdido = true;
+                this.totalNenes[nenesActuales].adulto = null;
+            }
+
+            //Asignar adulto a nenes
+            const adultosDisponibles = this.totalAdultos.filter(adulto => !adulto.neneACargo);
+
+            if(adultosDisponibles.length > 0){
+                for (let contador = 0; contador < cantidad; contador++){
+                    const nenesActuales = primerosNenes + contador;
+                    const nene = this.totalNenes[nenesActuales];
+
+                    if (nene.perdido) continue;
+
+                    const adulto = adultosDisponibles[obtenerNumeroAleatorio(0, adultosDisponibles.length - 1)];
+                    
+                    adulto.neneACargo = nene;
+                    nene.adulto = adulto;
+                }
+            }
         }
     }
     
@@ -386,7 +395,6 @@ class Juego{
         //requestAnimationFrame(this.gameLoop); // SIEMPRE SE LLAMA
     }
 }
-
 
 const miJuego = new Juego()
 

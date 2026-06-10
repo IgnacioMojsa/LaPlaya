@@ -333,16 +333,23 @@ class Npc {
             this.ahogarse();
             return;
         }
-        else if(!this.ahogandose && this.rescatado){
-            this.mantenerCercaDe(miJuego.jugador);
-        }
         
-        this.render();
-        this.cambiarDeSpriteDeDireccion();
-        this.mantenerEnLimites(dt);
-        this.agrupar(miJuego.arrayDeNpc)
-        this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
-        this.nadar()
-        //this.evitarAgua();
+        else if(!this.ahogandose && this.rescatado){
+            this.render();
+            this.mantenerEnLimites(dt);
+            this.mantenerCercaDe(miJuego.jugador);
+            this.nadar();
+            return
+        }
+
+        else{
+            this.render();
+            this.cambiarDeSpriteDeDireccion();
+            this.mantenerEnLimites(dt);
+            this.agrupar(miJuego.arrayDeNpc)
+            this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
+            this.nadar();
+            //this.evitarAgua();
+        }
     }
 }
