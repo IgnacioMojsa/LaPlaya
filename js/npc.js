@@ -47,7 +47,7 @@ class Npc {
             if(this.esMuyTemerario() && !this.rescatado){
                 this.ahogandose = true;
             }
-            else{
+            else if(!this.rescatado){
                 this.evitarAgua();
             }
         }
@@ -78,7 +78,7 @@ class Npc {
     }
 
     ahogarse(){
-        this.ahogandose = true;
+        this.ahogandose = true;sssss
         
         this.velocidad.x = 0;
         this.velocidad.y = 0;
