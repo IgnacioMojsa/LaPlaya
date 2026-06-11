@@ -312,7 +312,7 @@ class Juego{
         if(this.temporizador >= 30 && !this.hayPersonasAhogadas() && this.totalPersonasTemerarias.length > 0){
             console.log("Pasaron 20 segundos sin ahogados")
             
-            this.totalPersonasTemerarias[obtenerNumeroAleatorio(1, this.maxPersonasTemerarias)].sumarAceleracion(0, 0.5)
+            this.totalPersonasTemerarias[obtenerNumeroAleatorio(1, this.maxPersonasTemerarias) - 1].sumarAceleracion(0, 0.5)
 
             this.temporizador -= 30;
         }
