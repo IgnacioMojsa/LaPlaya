@@ -690,6 +690,12 @@
         ],
         "rescatado_der":[
             "hombre_rescatado_right.png"
+        ],
+        "idle_izq":[
+            "left_1.png"
+        ],
+        "idle_der":[
+            "right_1.png"
         ]
 	},
 

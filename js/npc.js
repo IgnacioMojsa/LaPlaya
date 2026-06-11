@@ -313,6 +313,35 @@ class Npc {
         }
     }
 
+    recuperarse(dt){
+        // Si el npc ahogado es llevado a la orilla se debe establecer su animacion idle, esperar unos segundos y volver a moverse. Ademas su 
+        // nivel de temerosidad debe reducirse a 3 o menos y se debe recompoensar al jugador con x cantidad de dinero.
+        // Tambien hay que eliminar al npc rescatado de la lista de personas temerarias
+        this.temporizador = 0;
+
+        if(this.container.y > miJuego.orillaDelMar + 15){
+            this.velocidad.x = 0;
+            this.velocidad.y = 0;
+            this.aceleracion.x = 0;
+            this.aceleracion.y = 0;
+
+            if(this.ultimaDir === "izq"){
+                this.cambiarAnimacion("idle_izq")
+            }
+            else if(this.ultimaDir === "der"){
+                this.cambiarAnimacion("idle_der")                
+            }
+            
+            this.temporizador += dt;
+
+            if(this.temporizador >= 6){
+                this.rescatado = false;
+                this.temerosidad = obtenerNumeroAleatorio(1,3);
+                miJuego.jugador.personaAhogada = null;
+            }
+        }
+    }
+
     render(){
         this.velocidad.x += this.aceleracion.x;
         this.velocidad.y += this.aceleracion.y;
@@ -343,6 +372,7 @@ class Npc {
             this.mantenerEnLimites(dt);
             this.mantenerCercaDe(miJuego.jugador);
             this.nadar();
+            this.recuperarse(dt);
             return
         }
 

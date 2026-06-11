@@ -180,7 +180,7 @@ class Juego{
         const texturasNPCS = [this.mujer1, this.mujer2, this.mujer4];
 
         for(let i = 0; i < cantAdultos; i++){
-            const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,0)]  ;    
+            const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,2)];    
             await this.cargarUnPersonajeNoJugable(Mujer, texturaAleatoria, 1)
         };
 
@@ -305,8 +305,6 @@ class Juego{
     }
 
     llevarTemerariosAlMar(dt){
-        // CORREGIR // ---> La consola tira un error, encuentra un undefined dentro de totalPersonasTemerarias, probablemente sea porque esta agarrando a un npc que esta ahogado. A revisar
-
         this.temporizador += dt;
 
         if(this.temporizador >= 30 && !this.hayPersonasAhogadas() && this.totalPersonasTemerarias.length > 0){
