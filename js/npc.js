@@ -78,7 +78,7 @@ class Npc {
     }
 
     ahogarse(){
-        this.ahogandose = true;sssss
+        this.ahogandose = true;
         
         this.velocidad.x = 0;
         this.velocidad.y = 0;
