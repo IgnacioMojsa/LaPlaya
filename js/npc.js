@@ -7,6 +7,7 @@ class Npc {
         this.aceleracion = {x: 0, y: 0};
         this.velocidadMax = 1;
         this.fuerzaMax = 0.25;
+        this.aceleracionMax = 0.2;
         this.ultimaDir = "izq";
         this.temerosidad = obtenerNumeroAleatorio(1, 5);
         this.ahogandose = false;
@@ -14,6 +15,9 @@ class Npc {
         this.tiempoEnPeligro = 0;
         this.target = {x: this.container.x, y: this.container.y}
         this.separacion = {x: 50, y: 50};
+        this.suavizado = 0.05;
+        this.distanciaMaxTarget = 40;
+        this.distanciaMinTarget = 20;
 
         this.cargarSpritesAnimados(animacion);
         this.cambiarAnimacion(Object.keys(animacion.animations)[0]);
@@ -262,22 +266,22 @@ class Npc {
     const d = distancia(this.container.x, this.target.x, this.container.y, this.target.y);
     if(d === 0) return;
 
-    if(d > this.distanciaMaxAdulto){
+    if(d > this.distanciaMaxTarget){
       const dX = (this.target.x - this.container.x) / d;
       const dY = (this.target.y - this.container.y) / d;
-      let intensidad = (d - this.distanciaMaxAdulto) * 0.05;
+      let intensidad = (d - this.distanciaMaxTarget) * 0.05;
       intensidad = Math.min(intensidad, this.aceleracionMax);
       this.sumarAceleracion(dX * intensidad, dY * intensidad);
     }
 
-    else if(d < this.distanciaMinAdulto){
+    else if(d < this.distanciaMinTarget){
       const dX = (this.container.x - this.target.x) / d;
       const dY = (this.container.y - this.target.y) / d;
       this.sumarAceleracion(dX * 0.05, dY * 0.05);
     }
 
     else {
-      this.sumarAceleracion((alguien.velocidad.x - this.velocidad.x) * 0.05, (alguien.velocidad.x - this.velocidad.y) * 0.05);
+      this.sumarAceleracion((alguien.velocidad.x - this.velocidad.x) * 0.05, (alguien.velocidad.y - this.velocidad.y) * 0.05);
     }
     }
 
