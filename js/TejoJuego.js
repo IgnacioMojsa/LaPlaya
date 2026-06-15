@@ -22,6 +22,7 @@ class TejoJuego {
         this.textoTejinValido = null;
 
         this.textoTurno = null;
+        this.esperandoCambioLado = false;
 
         this.tejosBlancos = [];
         this.tejosRojos = [];
@@ -202,13 +203,6 @@ class TejoJuego {
 
         this.fuerza = 0;
         this.altura = 0;
-
-        this.tejosBlancos = [];
-        this.tejosRojos = [];
-
-        this.tejosRestantesBlanco = 6;
-        this.tejosRestantesRojo = 6;
-
         
         this.container.visible = true;
 
@@ -226,7 +220,19 @@ class TejoJuego {
         this.textoPuntosBlanco = null;
         this.textoPuntosRojo = null;
 
-        this.tejin = null;
+        this.turnoActual = "tejin";
+
+        this.tejinValido = false;
+
+        this.intentosTejin = 3;
+
+        this.ladoActual = "izquierda";
+
+        this.puntosBlanco = 0;
+        this.puntosRojo = 0;
+
+        this.tejosRestantesBlanco = 6;
+        this.tejosRestantesRojo = 6;
 
         this.barraFuerza = null;
         this.barraAltura = null;
@@ -408,10 +414,10 @@ class TejoJuego {
         });
         
         this.textoPuntosRojo.x =
-        this.app.screen.width * 0.78;
+            this.app.screen.width * 0.78;
         
         this.textoPuntosRojo.y =
-        this.app.screen.height * 0.05;
+            this.app.screen.height * 0.05;
         
         this.container.addChild(this.textoPuntosRojo);
         
@@ -425,14 +431,14 @@ class TejoJuego {
         
         // POSICION INICIAL
         this.tejin.x =
-        this.cancha.x - this.cancha.width * 0.45;
+            this.cancha.x - this.cancha.width * 0.45;
         
         this.tejin.y =
-        this.cancha.y + this.cancha.height * 0.25;
+            this.cancha.y + this.cancha.height * 0.25;
         
         const tamañoDeseado = this.app.screen.width * 0.05;
         const escala =
-        tamañoDeseado / this.tejin.texture.width;
+            tamañoDeseado / this.tejin.texture.width;
         this.tejin.scale.set(escala);
         
         
@@ -504,6 +510,11 @@ class TejoJuego {
 
         let tiempo = 0;
 
+        this.ultimoLanzamiento = {
+            inicioX,
+            destinoX
+        };
+
         const animar = () => {
 
             tiempo++;
@@ -527,9 +538,7 @@ class TejoJuego {
 
                 this.lanzando = false;
 
-                // -------------------------
-                // SEGUN EL TURNO
-                // -------------------------
+                this.detectarColisiones();
 
                 if (this.turnoActual === "tejin") {
                 
@@ -547,6 +556,54 @@ class TejoJuego {
 
         this.fuerza = 0;
         this.altura = 0;
+    }
+
+    detectarColisiones() {
+
+        const radioActual =
+            this.objetoActual.width / 2;
+
+        const objetos = [
+            this.tejin,
+            ...this.tejosBlancos,
+            ...this.tejosRojos
+        ];
+
+        objetos.forEach(obj => {
+
+            if (!obj || obj === this.objetoActual) return;
+
+            const dx =
+                obj.x - this.objetoActual.x;
+
+            const dy =
+                obj.y - this.objetoActual.y;
+
+            const distancia =
+                Math.sqrt(dx * dx + dy * dy);
+
+            const radioObj =
+                obj.width / 2;
+
+            if (distancia < radioActual + radioObj) {
+
+                this.golpearObjeto(obj);
+            }
+        });
+    }
+
+    golpearObjeto(obj) {
+
+        const direccion =
+            this.ultimoLanzamiento.destinoX >
+            this.ultimoLanzamiento.inicioX
+                ? 1
+                : -1;
+
+        const empuje =
+            this.objetoActual.width * 1.2;
+
+        obj.x += empuje * direccion;
     }
 
     verificarTejin() {
@@ -990,12 +1047,16 @@ class TejoJuego {
         if (!this.activo) return;
         if (!this.barraFuerza || !this.barraAltura) return;
         if (!this.objetoActual) return;
+
+        const controlesBloqueados =
+            this.turnoActual === "tejin" &&
+            this.tejinValido;
         
         // ------------------------
         // CARGA FUERZA / ALTURA
         // ------------------------
         
-        if (!this.lanzando) {
+        if (!this.lanzando && !controlesBloqueados) {
         
             if (keys["f"] || keys["F"]) {
             
@@ -1024,7 +1085,7 @@ class TejoJuego {
         // MOVIMIENTO
         // ------------------------
     
-        if (!this.lanzando) {
+        if (!this.lanzando && !controlesBloqueados) {
         
             if (keys["w"] || keys["W"]) {
                 this.objetoActual.y -= this.velocidadMovimiento;

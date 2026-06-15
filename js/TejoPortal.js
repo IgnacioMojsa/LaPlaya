@@ -40,6 +40,11 @@ class TejoPortal {
 
         window.addEventListener("keydown", (e) => {
             if (e.key.toLowerCase() === "e" && this.jugadorCerca) {
+            
+                if (this.juego.activo) {
+                    this.juego.salir();
+                }
+            
                 this.juego.iniciar();
             }
         });
