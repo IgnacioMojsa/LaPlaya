@@ -18,6 +18,7 @@ class Npc {
         this.suavizado = 0.05;
         this.distanciaMaxTarget = 40;
         this.distanciaMinTarget = 20;
+        this.temporizador = 0;
 
         this.cargarSpritesAnimados(animacion);
         this.cambiarAnimacion(Object.keys(animacion.animations)[0]);
@@ -317,7 +318,6 @@ class Npc {
         // Si el npc ahogado es llevado a la orilla se debe establecer su animacion idle, esperar unos segundos y volver a moverse. Ademas su 
         // nivel de temerosidad debe reducirse a 3 o menos y se debe recompoensar al jugador con x cantidad de dinero.
         // Tambien hay que eliminar al npc rescatado de la lista de personas temerarias
-        this.temporizador = 0;
 
         if(this.container.y > miJuego.orillaDelMar + 15){
             this.velocidad.x = 0;
