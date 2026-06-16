@@ -428,19 +428,21 @@ class TejoJuego {
         this.tejin = new PIXI.Sprite(texturaTejin);
         
         this.tejin.anchor.set(0.5);
+
         
         // POSICION INICIAL
         this.tejin.x =
-            this.cancha.x - this.cancha.width * 0.45;
+        this.cancha.x - this.cancha.width * 0.45;
         
         this.tejin.y =
-            this.cancha.y + this.cancha.height * 0.25;
+        this.cancha.y + this.cancha.height * 0.25;
         
         const tamañoDeseado = this.app.screen.width * 0.05;
         const escala =
-            tamañoDeseado / this.tejin.texture.width;
+        tamañoDeseado / this.tejin.texture.width;
         this.tejin.scale.set(escala);
         
+        this.tejin.radioColision = 18;
         
         this.container.addChild(this.tejin);
         this.objetoActual = this.tejin;
@@ -512,7 +514,8 @@ class TejoJuego {
 
         this.ultimoLanzamiento = {
             inicioX,
-            destinoX
+            destinoX,
+            fuerza: this.fuerza
         };
 
         const animar = () => {
@@ -532,13 +535,14 @@ class TejoJuego {
 
             this.objetoActual.y = destinoY - parabola;
 
+            this.detectarColisiones();
+
             if (t >= 1) {
 
                 this.app.ticker.remove(animar);
 
                 this.lanzando = false;
 
-                this.detectarColisiones();
 
                 if (this.turnoActual === "tejin") {
                 
@@ -561,7 +565,7 @@ class TejoJuego {
     detectarColisiones() {
 
         const radioActual =
-            this.objetoActual.width / 2;
+            this.objetoActual.radioColision;
 
         const objetos = [
             this.tejin,
@@ -583,27 +587,69 @@ class TejoJuego {
                 Math.sqrt(dx * dx + dy * dy);
 
             const radioObj =
-                obj.width / 2;
+                obj.radioColision;
 
             if (distancia < radioActual + radioObj) {
+
+                console.log("COLISION");
 
                 this.golpearObjeto(obj);
             }
         });
     }
 
+    moverObjetos() {
+
+        const objetos = [
+            this.tejin,
+            ...this.tejosBlancos,
+            ...this.tejosRojos
+        ];
+
+        objetos.forEach(obj => {
+
+            if (!obj) return;
+
+            obj.velX = obj.velX || 0;
+            obj.velY = obj.velY || 0;
+
+            obj.x += obj.velX;
+            obj.y += obj.velY;
+
+            obj.velX *= 0.95;
+            obj.velY *= 0.95;
+
+            if (Math.abs(obj.velX) < 0.05) obj.velX = 0;
+            if (Math.abs(obj.velY) < 0.05) obj.velY = 0;
+        });
+    }
+
     golpearObjeto(obj) {
 
-        const direccion =
-            this.ultimoLanzamiento.destinoX >
-            this.ultimoLanzamiento.inicioX
-                ? 1
-                : -1;
+        /* if (obj.golpeado) return;
 
-        const empuje =
-            this.objetoActual.width * 1.2;
+        obj.golpeado = true; */
 
-        obj.x += empuje * direccion;
+        const dx =
+            obj.x - this.objetoActual.x;
+
+        const dy =
+            obj.y - this.objetoActual.y;
+
+        const distancia =
+            Math.sqrt(dx * dx + dy * dy);
+
+        if (distancia <= 0) return;
+
+        const nx = dx / distancia;
+        const ny = dy / distancia;
+
+        const fuerza =
+            this.ultimoLanzamiento.fuerza / 10;
+            
+
+        obj.velX = nx * fuerza;
+        obj.velY = ny * fuerza;
     }
 
     verificarTejin() {
@@ -1131,6 +1177,8 @@ class TejoJuego {
         }
     
         this.aPresionadaAntes = aApretada;
+
+        this.moverObjetos();
     }
 
     dibujarBarras() {
@@ -1209,6 +1257,13 @@ class TejoJuego {
         let mejorBlanco = Infinity;
         let mejorRojo = Infinity;
 
+        console.log(
+            "Mejor blanco:",
+            mejorBlanco,
+            "Mejor rojo:",
+            mejorRojo
+        );
+
         // ------------------------
         // BLANCOS
         // ------------------------
@@ -1279,21 +1334,24 @@ class TejoJuego {
 
         tejo.anchor.set(0.5);
 
+        
         tejo.x =
-            this.ladoActual === "izquierda"
-            ? this.cancha.x - this.cancha.width * 0.45
-            : this.cancha.x + this.cancha.width * 0.45;
-
+        this.ladoActual === "izquierda"
+        ? this.cancha.x - this.cancha.width * 0.45
+        : this.cancha.x + this.cancha.width * 0.45;
+        
         tejo.y =
-            this.cancha.y + this.cancha.height * 0.25;
-
+        this.cancha.y + this.cancha.height * 0.25;
+        
         const tamañoDeseado =
-            this.app.screen.width * 0.05;
-
+        this.app.screen.width * 0.05;
+        
         const escala =
-            tamañoDeseado / tejo.texture.width;
-
+        tamañoDeseado / tejo.texture.width;
+        
         tejo.scale.set(escala);
+
+        tejo.radioColision = 18;
 
         this.container.addChild(tejo);
 
