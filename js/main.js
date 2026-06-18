@@ -258,12 +258,6 @@ class Juego{
         this.mundo.y = Math.max(limiteInferior, Math.min(0, targetY));
     }
 
-    actualizarInterfaz(){
-        const cantNenesPerdidos = this.totalNenes.filter(nene => nene.perdido).length
-        
-        this.tareasPendientes.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
-    }
-
     mostrarMensajeDeGarita(){
         if(this.jugador.estaCercaDeLaGarita() && this.jugador.neneRescatado instanceof Nenes){
             console.log("mostrar mensaje de garita");
@@ -372,7 +366,7 @@ class Juego{
             this.jugador.update(dt);
             
             this.actualizarCamara();
-            this.actualizarInterfaz();
+            actualizarInterfaz();
             this.mostrarMensajeDeGarita();
             this.llevarTemerariosAlMar(dt);
             actualizarCielo(this.fondo);

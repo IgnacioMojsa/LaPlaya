@@ -18,6 +18,12 @@ function cargarInterfaz(){
   miJuego.app.stage.addChild(miJuego.dinero)
 }
 
+function actualizarInterfaz(){
+        const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
+        miJuego.tareasPendientes.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
+        miJuego.dinero.text = "$" + miJuego.dineroDelJugador; //Acá se hace el update de la interfaz, funca en la consola
+    }
+
 
 class UICompra {
   constructor(app, opciones){
@@ -122,7 +128,6 @@ class UICompra {
     const opc = this.opciones[this.indexOpcion];
     if (miJuego.dineroDelJugador >= opc.price){
       miJuego.dineroDelJugador -= opc.price;
-      miJuego.dinero.text = "$" + miJuego.dineroDelJugador; //Acá se hace el update de la interfaz, funca en la consola
       this.confirmarCompra(this.indexOpcion, opc);
     } else {
       //Le cambia el color cuando no te alcanza la plata para comprar algo, por 500 ms
@@ -136,7 +141,7 @@ class UICompra {
     const key = e.key.toLowerCase();
     if (this.keysProcesadas[key]) return;
     this.keysProcesadas[key] = true;
-
+    actualizarInterfaz();
     if (!this.abierto) return;
          if (key === 'a'){ this.indexOpcion = 0; this.hoverOpcion();}
     else if (key === 'd'){ this.indexOpcion = 1; this.hoverOpcion();}
