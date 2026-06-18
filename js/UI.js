@@ -26,10 +26,10 @@ class UICompra {
     this.container.visible = false;
     this.app.stage.addChild(this.container);
 
-    const menuAncho = opciones.menuAncho || 700;
-    const menuAltura = opciones.menuAltura || 120;
+    const menuAncho = 700;
+    const menuAltura = 120;
     const x = window.innerWidth/2 - 350;
-    const y = 800;
+    const y = window.innerHeight - 140;
 
     const fondoMenu = new PIXI.Graphics();
     fondoMenu.fill(0xffffff);
@@ -69,10 +69,12 @@ class UICompra {
     this.indexOpcion = 0;
     this.hoverOpcion();
 
-    this.dineroDelJugador = miJuego.dineroDelJugador;
-    this.textoDinero = new PIXI.Text({text: "Dinero disponible: $" + this.dineroDelJugador, style: {fontFamily: "Arial", fontSize: 14, fill: "#000000"}});
-    this.textoDinero.x = x + 18; this.textoDinero.y = y + menuAltura - 28;
-    this.container.addChild(this.textoDinero);
+    this.infoTxt = new PIXI.Text({
+      //Esto está para modificar después en la construcción de la UI
+      text: "A o D para elegir producto    |    Enter para confirmar compra                                                           Salir (E)", 
+      style: {fontFamily: "Arial", fontSize: 14, fill: "#000000"}}); 
+    this.infoTxt.x = x + 18; this.infoTxt.y = y + menuAltura - 28;
+    this.container.addChild(this.infoTxt);
 
     this.confirmarCompra = opciones.confirmarCompra || ((idx,opc) => console.log("Compró", idx, opc));
 
@@ -107,8 +109,6 @@ class UICompra {
     this.abierto ? this.cerrar() : this.abrir();
   }
 
-  mostrarDinero(m){miJuego.dineroDelJugador = m; this.textoDinero.text = "Dinero disponible: $" + miJuego.dineroDelJugador;}
-
   hoverOpcion(){
     const x0 = this.textoOpciones[0].x - 6;
     const x1 = this.textoOpciones[1].x - 6;
@@ -118,12 +118,11 @@ class UICompra {
     this.textoOpciones.forEach((texto,i) => texto.style.fontWeight = i===this.indexOpcion ? 900 : 100);
   }
 
-  tryBuySelected(){
+  comprarProducto(){
     const opc = this.opciones[this.indexOpcion];
-    if (this.dineroDelJugador >= opc.price){
-      this.dineroDelJugador -= opc.price;
-      miJuego.dinero.text = "$" + this.dineroDelJugador;
-      this.mostrarDinero(this.dineroDelJugador);
+    if (miJuego.dineroDelJugador >= opc.price){
+      miJuego.dineroDelJugador -= opc.price;
+      miJuego.dinero.text = "$" + miJuego.dineroDelJugador; //Acá se hace el update de la interfaz, funca en la consola
       this.confirmarCompra(this.indexOpcion, opc);
     } else {
       //Le cambia el color cuando no te alcanza la plata para comprar algo, por 500 ms
@@ -141,11 +140,9 @@ class UICompra {
     if (!this.abierto) return;
          if (key === 'a'){ this.indexOpcion = 0; this.hoverOpcion();}
     else if (key === 'd'){ this.indexOpcion = 1; this.hoverOpcion();}
-    else if (key === 'enter'){ this.tryBuySelected();}
+    else if (key === 'enter'){ this.comprarProducto();}
   }
-
   onKeyUp(e){ this.keysProcesadas[e.key.toLowerCase()] = false;}
-
 }
 
 function menuDeCompra(app, juego, opciones) {
