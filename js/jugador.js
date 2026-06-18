@@ -6,6 +6,8 @@ class Jugador {
 
     this.velocidad = {x: 0, y: 0};
 
+    //this.maquinaDeEstados = new MaquinaDeEstados(estadosDelJugador.DEFAULT, estadosDelJugador);
+
     this.velMaxima = 80;
     this.aceleracion = 80;
     this.friccion = 0.95;

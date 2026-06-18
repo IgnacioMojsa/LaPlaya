@@ -1,5 +1,11 @@
+const estadosDelJugador = {
+    SWIM: new SwimState(miJuego.jugador),
+    DEFAULT: new DefaultState(miJuego.jugador),
+    WITH_CHILD: new WithChildState(miJuego.jugador)
+}
+
 class MaquinaDeEstados {
-    constructor(estados, estadoInicial){
+    constructor(estadoInicial, estados){
         this.estadoActual = null;
         this.estados = estados;
 
@@ -26,47 +32,93 @@ class MaquinaDeEstados {
 }
 
 class SwimState{
-    constructor(jugador, estados){
+    constructor(jugador){
         this.jugador = jugador;
-        this.subEstados = estados;
+        //this.subEstadoActual = null;
     }   
 
     enter(){
-        console.log("Entrando al estado Swim")
+        console.log("Entrando al estado Swim");
+
+        this.cambiarDireccionYMovimiento();
     }
 
     update(){
+        this.cambiarDireccionYMovimiento();
         
+        if(this.jugador.estaCargandoUnNene()){
+            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.WITH_CHILD)
+        }
+        else if(!this.jugador.estaCargandoUnNene() && !this.jugador.estaNadando()){
+            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.DEFAULT);
+        }
     }
 
     exit(){
         console.log("Saliendo del estado Swim")
     }
+
+    cambiarDireccionYMovimiento(){
+        if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+            this.jugador.cambiarAnimacion("swim_der")
+        }
+        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+            this.jugador.cambiarAnimacion("swim_izq")
+        }
+        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+            this.jugador.cambiarAnimacion("swim_idle_der")
+        }
+        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+            this.jugador.cambiarAnimacion("swim_idle_izq")
+        }
+    }
 }
 
 class WithChildState{
-    constructor(jugador, estados){
+    constructor(jugador){
         this.jugador = jugador;
-        this.subEstados = estados;
     }
 
     enter(){
-        console.log("Entrando al estado WithChild")
+        console.log("Entrando al estado WithChild");
     }
 
     update(){
+        this.jugador.evitarQueEntreAlAguaConNene();
+
+        this.cambiarDireccionYMovimiento();
         
+        if(this.jugador.estaNadando()){
+            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.SWIM)
+        }
+        else if(!this.jugador.estaCargandoUnNene() && !this.jugador.estaNadando()){
+            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.DEFAULT);
+        }
     }
 
     exit(){
         console.log("Saliendo del estado WithChild")
     }
+
+    cambiarDireccionYMovimiento(){
+        if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+            this.jugador.cambiarAnimacion("der_con_nene")
+        }
+        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+            this.jugador.cambiarAnimacion("izq_con_nene")
+        }
+        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+            this.jugador.cambiarAnimacion("idle_con_nene_der")
+        }
+        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+            this.jugador.cambiarAnimacion("idle_con_nene_izq")
+        }
+    }
 }
 
 class DefaultState{
-    constructor(jugador, estados){
+    constructor(jugador){
         this.jugador = jugador;
-        this.subEstados = estados;
     }
 
     enter(){
@@ -74,17 +126,40 @@ class DefaultState{
     }
 
     update(){
-        
+        this.cambiarDireccionYMovimiento();
+
+        if(this.jugador.estaNadando()){
+            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.SWIM)
+        }
+        else if(this.jugador.estaCargandoUnNene()){
+            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.WITH_CHILD)
+        }
     }
 
     exit(){
         console.log("Entrando en el estado Default")
     }
+
+    cambiarDireccionYMovimiento(){
+        if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+            this.jugador.cambiarAnimacion("der")
+        }
+        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+            this.jugador.cambiarAnimacion("izq")
+        }
+        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+            this.jugador.cambiarAnimacion("idle_der")
+        }
+        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+            this.jugador.cambiarAnimacion("idle_izq")
+        }
+    }
 }
 
 class IdleState {
-    constructor(jugador){
+    constructor(jugador, estadoPadre){
         this.jugador = jugador;
+        this.estadoPadre = estadoPadre;
     }
 
     enter(){
@@ -101,8 +176,9 @@ class IdleState {
 }
 
 class MoveState {
-    constructor(jugador){
+    constructor(jugador, estadoPadre){
         this.jugador = jugador;
+        this.estadoPadre = estadoPadre;
     }
 
     enter(){
@@ -110,12 +186,7 @@ class MoveState {
     }
 
     update(){
-        if(this.estaQuieto() && this.ultimaDir === "der"){
-            this.cambiarAnimacion("idle_der");
-        } 
-        else if(this.estaQuieto() && this.ultimaDir === "izq" ){
-            this.cambiarAnimacion("idle_izq");
-        }
+        
     }
 
     exit(){

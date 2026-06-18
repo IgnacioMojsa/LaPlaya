@@ -314,6 +314,20 @@ class Npc {
         }
     }
 
+    cambiarVelocidadDeAnimacion(){
+        if(this.velocidad.x > 0.09 || this.velocidad.y > 0.09){
+            this.spriteAnimadoActual.animationSpeed = 0.09;
+        }
+        
+        else if(this.velocidad.x > 0.5 || this.velocidad.y > 0.5 && this.velocidad.x < 0.08 || this.velocidad.y < 0.08){
+            this.spriteAnimadoActual.animationSpeed = 0.07;
+        }
+
+        else if(this.velocidad.x < 0.5 || this.velocidad.y < 0.5){
+            this.spriteAnimadoActual.animationSpeed = 0.04;
+        }
+    }
+
     recuperarse(dt){
         // Si el npc ahogado es llevado a la orilla se debe establecer su animacion idle, esperar unos segundos y volver a moverse. Ademas su 
         // nivel de temerosidad debe reducirse a 3 o menos y se debe recompoensar al jugador con x cantidad de dinero.
@@ -382,8 +396,13 @@ class Npc {
             this.mantenerEnLimites(dt);
             this.agrupar(miJuego.arrayDeNpc)
             this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
+            this.cambiarVelocidadDeAnimacion();
             this.nadar();
             //this.evitarAgua();
         }
     }
 }
+
+// USAR PARA CAMBIAR LA VELOCIDAD DE LA ANIMACION DEPENDIENDO DE QUE TAN RAPIDO SEA EL NPC
+// 0.1 ES LA VELOCIDAD NORMAL, DE AHI TIRAR PARA ARRIBA SI ESTA CORRIENDO O PARA ABAJO SI ESTA CAMINANDO
+// this.spriteAnimadoActual.animationSpeed = 0.1;
