@@ -1,11 +1,12 @@
 //HUD
+
 function cargarInterfaz(){
   miJuego.tareasPendientes = new PIXI.Text({
     text: "Encontrar " + miJuego.perdidos + " nenes perdidos",
     style: {
     fill: "#000000",
     fontSize: 25,
-    fontFamily: "Arial",
+    fontFamily: "PixelFont",
     },
   });
 
@@ -13,7 +14,7 @@ function cargarInterfaz(){
         
   miJuego.app.stage.addChild(miJuego.listaDeTareas);
 
-  miJuego.dinero = new PIXI.Text({text: "$" + miJuego.dineroDelJugador, style: {fill: "#009e42", fontSize: 30, fontWeight: 900, fontFamily: "Arial"}});
+  miJuego.dinero = new PIXI.Text({text: "$" + miJuego.dineroDelJugador, style: {fill: "#009e42", fontSize: 30, fontWeight: 900, fontFamily: "PixelFont"}});
   miJuego.dinero.y = 50;
   miJuego.app.stage.addChild(miJuego.dinero)
 }

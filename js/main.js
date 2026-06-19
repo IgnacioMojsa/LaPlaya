@@ -86,11 +86,12 @@ class Juego{
         this.churrosAssets = await PIXI.Assets.load("assets/spritesheets/vendedora1.json")
         this.chocloAssets = await PIXI.Assets.load("assets/spritesheets/choclo.json")
         //this.pochocloAssets = await PIXI.Assets.load("assets/spritesheets/vendedor3.json")
-        this.playaTextura = await PIXI.Assets.load('assets/playa2.png');
+        this.playaTextura = await PIXI.Assets.load('assets/playa3.png');
         this.garitaTextura = await PIXI.Assets.load('assets/garitaGuardavidas.png')
         this.sombrilla1 = await PIXI.Assets.load('assets/sombrilla.png');
         this.sombrilla2 = await PIXI.Assets.load('assets/sombrilla2.png');
         this.sombrilla3 = await PIXI.Assets.load('assets/sombrilla3.png');
+        this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}});
     }
 
     async cargarJugador() {
