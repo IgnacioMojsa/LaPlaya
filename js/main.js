@@ -91,7 +91,7 @@ class Juego{
         this.sombrilla1 = await PIXI.Assets.load('assets/sombrilla.png');
         this.sombrilla2 = await PIXI.Assets.load('assets/sombrilla2.png');
         this.sombrilla3 = await PIXI.Assets.load('assets/sombrilla3.png');
-        this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}});
+        this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}}); 
     }
 
     async cargarJugador() {
@@ -140,7 +140,7 @@ class Juego{
 
         this.mensajeDeGarita = new PIXI.Text({
             text: "Pulsa E para resguardar al nene",
-            style: { fill: "white", fontSize: 18 }
+            style: { fill: "white", fontSize: 18, family: "PixelFont"}
         });
         
         this.mundo.addChild(this.garita);

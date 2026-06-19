@@ -45,7 +45,7 @@ class UICompra {
     fondoMenu.x = x; fondoMenu.y = y;
     this.container.addChild(fondoMenu);
 
-    this.title = new PIXI.Text({text: "¿Qué te gustaría comprar?", style: {fontFamily: "Arial", fontSize: 20, fill: 0x000000, fontWeight: 900}});
+    this.title = new PIXI.Text({text: "¿Qué te gustaría comprar?", style: {fontFamily: "PixelFont", fontSize: 20, fill: 0x000000, fontWeight: 900}});
     this.title.x = x + 15; this.title.y = y + 8;
     this.container.addChild(this.title);
 
@@ -60,7 +60,7 @@ class UICompra {
     const derX = x + menuAncho / 2 + 10;
 
     this.opciones.forEach((opc, i) => {
-      const texto = new PIXI.Text({text: opc.label, style: {fontFamily: "Arial", fontSize: 16, fill: "#000000"}});
+      const texto = new PIXI.Text({text: opc.label, style: {fontFamily: "PixelFont", fontSize: 16, fill: "#000000"}});
       texto.x = i === 0 ? izqX : derX;
       texto.y = bordeY;
       this.container.addChild(texto);
@@ -79,7 +79,7 @@ class UICompra {
     this.infoTxt = new PIXI.Text({
       //Esto está para modificar después en la construcción de la UI
       text: "A o D para elegir producto    |    Enter para confirmar compra                                                           Salir (E)", 
-      style: {fontFamily: "Arial", fontSize: 14, fill: "#000000"}}); 
+      style: {fontFamily: "PixelFont", fontSize: 14, fill: "#000000"}}); 
     this.infoTxt.x = x + 18; this.infoTxt.y = y + menuAltura - 28;
     this.container.addChild(this.infoTxt);
 

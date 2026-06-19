@@ -17,7 +17,8 @@ class Nenes extends Npc{
           text: "Pulsa E para rescatar",
           style: {
             fill: "white",
-            fontSize: 18
+            fontSize: 18,
+            fontFamily: "PixelFont"
           }
         });
         

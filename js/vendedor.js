@@ -13,7 +13,8 @@ class Vendedor extends Npc {
           text: "Pulsa E para comprar",
           style: {
             fill: "white",
-            fontSize: 18
+            fontSize: 18,
+            fontFamily: 'PixelFont'
           }
         });
     this.mensaje.anchor.set(0.5);
