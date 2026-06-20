@@ -140,7 +140,7 @@ class Juego{
 
         this.mensajeDeGarita = new PIXI.Text({
             text: "Pulsa E para resguardar al nene",
-            style: { fill: "white", fontSize: 18, family: "PixelFont"}
+            style: { fill: "white", fontSize: 18, fontFamily: "PixelFont"}
         });
         
         this.mundo.addChild(this.garita);

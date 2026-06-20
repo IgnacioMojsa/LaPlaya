@@ -1,15 +1,14 @@
-const estadosDelJugador = {
-    SWIM: new SwimState(miJuego.jugador),
-    DEFAULT: new DefaultState(miJuego.jugador),
-    WITH_CHILD: new WithChildState(miJuego.jugador)
-}
-
-class MaquinaDeEstados {
-    constructor(estadoInicial, estados){
+class MaquinaDeEstadosJugador {
+    constructor(jugador){
         this.estadoActual = null;
-        this.estados = estados;
+        this.jugador = jugador;
+        this.estados = {
+            SWIM: new SwimState(this.jugador),
+            DEFAULT: new DefaultState(this.jugador),
+            WITH_CHILD: new WithChildState(this.jugador)
+        };
 
-        this.cambiarA(estadoInicial);
+        this.cambiarA(this.estados.DEFAULT);
     } 
 
     cambiarA(nuevoEstado){
@@ -47,10 +46,10 @@ class SwimState{
         this.cambiarDireccionYMovimiento();
         
         if(this.jugador.estaCargandoUnNene()){
-            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.WITH_CHILD)
+            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.WITH_CHILD)
         }
         else if(!this.jugador.estaCargandoUnNene() && !this.jugador.estaNadando()){
-            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.DEFAULT);
+            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.DEFAULT);
         }
     }
 
@@ -59,17 +58,21 @@ class SwimState{
     }
 
     cambiarDireccionYMovimiento(){
-        if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+        if (this.jugador.velocidad.x > 0) this.jugador.ultimaDireccion = "der";
+        if (this.jugador.velocidad.x < 0) this.jugador.ultimaDireccion = "izq";
+
+        if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
             this.jugador.cambiarAnimacion("swim_der")
         }
-        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
             this.jugador.cambiarAnimacion("swim_izq")
         }
-        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
-            this.jugador.cambiarAnimacion("swim_idle_der")
+        
+        if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
+            this.jugador.cambiarAnimacion("idle_swim_der")
         }
-        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
-            this.jugador.cambiarAnimacion("swim_idle_izq")
+        else if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
+            this.jugador.cambiarAnimacion("idle_swim_izq")
         }
     }
 }
@@ -89,10 +92,10 @@ class WithChildState{
         this.cambiarDireccionYMovimiento();
         
         if(this.jugador.estaNadando()){
-            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.SWIM)
+            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.SWIM)
         }
         else if(!this.jugador.estaCargandoUnNene() && !this.jugador.estaNadando()){
-            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.DEFAULT);
+            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.DEFAULT);
         }
     }
 
@@ -101,16 +104,20 @@ class WithChildState{
     }
 
     cambiarDireccionYMovimiento(){
-        if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+        if (this.jugador.velocidad.x > 0) this.jugador.ultimaDireccion = "der";
+        if (this.jugador.velocidad.x < 0) this.jugador.ultimaDireccion = "izq";
+        
+        if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
             this.jugador.cambiarAnimacion("der_con_nene")
         }
-        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
             this.jugador.cambiarAnimacion("izq_con_nene")
         }
-        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+        
+        if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
             this.jugador.cambiarAnimacion("idle_con_nene_der")
         }
-        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+        else if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
             this.jugador.cambiarAnimacion("idle_con_nene_izq")
         }
     }
@@ -128,11 +135,13 @@ class DefaultState{
     update(){
         this.cambiarDireccionYMovimiento();
 
+        this.jugador.actualizarMensajesDeNenes();
+
         if(this.jugador.estaNadando()){
-            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.SWIM)
+            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.SWIM)
         }
         else if(this.jugador.estaCargandoUnNene()){
-            this.jugador.maquinaDeEstados.cambiarA(estadosDelJugador.WITH_CHILD)
+            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.WITH_CHILD)
         }
     }
 
@@ -141,16 +150,20 @@ class DefaultState{
     }
 
     cambiarDireccionYMovimiento(){
-        if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+        if (this.jugador.velocidad.x > 0) this.jugador.ultimaDireccion = "der";
+        if (this.jugador.velocidad.x < 0) this.jugador.ultimaDireccion = "izq";
+        
+        if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
             this.jugador.cambiarAnimacion("der")
         }
-        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
             this.jugador.cambiarAnimacion("izq")
         }
-        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "der"){
+
+        if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
             this.jugador.cambiarAnimacion("idle_der")
         }
-        else if(this.jugador.estaQuieto() && this.jugador.ultimaDir == "izq"){
+        else if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
             this.jugador.cambiarAnimacion("idle_izq")
         }
     }
