@@ -27,6 +27,8 @@ class Nenes extends Npc{
         this.mensaje.visible = false;
         
         this.container.addChild(this.mensaje);
+
+        this.sombra.anchor.set(0.5, 1.15);
     }
 
   estaPerdido(){
@@ -87,6 +89,8 @@ class Nenes extends Npc{
       this.aceleracion.y = 0;
       this.velocidad.x = 0;
       this.velocidad.y = 0;
+
+      
       return;
     }
     else if(this.rescatado){
@@ -108,6 +112,9 @@ class Nenes extends Npc{
     }
     else{
       this.cambiarAnimacion("cry");
+      this.sombra.anchor.set(0.5, 1.5);
+      this.sombra.position.set(this.container.position.x, this.container.position.y - 2);
+      this.sombra.zIndex = this.container.position.y - 5;
       this.render();
     }
   }

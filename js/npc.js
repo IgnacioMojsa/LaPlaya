@@ -3,25 +3,38 @@ class Npc {
         this.id = i;
         this.container = new PIXI.Container();
         this.container.position.set(x, y)
+
+        this.sombra = new PIXI.Sprite(miJuego.sombra);
+        
         this.velocidad = {x: Math.random() * 2 - 1, y: Math.random() * 2 - 1};
         this.aceleracion = {x: 0, y: 0};
         this.velocidadMax = 1;
         this.fuerzaMax = 0.25;
         this.aceleracionMax = 0.2;
+
         this.ultimaDir = "izq";
         this.temerosidad = obtenerNumeroAleatorio(1, 5);
         this.ahogandose = false;
         this.rescatado = false;
         this.tiempoEnPeligro = 0;
+
         this.target = {x: this.container.x, y: this.container.y}
         this.separacion = {x: 50, y: 50};
         this.suavizado = 0.05;
         this.distanciaMaxTarget = 40;
         this.distanciaMinTarget = 20;
+
         this.temporizador = 0;
 
         this.cargarSpritesAnimados(animacion);
         this.cambiarAnimacion(Object.keys(animacion.animations)[0]);
+
+        this.sombra.anchor.set(0.5, 0.9);
+        this.sombra.position.set(this.container.position.x, this.container.position.y);
+        this.sombra.alpha = 0.5;
+        this.sombra.zIndex = this.container.position.y - 3;
+
+        miJuego.mundo.addChild(this.sombra);
     }
 
 /*     mantenerEnLimites(){
@@ -300,9 +313,11 @@ class Npc {
 
     nadar(){
         if(this.estaNadando() && this.velocidad.x > 0){
+            this.sombra.visible = false;
             this.cambiarAnimacion("swim_der");
         }
         else if (this.estaNadando() && this.velocidad.x < 0){
+            this.sombra.visible = false;
             this.cambiarAnimacion("swim_izq");
         }
 
@@ -356,6 +371,11 @@ class Npc {
         }
     }
 
+    actualizarPosicionDeSombra(){
+        this.sombra.position.set(this.container.position.x, this.container.position.y);
+        this.sombra.zIndex = this.container.position.y - 3;
+    }
+
     render(){
         this.velocidad.x += this.aceleracion.x;
         this.velocidad.y += this.aceleracion.y;
@@ -391,6 +411,7 @@ class Npc {
         }
 
         else{
+            this.sombra.visible = true;
             this.render();
             this.cambiarDeSpriteDeDireccion();
             this.mantenerEnLimites(dt);
@@ -400,6 +421,8 @@ class Npc {
             this.nadar();
             //this.evitarAgua();
         }
+
+        this.actualizarPosicionDeSombra()
     }
 }
 

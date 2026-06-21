@@ -44,6 +44,8 @@ class SwimState{
 
     update(){
         this.cambiarDireccionYMovimiento();
+
+        this.jugador.sombra.visible = false;
         
         if(this.jugador.estaCargandoUnNene()){
             this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.WITH_CHILD)
@@ -90,6 +92,9 @@ class WithChildState{
         this.jugador.evitarQueEntreAlAguaConNene();
 
         this.cambiarDireccionYMovimiento();
+
+        this.jugador.sombra.position.set(this.jugador.container.position.x, this.jugador.container.position.y);
+        this.jugador.sombra.zIndex = this.jugador.container.position.y - 3;
         
         if(this.jugador.estaNadando()){
             this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.SWIM)
@@ -136,6 +141,11 @@ class DefaultState{
         this.cambiarDireccionYMovimiento();
 
         this.jugador.actualizarMensajesDeNenes();
+
+        this.jugador.sombra.visible = true;
+
+        this.jugador.sombra.position.set(this.jugador.container.position.x, this.jugador.container.position.y);
+        this.jugador.sombra.zIndex = this.jugador.container.position.y - 3;
 
         if(this.jugador.estaNadando()){
             this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.SWIM)

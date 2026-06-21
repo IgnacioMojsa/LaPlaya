@@ -91,6 +91,7 @@ class Juego{
         this.sombrilla1 = await PIXI.Assets.load('assets/sombrilla.png');
         this.sombrilla2 = await PIXI.Assets.load('assets/sombrilla2.png');
         this.sombrilla3 = await PIXI.Assets.load('assets/sombrilla3.png');
+        this.sombra = await PIXI.Assets.load('assets/sombra.png');
         this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}}); 
     }
 

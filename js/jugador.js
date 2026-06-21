@@ -8,6 +8,8 @@ class Jugador {
 
     this.maquinaDeEstados = new MaquinaDeEstadosJugador(this);
 
+    this.sombra = new PIXI.Sprite(miJuego.sombra);
+
     this.velMaxima = 80;
     this.aceleracion = 80;
     this.friccion = 0.95;
@@ -27,6 +29,13 @@ class Jugador {
 
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
+
+    this.sombra.anchor.set(0.5, 1.2);
+    this.sombra.position.set(this.container.position.x, this.container.position.y);
+    this.sombra.zIndex = this.container.position.y - 3;
+    this.sombra.alpha = 0.5;
+
+    miJuego.mundo.addChild(this.sombra);
   }
 
   inputTeclado(dt, keys){
