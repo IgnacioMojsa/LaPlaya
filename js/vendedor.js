@@ -34,6 +34,8 @@ class Vendedor extends Npc {
     this.container.x += this.velocidad.x;
     this.container.zIndex = this.container.y;
     this.aceleracion.x = 0;
+
+    this.actualizarPosicionDeSombra();
   }
 
   update(dt){
