@@ -1,17 +1,17 @@
-class MaquinaDeEstadosJugador {
-    constructor(jugador){
+class MaquinaDeEstados {
+    constructor(personaje){
         this.estadoActual = null;
-        this.jugador = jugador;
-        this.estados = {
-            SWIM: new SwimState(this.jugador),
-            DEFAULT: new DefaultState(this.jugador),
-            WITH_CHILD: new WithChildState(this.jugador)
-        };
-
-        this.cambiarA(this.estados.DEFAULT);
+        this.personaje = personaje;
+        this.estados = {};
     } 
 
-    cambiarA(nuevoEstado){
+    agregarEstado(clave, nuevoEstado) {
+        this.estados[clave] = nuevoEstado;
+    }
+
+    cambiarA(nombreDeEstado){
+        const nuevoEstado = this.estados[nombreDeEstado];
+        
         if(this.estadoActual && this.estadoActual.exit){
             this.estadoActual.exit;
         }
@@ -31,8 +31,8 @@ class MaquinaDeEstadosJugador {
 }
 
 class SwimState{
-    constructor(jugador){
-        this.jugador = jugador;
+    constructor(personaje){
+        this.personaje = personaje;
         //this.subEstadoActual = null;
     }   
 
@@ -45,13 +45,13 @@ class SwimState{
     update(){
         this.cambiarDireccionYMovimiento();
 
-        this.jugador.sombra.visible = false;
+        this.actualizarSombra();
         
-        if(this.jugador.estaCargandoUnNene()){
-            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.WITH_CHILD)
+        if(this.personaje.estaCargandoUnNene()){
+            this.personaje.maquinaDeEstados.cambiarA('WITH_CHILD')
         }
-        else if(!this.jugador.estaCargandoUnNene() && !this.jugador.estaNadando()){
-            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.DEFAULT);
+        else if(!this.personaje.estaCargandoUnNene() && !this.personaje.estaNadando()){
+            this.personaje.maquinaDeEstados.cambiarA('DEFAULT');
         }
     }
 
@@ -60,28 +60,32 @@ class SwimState{
     }
 
     cambiarDireccionYMovimiento(){
-        if (this.jugador.velocidad.x > 0) this.jugador.ultimaDireccion = "der";
-        if (this.jugador.velocidad.x < 0) this.jugador.ultimaDireccion = "izq";
+        if (this.personaje.velocidad.x > 0) this.personaje.ultimaDireccion = "der";
+        if (this.personaje.velocidad.x < 0) this.personaje.ultimaDireccion = "izq";
 
-        if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
-            this.jugador.cambiarAnimacion("swim_der")
+        if(!this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "der"){
+            this.personaje.cambiarAnimacion("swim_der")
         }
-        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
-            this.jugador.cambiarAnimacion("swim_izq")
+        else if(!this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "izq"){
+            this.personaje.cambiarAnimacion("swim_izq")
         }
         
-        if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
-            this.jugador.cambiarAnimacion("idle_swim_der")
+        if(this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "der"){
+            this.personaje.cambiarAnimacion("idle_swim_der")
         }
-        else if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
-            this.jugador.cambiarAnimacion("idle_swim_izq")
+        else if(this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "izq"){
+            this.personaje.cambiarAnimacion("idle_swim_izq")
         }
+    }
+
+    actualizarSombra(){
+        this.personaje.sombra.visible = false;
     }
 }
 
 class WithChildState{
-    constructor(jugador){
-        this.jugador = jugador;
+    constructor(personaje){
+        this.personaje = personaje;
     }
 
     enter(){
@@ -89,18 +93,17 @@ class WithChildState{
     }
 
     update(){
-        this.jugador.evitarQueEntreAlAguaConNene();
+        this.personaje.evitarQueEntreAlAguaConNene();
 
         this.cambiarDireccionYMovimiento();
 
-        this.jugador.sombra.position.set(this.jugador.container.position.x, this.jugador.container.position.y);
-        this.jugador.sombra.zIndex = this.jugador.container.position.y - 3;
+        this.actualizarSombra();
         
-        if(this.jugador.estaNadando()){
-            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.SWIM)
+        if(this.personaje.estaNadando()){
+            this.personaje.maquinaDeEstados.cambiarA('SWIM')
         }
-        else if(!this.jugador.estaCargandoUnNene() && !this.jugador.estaNadando()){
-            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.DEFAULT);
+        else if(!this.personaje.estaCargandoUnNene() && !this.personaje.estaNadando()){
+            this.personaje.maquinaDeEstados.cambiarA('DEFAULT');
         }
     }
 
@@ -109,28 +112,33 @@ class WithChildState{
     }
 
     cambiarDireccionYMovimiento(){
-        if (this.jugador.velocidad.x > 0) this.jugador.ultimaDireccion = "der";
-        if (this.jugador.velocidad.x < 0) this.jugador.ultimaDireccion = "izq";
+        if (this.personaje.velocidad.x > 0) this.personaje.ultimaDireccion = "der";
+        if (this.personaje.velocidad.x < 0) this.personaje.ultimaDireccion = "izq";
         
-        if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
-            this.jugador.cambiarAnimacion("der_con_nene")
+        if(!this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "der"){
+            this.personaje.cambiarAnimacion("der_con_nene")
         }
-        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
-            this.jugador.cambiarAnimacion("izq_con_nene")
+        else if(!this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "izq"){
+            this.personaje.cambiarAnimacion("izq_con_nene")
         }
         
-        if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
-            this.jugador.cambiarAnimacion("idle_con_nene_der")
+        if(this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "der"){
+            this.personaje.cambiarAnimacion("idle_con_nene_der")
         }
-        else if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
-            this.jugador.cambiarAnimacion("idle_con_nene_izq")
+        else if(this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "izq"){
+            this.personaje.cambiarAnimacion("idle_con_nene_izq")
         }
+    }
+
+    actualizarSombra(){
+        this.personaje.sombra.position.set(this.personaje.container.position.x, this.personaje.container.position.y);
+        this.personaje.sombra.zIndex = this.personaje.container.position.y - 3;
     }
 }
 
 class DefaultState{
-    constructor(jugador){
-        this.jugador = jugador;
+    constructor(personaje){
+        this.personaje = personaje;
     }
 
     enter(){
@@ -140,18 +148,13 @@ class DefaultState{
     update(){
         this.cambiarDireccionYMovimiento();
 
-        this.jugador.actualizarMensajesDeNenes();
+        this.actualizarSombra();
 
-        this.jugador.sombra.visible = true;
-
-        this.jugador.sombra.position.set(this.jugador.container.position.x, this.jugador.container.position.y);
-        this.jugador.sombra.zIndex = this.jugador.container.position.y - 3;
-
-        if(this.jugador.estaNadando()){
-            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.SWIM)
+        if(this.personaje.estaNadando()){
+            this.personaje.maquinaDeEstados.cambiarA('SWIM')
         }
-        else if(this.jugador.estaCargandoUnNene()){
-            this.jugador.maquinaDeEstados.cambiarA(this.jugador.maquinaDeEstados.estados.WITH_CHILD)
+        else if(this.personaje.estaCargandoUnNene()){
+            this.personaje.maquinaDeEstados.cambiarA('WITH_CHILD')
         }
     }
 
@@ -160,28 +163,35 @@ class DefaultState{
     }
 
     cambiarDireccionYMovimiento(){
-        if (this.jugador.velocidad.x > 0) this.jugador.ultimaDireccion = "der";
-        if (this.jugador.velocidad.x < 0) this.jugador.ultimaDireccion = "izq";
+        if (this.personaje.velocidad.x > 0) this.personaje.ultimaDireccion = "der";
+        if (this.personaje.velocidad.x < 0) this.personaje.ultimaDireccion = "izq";
         
-        if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
-            this.jugador.cambiarAnimacion("der")
+        if(!this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "der"){
+            this.personaje.cambiarAnimacion("der")
         }
-        else if(!this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
-            this.jugador.cambiarAnimacion("izq")
+        else if(!this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "izq"){
+            this.personaje.cambiarAnimacion("izq")
         }
 
-        if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "der"){
-            this.jugador.cambiarAnimacion("idle_der")
+        if(this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "der"){
+            this.personaje.cambiarAnimacion("idle_der")
         }
-        else if(this.jugador.estaQuieto() && this.jugador.ultimaDireccion == "izq"){
-            this.jugador.cambiarAnimacion("idle_izq")
+        else if(this.personaje.estaQuieto() && this.personaje.ultimaDireccion == "izq"){
+            this.personaje.cambiarAnimacion("idle_izq")
         }
+    }
+
+    actualizarSombra(){
+        this.personaje.sombra.visible = true;
+
+        this.personaje.sombra.position.set(this.personaje.container.position.x, this.personaje.container.position.y);
+        this.personaje.sombra.zIndex = this.personaje.container.position.y - 3;
     }
 }
 
 class IdleState {
-    constructor(jugador, estadoPadre){
-        this.jugador = jugador;
+    constructor(personaje, estadoPadre){
+        this.personaje = personaje;
         this.estadoPadre = estadoPadre;
     }
 
@@ -199,8 +209,8 @@ class IdleState {
 }
 
 class MoveState {
-    constructor(jugador, estadoPadre){
-        this.jugador = jugador;
+    constructor(personaje, estadoPadre){
+        this.personaje = personaje;
         this.estadoPadre = estadoPadre;
     }
 

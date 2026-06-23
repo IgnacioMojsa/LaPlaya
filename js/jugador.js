@@ -6,7 +6,13 @@ class Jugador {
 
     this.velocidad = {x: 0, y: 0};
 
-    this.maquinaDeEstados = new MaquinaDeEstadosJugador(this);
+    this.maquinaDeEstados = new MaquinaDeEstados(this);
+
+    this.maquinaDeEstados.agregarEstado('DEFAULT', new DefaultState(this));
+    this.maquinaDeEstados.agregarEstado('SWIM', new SwimState(this));
+    this.maquinaDeEstados.agregarEstado('WITH_CHILD', new WithChildState(this));
+
+    this.maquinaDeEstados.cambiarA('DEFAULT');
 
     this.sombra = new PIXI.Sprite(miJuego.sombra);
 
@@ -206,6 +212,8 @@ class Jugador {
       this.container.x += this.velocidad.x * dt;
       this.container.y += this.velocidad.y * dt;
       this.container.zIndex = this.container.y;
+
+      this.actualizarMensajesDeNenes();
 
       this.maquinaDeEstados.update();
 
