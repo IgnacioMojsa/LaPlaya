@@ -8,6 +8,9 @@ class Juego{
         this.bgm = new Audio("assets/audio/bgm.wav");
         this.nuevoAhora = performance.now();
         this.listaDeTareas = new PIXI.Container();
+        this.comidaAComprar = this.unaComidaAleatoria();
+        this.cantidadDeComida = this.cantidadAleatoriaSegunComida();
+
 
         this.cantAdultos = 100;
         this.cantNenes = 6;
@@ -338,6 +341,45 @@ class Juego{
                     adulto.neneACargo = nene;
                     nene.adulto = adulto;
                 }
+            }
+        }
+    }
+
+    unaComidaAleatoria(){
+        const comidasDisponibles = ["churros", "choclos"]
+
+        const comidaElegida = comidasDisponibles[obtenerNumeroAleatorio(0,1)]
+
+        if(comidaElegida === "choclos" && this.cantidadDeComida > 1){
+            return "choclos"
+        } 
+        else if(comidaElegida === "choclos" && this.cantidadDeComida === 1){
+            return "choclo"
+        } 
+        else{
+            return comidaElegida
+        }
+    }
+
+    cantidadAleatoriaSegunComida(){
+        if(this.comidaAComprar === 'churros'){
+            const numero = obtenerNumeroAleatorio(0,1);
+
+            if(numero == 0){
+                return "media docena de "
+            }
+            else{
+                return "una docena de "
+            }
+        }
+        else if(this.comidaAComprar === 'choclos'){
+            const numero = obtenerNumeroAleatorio(0,1);
+
+            if(numero == 0){
+                return "1 "
+            }
+            else{
+                return "2 "
             }
         }
     }

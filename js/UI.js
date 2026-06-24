@@ -1,7 +1,7 @@
 //HUD
 
 function cargarInterfaz(){
-  miJuego.tareasPendientes = new PIXI.Text({
+  miJuego.nenesPorRescatar = new PIXI.Text({
     text: "Encontrar " + miJuego.perdidos + " nenes perdidos",
     style: {
     fill: "#000000",
@@ -10,7 +10,19 @@ function cargarInterfaz(){
     },
   });
 
-  miJuego.listaDeTareas.addChild(miJuego.tareasPendientes);
+  miJuego.comprasPendientes = new PIXI.Text({
+    text: "Comprar " + miJuego.cantidadDeComida + miJuego.comidaAComprar,
+    style: {
+    fill: "#000000",
+    fontSize: 25,
+    fontFamily: "PixelFont",
+    },
+  })
+
+  miJuego.comprasPendientes.y = 20;
+
+  miJuego.listaDeTareas.addChild(miJuego.nenesPorRescatar);
+  miJuego.listaDeTareas.addChild(miJuego.comprasPendientes);
         
   miJuego.app.stage.addChild(miJuego.listaDeTareas);
 
@@ -21,7 +33,8 @@ function cargarInterfaz(){
 
 function actualizarInterfaz(){
         const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
-        miJuego.tareasPendientes.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
+        miJuego.nenesPorRescatar.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
+        miJuego.comprasPendientes.text = "Comprar " + miJuego.cantidadDeComida + miJuego.comidaAComprar
         miJuego.dinero.text = "$" + miJuego.dineroDelJugador; //Acá se hace el update de la interfaz, funca en la consola
     }
 
