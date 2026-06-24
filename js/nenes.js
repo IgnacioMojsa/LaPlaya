@@ -11,6 +11,9 @@ class Nenes extends Npc{
         this.suavizado = 1;
         this.aceleracionMax = 0.05;
 
+        this.maquinaDeEstados.agregarEstado('LOST', new LostState(this));
+        this.maquinaDeEstados.cambiarA('LOST');
+
         console.log("nenes creados")
 
         this.mensaje = new PIXI.Text({
@@ -89,18 +92,19 @@ class Nenes extends Npc{
       this.aceleracion.y = 0;
       this.velocidad.x = 0;
       this.velocidad.y = 0;
-
       
       return;
     }
     else if(this.rescatado){
       this.container.visible = false;
+      this.sombra.visible = false;
     }
     
     super.render();
   }
 
-  update(){
+  update(dt){
+    /*
     if (!this.estaPerdido()){
       this.cambiarDeSpriteDeDireccion();
       this.mantenerCercaDe(this.adulto);
@@ -117,6 +121,13 @@ class Nenes extends Npc{
       this.sombra.zIndex = this.container.position.y - 5;
       this.render();
     }
+    */
+
+    this.mantenerCercaDe(this.adulto);
+
+    this.render();
+
+    this.maquinaDeEstados.update(dt);
   }
 
 };

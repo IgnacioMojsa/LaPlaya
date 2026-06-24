@@ -215,7 +215,7 @@ class Jugador {
 
       this.actualizarMensajesDeNenes();
 
-      this.maquinaDeEstados.update();
+      this.maquinaDeEstados.update(dt);
 
       /*this.cambiarDeSpriteDeDireccion();
       this.evitarQueEntreAlAguaConNene();

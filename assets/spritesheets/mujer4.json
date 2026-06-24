@@ -671,6 +671,20 @@
 			"mujer_4_swim_right_4.png",
 			"mujer_4_swim_right_5.png"
 		], 
+        "idle_swim_izq":[
+			"mujer_4_swim_left_1.png",
+			"mujer_4_swim_left_2.png",
+			"mujer_4_swim_left_3.png",
+			"mujer_4_swim_left_4.png",
+			"mujer_4_swim_left_5.png"
+		],
+		"idle_swim_der":[
+			"mujer_4_swim_right_1.png",
+			"mujer_4_swim_right_2.png",
+			"mujer_4_swim_right_3.png",
+			"mujer_4_swim_right_4.png",
+			"mujer_4_swim_right_5.png"
+		], 
         "drown_izq":[
             "mujer_4_drown_left_1.png",
             "mujer_4_drown_left_2.png",

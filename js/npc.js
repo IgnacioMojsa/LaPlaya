@@ -5,6 +5,13 @@ class Npc {
         this.container.position.set(x, y)
 
         this.sombra = new PIXI.Sprite(miJuego.sombra);
+
+        this.maquinaDeEstados = new MaquinaDeEstados(this);
+        this.maquinaDeEstados.agregarEstado('DEFAULT', new DefaultState(this));
+        this.maquinaDeEstados.agregarEstado('SWIM', new SwimState(this));
+        this.maquinaDeEstados.agregarEstado('DROWN', new DrownState(this));
+        this.maquinaDeEstados.agregarEstado('RESCUED', new RescuedState(this));
+        this.maquinaDeEstados.cambiarA('DEFAULT');
         
         this.velocidad = {x: Math.random() * 2 - 1, y: Math.random() * 2 - 1};
         this.aceleracion = {x: 0, y: 0};
@@ -311,6 +318,14 @@ class Npc {
         return this.temerosidad == 5;
     }
 
+    estaCargandoUnNene(){
+        return false 
+    }
+
+    estaQuieto(){
+        return this.velocidad.x == 0;
+    }
+
     nadar(){
         if(this.estaNadando() && this.velocidad.x > 0){
             this.sombra.visible = false;
@@ -396,6 +411,7 @@ class Npc {
     }
 
     update(dt){
+        /*
         if(this.ahogandose && !this.rescatado){
             this.ahogarse();
             return;
@@ -423,9 +439,11 @@ class Npc {
         }
 
         this.actualizarPosicionDeSombra()
+        */
+       this.render();
+       this.mantenerEnLimites(dt);
+       this.agrupar(miJuego.arrayDeNpc);
+       this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
+       this.maquinaDeEstados.update(dt)
     }
 }
-
-// USAR PARA CAMBIAR LA VELOCIDAD DE LA ANIMACION DEPENDIENDO DE QUE TAN RAPIDO SEA EL NPC
-// 0.1 ES LA VELOCIDAD NORMAL, DE AHI TIRAR PARA ARRIBA SI ESTA CORRIENDO O PARA ABAJO SI ESTA CAMINANDO
-// this.spriteAnimadoActual.animationSpeed = 0.1;
