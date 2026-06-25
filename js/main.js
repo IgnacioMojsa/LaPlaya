@@ -171,12 +171,22 @@ class Juego{
         for(let i = 0; i < maxSombrillas; i++){
             const coordenadaXDeSombrilla = Math.min(Math.random() * this.fondo.width, this.fondo.width);
             const coordenadaYDeSombrilla = Math.min(this.orillaDelMar + Math.random() * this.fondo.height, this.fondo.height);
-            const texturaAleatoria = texturasDeSombrilla[obtenerNumeroAleatorio(0,2)]  ;    
+            const texturaAleatoria = texturasDeSombrilla[obtenerNumeroAleatorio(0,2)] ;    
+            const ubicacionLibre = false;
 
             const sombrillaNueva = new GameObject(coordenadaXDeSombrilla, coordenadaYDeSombrilla, texturaAleatoria, i);
 
             this.sombrillas.push(sombrillaNueva);
-            this.mundo.addChild(sombrillaNueva.container);
+
+            if(!sombrillaNueva.haySombrillaCerca()){
+                this.mundo.addChild(sombrillaNueva.container);
+            }
+            else{
+                sombrillaNueva.container.x = Math.min(Math.random() * this.fondo.width, this.fondo.width);
+                sombrillaNueva.container.y = Math.min(this.orillaDelMar + Math.random() * this.fondo.height, this.fondo.height);
+
+                this.mundo.addChild(sombrillaNueva.container);
+            }
         }
     }
 

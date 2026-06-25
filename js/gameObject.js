@@ -13,4 +13,13 @@ class GameObject {
 
         this.container.addChild(this.texture);
     }
+    
+    haySombrillaCerca(){
+        return miJuego.sombrillas.some(sombrilla => {
+                if(sombrilla.id === this.id) return false;
+                
+                return distancia(this.container.x, sombrilla.container.x, this.container.y, sombrilla.container.y) < 80
+            }
+        )
+    }
 }
