@@ -28,6 +28,7 @@ class TejoPortal {
         this.mensaje = new PIXI.Text("Pulsa E para jugar al tejo", {
             fill: "white",
             fontSize: 24,
+            fontFamily: 'PixelFont'
         });
 
         this.mensaje.anchor.set(0.5);

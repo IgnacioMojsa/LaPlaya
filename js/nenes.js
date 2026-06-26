@@ -11,13 +11,17 @@ class Nenes extends Npc{
         this.suavizado = 1;
         this.aceleracionMax = 0.05;
 
+        this.maquinaDeEstados.agregarEstado('LOST', new LostState(this));
+        this.maquinaDeEstados.cambiarA('LOST');
+
         console.log("nenes creados")
 
         this.mensaje = new PIXI.Text({
           text: "Pulsa E para rescatar",
           style: {
             fill: "white",
-            fontSize: 18
+            fontSize: 18,
+            fontFamily: "PixelFont"
           }
         });
         
@@ -26,6 +30,8 @@ class Nenes extends Npc{
         this.mensaje.visible = false;
         
         this.container.addChild(this.mensaje);
+
+        this.sombra.anchor.set(0.5, 1.15);
     }
 
   estaPerdido(){
@@ -86,16 +92,19 @@ class Nenes extends Npc{
       this.aceleracion.y = 0;
       this.velocidad.x = 0;
       this.velocidad.y = 0;
+      
       return;
     }
     else if(this.rescatado){
       this.container.visible = false;
+      this.sombra.visible = false;
     }
     
     super.render();
   }
 
-  update(){
+  update(dt){
+    /*
     if (!this.estaPerdido()){
       this.cambiarDeSpriteDeDireccion();
       this.mantenerCercaDe(this.adulto);
@@ -107,8 +116,18 @@ class Nenes extends Npc{
     }
     else{
       this.cambiarAnimacion("cry");
+      this.sombra.anchor.set(0.5, 1.5);
+      this.sombra.position.set(this.container.position.x, this.container.position.y - 2);
+      this.sombra.zIndex = this.container.position.y - 5;
       this.render();
     }
+    */
+
+    this.mantenerCercaDe(this.adulto);
+
+    this.render();
+
+    this.maquinaDeEstados.update(dt);
   }
 
 };

@@ -6,6 +6,16 @@ class Jugador {
 
     this.velocidad = {x: 0, y: 0};
 
+    this.maquinaDeEstados = new MaquinaDeEstados(this);
+
+    this.maquinaDeEstados.agregarEstado('DEFAULT', new DefaultState(this));
+    this.maquinaDeEstados.agregarEstado('SWIM', new SwimState(this));
+    this.maquinaDeEstados.agregarEstado('WITH_CHILD', new WithChildState(this));
+
+    this.maquinaDeEstados.cambiarA('DEFAULT');
+
+    this.sombra = new PIXI.Sprite(miJuego.sombra);
+
     this.velMaxima = 80;
     this.aceleracion = 80;
     this.friccion = 0.95;
@@ -25,6 +35,13 @@ class Jugador {
 
     this.cargarSpritesAnimados(texture);
     this.cambiarAnimacion(Object.keys(texture.animations)[0]);
+
+    this.sombra.anchor.set(0.5, 1.2);
+    this.sombra.position.set(this.container.position.x, this.container.position.y);
+    this.sombra.zIndex = this.container.position.y - 3;
+    this.sombra.alpha = 0.5;
+
+    miJuego.mundo.addChild(this.sombra);
   }
 
   inputTeclado(dt, keys){
@@ -196,10 +213,14 @@ class Jugador {
       this.container.y += this.velocidad.y * dt;
       this.container.zIndex = this.container.y;
 
-      this.cambiarDeSpriteDeDireccion();
-      this.evitarQueEntreAlAguaConNene();
-      //this.mostrarMensajeDeRescate()
       this.actualizarMensajesDeNenes();
+
+      this.maquinaDeEstados.update(dt);
+
+      /*this.cambiarDeSpriteDeDireccion();
+      this.evitarQueEntreAlAguaConNene();
+      this.mostrarMensajeDeRescate()
+      this.actualizarMensajesDeNenes();*/
   }
 
   cargarSpritesAnimados(spritesACargar){
@@ -227,7 +248,7 @@ class Jugador {
     this.spriteAnimadoActual = this.spritesAnimados[nuevaAnimacion];
   }
 
-  cambiarDeSpriteDeDireccion(){
+  /*cambiarDeSpriteDeDireccion(){
     if (this.velocidad.x > 0) this.ultimaDireccion = "der";
     if (this.velocidad.x < 0) this.ultimaDireccion = "izq";
     
@@ -265,7 +286,7 @@ class Jugador {
     else if(this.estaCargandoUnNene() && !this.estaQuieto() && this.velocidad.x < 0){
       this.cambiarAnimacion("izq_con_nene")
     }
-  }
+  }*/
 
   //PARAMETRO QUE TOMA EN MAIN.JS PARA QUE NO PASE EL LIMITE DE AGUA
   mantenerEnPantalla(limiteAguaY, anchoFondo, altoFondo) {

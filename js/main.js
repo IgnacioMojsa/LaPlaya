@@ -8,6 +8,9 @@ class Juego{
         this.bgm = new Audio("assets/audio/bgm.wav");
         this.nuevoAhora = performance.now();
         this.listaDeTareas = new PIXI.Container();
+        this.comidaAComprar = this.unaComidaAleatoria();
+        this.cantidadDeComida = this.cantidadAleatoriaSegunComida();
+
 
         this.cantAdultos = 100;
         this.cantNenes = 6;
@@ -86,11 +89,13 @@ class Juego{
         this.churrosAssets = await PIXI.Assets.load("assets/spritesheets/vendedora1.json")
         this.chocloAssets = await PIXI.Assets.load("assets/spritesheets/choclo.json")
         //this.pochocloAssets = await PIXI.Assets.load("assets/spritesheets/vendedor3.json")
-        this.playaTextura = await PIXI.Assets.load('assets/playa2.png');
+        this.playaTextura = await PIXI.Assets.load('assets/playa3.png');
         this.garitaTextura = await PIXI.Assets.load('assets/garitaGuardavidas.png')
         this.sombrilla1 = await PIXI.Assets.load('assets/sombrilla.png');
         this.sombrilla2 = await PIXI.Assets.load('assets/sombrilla2.png');
         this.sombrilla3 = await PIXI.Assets.load('assets/sombrilla3.png');
+        this.sombra = await PIXI.Assets.load('assets/sombra.png');
+        this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}}); 
     }
 
     async cargarJugador() {
@@ -139,7 +144,7 @@ class Juego{
 
         this.mensajeDeGarita = new PIXI.Text({
             text: "Pulsa E para resguardar al nene",
-            style: { fill: "white", fontSize: 18 }
+            style: { fill: "white", fontSize: 18, fontFamily: "PixelFont"}
         });
         
         this.mundo.addChild(this.garita);
@@ -166,12 +171,22 @@ class Juego{
         for(let i = 0; i < maxSombrillas; i++){
             const coordenadaXDeSombrilla = Math.min(Math.random() * this.fondo.width, this.fondo.width);
             const coordenadaYDeSombrilla = Math.min(this.orillaDelMar + Math.random() * this.fondo.height, this.fondo.height);
-            const texturaAleatoria = texturasDeSombrilla[obtenerNumeroAleatorio(0,2)]  ;    
+            const texturaAleatoria = texturasDeSombrilla[obtenerNumeroAleatorio(0,2)] ;    
+            const ubicacionLibre = false;
 
             const sombrillaNueva = new GameObject(coordenadaXDeSombrilla, coordenadaYDeSombrilla, texturaAleatoria, i);
 
             this.sombrillas.push(sombrillaNueva);
-            this.mundo.addChild(sombrillaNueva.container);
+
+            if(!sombrillaNueva.haySombrillaCerca()){
+                this.mundo.addChild(sombrillaNueva.container);
+            }
+            else{
+                sombrillaNueva.container.x = Math.min(Math.random() * this.fondo.width, this.fondo.width);
+                sombrillaNueva.container.y = Math.min(this.orillaDelMar + Math.random() * this.fondo.height, this.fondo.height);
+
+                this.mundo.addChild(sombrillaNueva.container);
+            }
         }
     }
 
@@ -258,12 +273,6 @@ class Juego{
         this.mundo.y = Math.max(limiteInferior, Math.min(0, targetY));
     }
 
-    actualizarInterfaz(){
-        const cantNenesPerdidos = this.totalNenes.filter(nene => nene.perdido).length
-        
-        this.tareasPendientes.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
-    }
-
     mostrarMensajeDeGarita(){
         if(this.jugador.estaCercaDeLaGarita() && this.jugador.neneRescatado instanceof Nenes){
             console.log("mostrar mensaje de garita");
@@ -345,6 +354,45 @@ class Juego{
             }
         }
     }
+
+    unaComidaAleatoria(){
+        const comidasDisponibles = ["churros", "choclos"]
+
+        const comidaElegida = comidasDisponibles[obtenerNumeroAleatorio(0,1)]
+
+        if(comidaElegida === "choclos" && this.cantidadDeComida > 1){
+            return "choclos"
+        } 
+        else if(comidaElegida === "choclos" && this.cantidadDeComida === 1){
+            return "choclo"
+        } 
+        else{
+            return comidaElegida
+        }
+    }
+
+    cantidadAleatoriaSegunComida(){
+        if(this.comidaAComprar === 'churros'){
+            const numero = obtenerNumeroAleatorio(0,1);
+
+            if(numero == 0){
+                return "media docena de "
+            }
+            else{
+                return "una docena de "
+            }
+        }
+        else if(this.comidaAComprar === 'choclos'){
+            const numero = obtenerNumeroAleatorio(0,1);
+
+            if(numero == 0){
+                return "1 "
+            }
+            else{
+                return "2 "
+            }
+        }
+    }
     
     gameLoop() {
         const ahora = performance.now();
@@ -372,7 +420,7 @@ class Juego{
             this.jugador.update(dt);
             
             this.actualizarCamara();
-            this.actualizarInterfaz();
+            actualizarInterfaz();
             this.mostrarMensajeDeGarita();
             this.llevarTemerariosAlMar(dt);
             actualizarCielo(this.fondo);

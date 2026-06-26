@@ -671,6 +671,20 @@
 			"hombre_swim_right_4.png",
 			"hombre_swim_right_5.png"
 		],
+        "idle_swim_izq": [
+			"hombre_swim_left_1.png",
+			"hombre_swim_left_2.png",
+			"hombre_swim_left_3.png",
+			"hombre_swim_left_4.png",
+			"hombre_swim_left_5.png"
+		],
+		"idle_swim_der":[
+			"hombre_swim_right_1.png",
+			"hombre_swim_right_2.png",
+			"hombre_swim_right_3.png",
+			"hombre_swim_right_4.png",
+			"hombre_swim_right_5.png"
+		],
         "drown_izq":[
             "hombre_drown_left_1.png",
             "hombre_drown_left_2.png",

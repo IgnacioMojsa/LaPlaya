@@ -3,25 +3,45 @@ class Npc {
         this.id = i;
         this.container = new PIXI.Container();
         this.container.position.set(x, y)
+
+        this.sombra = new PIXI.Sprite(miJuego.sombra);
+
+        this.maquinaDeEstados = new MaquinaDeEstados(this);
+        this.maquinaDeEstados.agregarEstado('DEFAULT', new DefaultState(this));
+        this.maquinaDeEstados.agregarEstado('SWIM', new SwimState(this));
+        this.maquinaDeEstados.agregarEstado('DROWN', new DrownState(this));
+        this.maquinaDeEstados.agregarEstado('RESCUED', new RescuedState(this));
+        this.maquinaDeEstados.cambiarA('DEFAULT');
+        
         this.velocidad = {x: Math.random() * 2 - 1, y: Math.random() * 2 - 1};
         this.aceleracion = {x: 0, y: 0};
         this.velocidadMax = 1;
         this.fuerzaMax = 0.25;
         this.aceleracionMax = 0.2;
+
         this.ultimaDir = "izq";
         this.temerosidad = obtenerNumeroAleatorio(1, 5);
         this.ahogandose = false;
         this.rescatado = false;
         this.tiempoEnPeligro = 0;
+
         this.target = {x: this.container.x, y: this.container.y}
         this.separacion = {x: 50, y: 50};
         this.suavizado = 0.05;
         this.distanciaMaxTarget = 40;
         this.distanciaMinTarget = 20;
+
         this.temporizador = 0;
 
         this.cargarSpritesAnimados(animacion);
         this.cambiarAnimacion(Object.keys(animacion.animations)[0]);
+
+        this.sombra.anchor.set(0.5, 0.9);
+        this.sombra.position.set(this.container.position.x, this.container.position.y);
+        this.sombra.alpha = 0.5;
+        this.sombra.zIndex = this.container.position.y - 3;
+
+        miJuego.mundo.addChild(this.sombra);
     }
 
 /*     mantenerEnLimites(){
@@ -298,11 +318,21 @@ class Npc {
         return this.temerosidad == 5;
     }
 
+    estaCargandoUnNene(){
+        return false 
+    }
+
+    estaQuieto(){
+        return this.velocidad.x == 0;
+    }
+
     nadar(){
         if(this.estaNadando() && this.velocidad.x > 0){
+            this.sombra.visible = false;
             this.cambiarAnimacion("swim_der");
         }
         else if (this.estaNadando() && this.velocidad.x < 0){
+            this.sombra.visible = false;
             this.cambiarAnimacion("swim_izq");
         }
 
@@ -311,6 +341,20 @@ class Npc {
         }
         else if (this.estaNadando() && this.velocidad.x < 0 && this.rescatado) {
             this.cambiarAnimacion("rescatado_izq");
+        }
+    }
+
+    cambiarVelocidadDeAnimacion(){
+        if(this.velocidad.x > 0.09 || this.velocidad.y > 0.09){
+            this.spriteAnimadoActual.animationSpeed = 0.09;
+        }
+        
+        else if(this.velocidad.x > 0.5 || this.velocidad.y > 0.5 && this.velocidad.x < 0.08 || this.velocidad.y < 0.08){
+            this.spriteAnimadoActual.animationSpeed = 0.07;
+        }
+
+        else if(this.velocidad.x < 0.5 || this.velocidad.y < 0.5){
+            this.spriteAnimadoActual.animationSpeed = 0.04;
         }
     }
 
@@ -342,6 +386,11 @@ class Npc {
         }
     }
 
+    actualizarPosicionDeSombra(){
+        this.sombra.position.set(this.container.position.x, this.container.position.y);
+        this.sombra.zIndex = this.container.position.y - 3;
+    }
+
     render(){
         this.velocidad.x += this.aceleracion.x;
         this.velocidad.y += this.aceleracion.y;
@@ -362,6 +411,7 @@ class Npc {
     }
 
     update(dt){
+        /*
         if(this.ahogandose && !this.rescatado){
             this.ahogarse();
             return;
@@ -377,13 +427,23 @@ class Npc {
         }
 
         else{
+            this.sombra.visible = true;
             this.render();
             this.cambiarDeSpriteDeDireccion();
             this.mantenerEnLimites(dt);
             this.agrupar(miJuego.arrayDeNpc)
             this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
+            this.cambiarVelocidadDeAnimacion();
             this.nadar();
             //this.evitarAgua();
         }
+
+        this.actualizarPosicionDeSombra()
+        */
+       this.render();
+       this.mantenerEnLimites(dt);
+       this.agrupar(miJuego.arrayDeNpc);
+       this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
+       this.maquinaDeEstados.update(dt)
     }
 }
