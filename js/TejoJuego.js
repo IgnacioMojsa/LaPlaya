@@ -44,6 +44,7 @@ class TejoJuego {
         this.lanzando = false;
 
         this.ladoActual = "izquierda";
+        this.esperandoCambioLado = false;
 
         window.addEventListener("resize", () => {
             if (this.activo) {
@@ -51,6 +52,8 @@ class TejoJuego {
             }
         });
         this.app.stage.addChild(this.container);
+
+        console.log("NUEVA INSTANCIA", this);
     }
     resize() {
 
@@ -175,19 +178,48 @@ class TejoJuego {
         this.limiteInferior =
             this.cancha.y + this.cancha.height * 0.36;
 
-        if (this.turnoActual === "tejin" && this.tejin) {
-
+        if (
+            this.turnoActual === "tejin" &&
+            this.tejin &&
+            !this.lanzando &&
+            !this.tejinValido
+        ) {
+        
             this.tejin.x =
                 this.ladoActual === "izquierda"
                 ? this.cancha.x - this.cancha.width * 0.45
                 : this.cancha.x + this.cancha.width * 0.45;
-
+        
             this.tejin.y =
                 this.cancha.y + this.cancha.height * 0.25;
-        }    
+        
+            this.tejin.yPiso = this.tejin.y;
+        }   
+
+        // ------------------------
+        // TEXTO CAMBIO DE LADO
+        // ------------------------
+
+        if (this.textoCambioLado) {
+
+            this.textoCambioLado.x =
+                this.app.screen.width / 2;
+
+            this.textoCambioLado.y =
+                this.cancha.y - this.cancha.height * 0.20;
+
+            this.textoCambioLado.style.fontSize =
+                this.app.screen.width * 0.03;
+        }
     }
 
     async iniciar() {
+
+        if (this.activo) return;
+
+        this.activo = true;
+
+        this.container.sortableChildren = true;
 
         // ------------------------
         // RESETEO INPUTS
@@ -227,9 +259,6 @@ class TejoJuego {
         this.intentosTejin = 3;
 
         this.ladoActual = "izquierda";
-
-        this.puntosBlanco = 0;
-        this.puntosRojo = 0;
 
         this.tejosRestantesBlanco = 6;
         this.tejosRestantesRojo = 6;
@@ -382,7 +411,7 @@ class TejoJuego {
         // ------------------------
         
         this.textoPuntosBlanco = new PIXI.Text({
-            text: `Jugador 1: ${this.puntosBlanco}`,
+            text: `Blanco: ${this.puntosBlanco}`,
             style: {
                 fill: "#ffffff",
                 fontSize: this.app.screen.width * 0.025,
@@ -392,10 +421,10 @@ class TejoJuego {
         });
         
         this.textoPuntosBlanco.x =
-        this.app.screen.width * 0.05;
+            this.app.screen.width * 0.18;
         
         this.textoPuntosBlanco.y =
-        this.app.screen.height * 0.05;
+            this.app.screen.height * 0.28;
         
         this.container.addChild(this.textoPuntosBlanco);
         
@@ -404,7 +433,7 @@ class TejoJuego {
         // ------------------------
         
         this.textoPuntosRojo = new PIXI.Text({
-            text: `Jugador 2: ${this.puntosRojo}`,
+            text: `Rojo: ${this.puntosRojo}`,
             style: {
                 fill: "#ffffff",
                 fontSize: this.app.screen.width * 0.025,
@@ -414,18 +443,47 @@ class TejoJuego {
         });
         
         this.textoPuntosRojo.x =
-            this.app.screen.width * 0.78;
+            this.app.screen.width * 0.73;
         
         this.textoPuntosRojo.y =
-            this.app.screen.height * 0.05;
+            this.app.screen.height * 0.28;
+            
         
         this.container.addChild(this.textoPuntosRojo);
+
+
+        // ------------------------
+        // TEXTO CAMBIO DE LADO
+        // ------------------------
+
+        this.textoCambioLado = new PIXI.Text({
+            text: "PRESIONE E PARA CAMBIAR DE LADO",
+            style: {
+                fill: "#ffff00",
+                fontSize: this.app.screen.width * 0.03,
+                fontFamily: "Arial",
+                fontWeight: "bold"
+            }
+        });
+
+        this.textoCambioLado.anchor.set(0.5);
+
+        this.textoCambioLado.x = this.app.screen.width / 2;
+
+        this.textoCambioLado.y =
+            this.cancha.y - this.cancha.height * 0.20;
+
+        this.textoCambioLado.visible = false;
+
+        this.container.addChild(this.textoCambioLado);
         
         
         // TEJIN
         const texturaTejin = await PIXI.Assets.load('assets/tejin.png');
         
         this.tejin = new PIXI.Sprite(texturaTejin);
+
+        this.tejin.tipo = "tejin";
         
         this.tejin.anchor.set(0.5);
 
@@ -443,6 +501,29 @@ class TejoJuego {
         this.tejin.scale.set(escala);
         
         this.tejin.radioColision = 18;
+
+        this.tejin.yPiso = this.tejin.y;
+        this.tejin.alturaVisual = 0;
+
+        this.tejin.velX = 0;
+        this.tejin.velY = 0;
+
+        this.tejin.golpeado = false;
+
+        const sombraTejin = new PIXI.Graphics();
+
+        sombraTejin.beginFill(0x000000, 0.25);
+
+        sombraTejin.drawEllipse(0, 0, 20, 8);
+
+        sombraTejin.endFill();
+
+        sombraTejin.x = this.tejin.x;
+        sombraTejin.y = this.tejin.y + 10;
+
+        this.container.addChild(sombraTejin);
+
+        this.tejin.sombra = sombraTejin;
         
         this.container.addChild(this.tejin);
         this.objetoActual = this.tejin;
@@ -456,11 +537,13 @@ class TejoJuego {
         this.container.addChild(this.barraAltura);
         
         this.resize();
+
+        console.log("INICIAR", this);
         
     }
     
     
-    lanzarTejin() {
+    lanzarObjeto() {
         
         if (this.lanzando) return;
         
@@ -529,13 +612,34 @@ class TejoJuego {
             this.objetoActual.x =
                 inicioX + (destinoX - inicioX) * t;
 
+            this.objetoActual.tiempoGiro =
+                (this.objetoActual.tiempoGiro || 0) + 1;
+                    
+            if (this.objetoActual.tiempoGiro >= 4) {
+            
+                this.objetoActual.scale.x *= -1;
+            
+                this.objetoActual.tiempoGiro = 0;
+            }    
+
             const parabola =
                 -4 * alturaParabola * (t - 0.5) * (t - 0.5)
                 + alturaParabola;
 
-            this.objetoActual.y = destinoY - parabola;
+            this.objetoActual.yPiso = destinoY;
+
+            this.objetoActual.alturaVisual = parabola;
+
+            this.objetoActual.y =
+                this.objetoActual.yPiso
+                - this.objetoActual.alturaVisual;
 
             this.detectarColisiones();
+
+            /* this.objetoActual.scale.x =
+                Math.abs(this.objetoActual.scale.x);
+                    
+            this.objetoActual.tiempoGiro = 0; */
 
             if (t >= 1) {
 
@@ -564,6 +668,11 @@ class TejoJuego {
 
     detectarColisiones() {
 
+        // NO COLISIONA SI ESTA EN EL AIRE
+        if (this.objetoActual.alturaVisual > 15) {
+            return;
+        }
+
         const radioActual =
             this.objetoActual.radioColision;
 
@@ -581,7 +690,7 @@ class TejoJuego {
                 obj.x - this.objetoActual.x;
 
             const dy =
-                obj.y - this.objetoActual.y;
+                obj.yPiso - this.objetoActual.yPiso;
 
             const distancia =
                 Math.sqrt(dx * dx + dy * dy);
@@ -610,14 +719,86 @@ class TejoJuego {
 
             if (!obj) return;
 
+            obj.zIndex = Math.floor(obj.yPiso);
+
             obj.velX = obj.velX || 0;
             obj.velY = obj.velY || 0;
 
             obj.x += obj.velX;
-            obj.y += obj.velY;
 
-            obj.velX *= 0.95;
-            obj.velY *= 0.95;
+            obj.yPiso += obj.velY;
+                    
+            obj.y =
+                obj.yPiso - (obj.alturaVisual || 0);
+
+            const velocidad =
+                Math.sqrt(
+                    obj.velX * obj.velX +
+                    obj.velY * obj.velY
+                );
+            
+            if (velocidad > 0.2) {
+            
+                obj.tiempoGiro =
+                    (obj.tiempoGiro || 0) + 1;
+            
+                if (obj.tiempoGiro >= 4) {
+                
+                    obj.scale.x *= -1;
+                
+                    obj.tiempoGiro = 0;
+                }
+            }
+            else {
+            
+                // cuando se detiene
+                obj.tiempoGiro = 0;
+            
+                obj.scale.x =
+                    Math.abs(obj.scale.x);
+            }    
+
+            obj.yPiso = obj.yPiso || obj.y;
+
+            
+            if (obj.sombra) {
+
+                obj.sombra.x = obj.x;
+                        
+                obj.sombra.y =
+                    obj.yPiso + 10;
+                        
+                const altura =
+                    obj.alturaVisual || 0;
+                        
+                // -------------------------
+                // VISIBILIDAD
+                // -------------------------
+                        
+                obj.sombra.visible = altura > 5;
+                        
+                // -------------------------
+                // ESCALA
+                // -------------------------
+                        
+                const escala =
+                    1 + (altura / 120);
+                        
+                obj.sombra.scale.set(escala);
+                        
+                // -------------------------
+                // ALPHA
+                // -------------------------
+                        
+                obj.sombra.alpha =
+                    Math.max(
+                        0.08,
+                        0.35 - (altura / 250)
+                    );
+            }   
+
+            obj.velX *= 0.88;
+            obj.velY *= 0.88;
 
             if (Math.abs(obj.velX) < 0.05) obj.velX = 0;
             if (Math.abs(obj.velY) < 0.05) obj.velY = 0;
@@ -626,15 +807,12 @@ class TejoJuego {
 
     golpearObjeto(obj) {
 
-        /* if (obj.golpeado) return;
-
-        obj.golpeado = true; */
-
         const dx =
             obj.x - this.objetoActual.x;
 
         const dy =
-            obj.y - this.objetoActual.y;
+            obj.yPiso - this.objetoActual.yPiso;
+        
 
         const distancia =
             Math.sqrt(dx * dx + dy * dy);
@@ -644,12 +822,45 @@ class TejoJuego {
         const nx = dx / distancia;
         const ny = dy / distancia;
 
-        const fuerza =
-            this.ultimoLanzamiento.fuerza / 10;
-            
+        // -------------------------
+        // FUERZA BASE
+        // -------------------------
+
+        let fuerza =
+            this.ultimoLanzamiento.fuerza / 25;
+
+        // -------------------------
+        // SI EL QUE GOLPEA ES EL TEJIN
+        // -------------------------
+
+        if (this.objetoActual.tipo === "tejin") {
+
+            fuerza *= 0.25;
+        }
+
+        // -------------------------
+        // EMPUJAR OBJETO GOLPEADO
+        // -------------------------
 
         obj.velX = nx * fuerza;
         obj.velY = ny * fuerza;
+
+        // -------------------------
+        // FRENAR AL GOLPEADOR
+        // -------------------------
+
+        if (this.objetoActual.tipo === "tejo") {
+
+            // el tejo queda casi quieto
+            this.objetoActual.velX *= 0.15;
+            this.objetoActual.velY *= 0.15;
+        }
+        else {
+
+            // el tejin prácticamente no mueve
+            this.objetoActual.velX *= 0.05;
+            this.objetoActual.velY *= 0.05;
+        }
     }
 
     verificarTejin() {
@@ -746,9 +957,11 @@ class TejoJuego {
             // si perdió los intentos
             if (this.intentosTejin <= 0) {
 
-                console.log("CAMBIO DE LADO");
+                this.pedirCambioLado();
 
-                this.cambiarLado();
+                /* console.log("CAMBIO DE LADO");
+
+                this.cambiarLado(); */
             }
         }
     }
@@ -840,6 +1053,13 @@ class TejoJuego {
 
     async decidirSiguienteTurno() {
 
+        if (
+            this.puntosBlanco >= 15 ||
+            this.puntosRojo >= 15
+        ) {
+            return;
+        }
+
         // -----------------------------------
         // FIN DE RONDA
         // -----------------------------------
@@ -851,7 +1071,9 @@ class TejoJuego {
 
             this.calcularPuntos();
 
-            this.cambiarLado();
+            this.pedirCambioLado();
+
+            //this.cambiarLado();
 
             return;
         }
@@ -903,6 +1125,9 @@ class TejoJuego {
                 
                     this.turnoActual = "blanco";
                 
+                    this.textoTurno.text =
+                        "JUEGA TEJO BLANCO";
+                
                     await this.crearNuevoTejo("blanco");
                 }
             
@@ -910,6 +1135,9 @@ class TejoJuego {
             }
         
             this.turnoActual = "rojo";
+        
+            this.textoTurno.text =
+                "JUEGA TEJO ROJO";
         
             await this.crearNuevoTejo("rojo");
         
@@ -928,6 +1156,9 @@ class TejoJuego {
                 
                     this.turnoActual = "rojo";
                 
+                    this.textoTurno.text =
+                        "JUEGA TEJO ROJO";
+                
                     await this.crearNuevoTejo("rojo");
                 }
             
@@ -936,8 +1167,25 @@ class TejoJuego {
         
             this.turnoActual = "blanco";
         
+            this.textoTurno.text =
+                "JUEGA TEJO BLANCO";
+        
             await this.crearNuevoTejo("blanco");
         }
+    }
+
+    pedirCambioLado() {
+
+        console.log("MOSTRANDO CAMBIO DE LADO");
+
+        this.esperandoCambioLado = true;
+
+        this.textoCambioLado.visible = true;
+
+        this.container.setChildIndex(
+            this.textoCambioLado,
+            this.container.children.length - 1
+        );
     }
 
     calcularPuntos() {
@@ -1018,9 +1266,46 @@ class TejoJuego {
         console.log(
             `${ganador} suma ${puntos} puntos`
         );
+
+        // ------------------------
+        // GANADOR
+        // ------------------------
+
+        if (this.puntosBlanco >= 15) {
+        
+            this.finalizarPartida("BLANCO");
+            return;
+        }
+
+        if (this.puntosRojo >= 15) {
+        
+            this.finalizarPartida("ROJO");
+            return;
+        }
+    }
+
+    finalizarPartida(ganador) {
+
+        this.textoTurno.visible = true;
+
+        this.textoTurno.text =
+            `GANA ${ganador}`;
+
+        this.esperandoCambioLado = true;
+
+        this.textoCambioLado.visible = false;
+
+        console.log(`GANA ${ganador}`);
     }
 
     cambiarLado() {
+
+        console.log(
+        "CAMBIAR LADO",
+        this.puntosBlanco,
+        this.puntosRojo,
+        this
+        );
 
         if (this.ladoActual === "izquierda") {
 
@@ -1055,11 +1340,23 @@ class TejoJuego {
 
         // eliminar sprites viejos
         this.tejosBlancos.forEach(t => {
+
+            if (t.sombra) {
+                this.container.removeChild(t.sombra);
+                t.sombra.destroy();
+            }
+        
             this.container.removeChild(t);
             t.destroy();
         });
 
         this.tejosRojos.forEach(t => {
+        
+            if (t.sombra) {
+                this.container.removeChild(t.sombra);
+                t.sombra.destroy();
+            }
+        
             this.container.removeChild(t);
             t.destroy();
         });
@@ -1093,6 +1390,22 @@ class TejoJuego {
         if (!this.activo) return;
         if (!this.barraFuerza || !this.barraAltura) return;
         if (!this.objetoActual) return;
+
+        if (this.esperandoCambioLado) {
+
+            if (keys["e"] || keys["E"]) {
+
+                console.log("E detectada");
+            
+                this.esperandoCambioLado = false;
+            
+                this.textoCambioLado.visible = false;
+            
+                this.cambiarLado();
+            }
+        
+            return;
+        }
 
         const controlesBloqueados =
             this.turnoActual === "tejin" &&
@@ -1134,11 +1447,23 @@ class TejoJuego {
         if (!this.lanzando && !controlesBloqueados) {
         
             if (keys["w"] || keys["W"]) {
-                this.objetoActual.y -= this.velocidadMovimiento;
+
+                this.objetoActual.yPiso -=
+                    this.velocidadMovimiento;
+
+                this.objetoActual.y =
+                    this.objetoActual.yPiso
+                    - (this.objetoActual.alturaVisual || 0);
             }
-        
+
             if (keys["s"] || keys["S"]) {
-                this.objetoActual.y += this.velocidadMovimiento;
+            
+                this.objetoActual.yPiso +=
+                    this.velocidadMovimiento;
+            
+                this.objetoActual.y =
+                    this.objetoActual.yPiso
+                    - (this.objetoActual.alturaVisual || 0);
             }
         }
     
@@ -1146,13 +1471,21 @@ class TejoJuego {
         // LIMITES
         // ------------------------
     
-        if (this.objetoActual.y < this.limiteSuperior) {
-            this.objetoActual.y = this.limiteSuperior;
+        if (this.objetoActual.yPiso < this.limiteSuperior) {
+
+            this.objetoActual.yPiso =
+                this.limiteSuperior;
         }
-    
-        if (this.objetoActual.y > this.limiteInferior) {
-            this.objetoActual.y = this.limiteInferior;
+
+        if (this.objetoActual.yPiso > this.limiteInferior) {
+        
+            this.objetoActual.yPiso =
+                this.limiteInferior;
         }
+
+        this.objetoActual.y =
+            this.objetoActual.yPiso
+            - (this.objetoActual.alturaVisual || 0);
     
         // ------------------------
         // SOLTAR F
@@ -1161,7 +1494,7 @@ class TejoJuego {
         const fApretada = keys["f"] || keys["F"];
     
         if (this.fPresionadaAntes && !fApretada) {
-            this.lanzarTejin();
+            this.lanzarObjeto();
         }
     
         this.fPresionadaAntes = fApretada;
@@ -1173,7 +1506,7 @@ class TejoJuego {
         const aApretada = keys["a"] || keys["A"];
     
         if (this.aPresionadaAntes && !aApretada) {
-            this.lanzarTejin();
+            this.lanzarObjeto();
         }
     
         this.aPresionadaAntes = aApretada;
@@ -1247,8 +1580,10 @@ class TejoJuego {
     distanciaAlTejin(tejo) {
 
         const dx = tejo.x - this.tejin.x;
-        const dy = tejo.y - this.tejin.y;
-
+        
+        const dy =
+            tejo.yPiso - this.tejin.yPiso;
+        
         return Math.sqrt(dx * dx + dy * dy);
     }
 
@@ -1332,6 +1667,8 @@ class TejoJuego {
 
         const tejo = new PIXI.Sprite(textura);
 
+        tejo.tipo = "tejo";
+
         tejo.anchor.set(0.5);
 
         
@@ -1352,6 +1689,29 @@ class TejoJuego {
         tejo.scale.set(escala);
 
         tejo.radioColision = 18;
+
+        tejo.yPiso = tejo.y;
+        tejo.alturaVisual = 0;
+
+        tejo.velX = 0;
+        tejo.velY = 0;
+
+        tejo.golpeado = false;
+
+        const sombra = new PIXI.Graphics();
+
+        sombra.beginFill(0x000000, 0.25);
+
+        sombra.drawEllipse(0, 0, 20, 8);
+
+        sombra.endFill();
+
+        sombra.x = tejo.x;
+        sombra.y = tejo.y + 10;
+
+        this.container.addChild(sombra);
+
+        tejo.sombra = sombra;
 
         this.container.addChild(tejo);
 
@@ -1396,6 +1756,9 @@ class TejoJuego {
 
         this.ladoActual = "izquierda";
 
+        this.puntosBlanco = 0;
+        this.puntosRojo = 0;
+
         // posición inicial
         if (this.tejin) {
 
@@ -1414,5 +1777,7 @@ class TejoJuego {
 
         this.barraFuerza = null;
         this.barraAltura = null;
+
+        console.log("SALIR", this);
     }
 }

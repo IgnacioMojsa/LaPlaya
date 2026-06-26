@@ -39,13 +39,13 @@ class TejoPortal {
         this.mundo.addChild(this.mensaje);
 
         window.addEventListener("keydown", (e) => {
+
             if (e.key.toLowerCase() === "e" && this.jugadorCerca) {
             
-                if (this.juego.activo) {
-                    this.juego.salir();
+                // SOLO entrar si NO está activo
+                if (!this.juego.activo) {
+                    this.juego.iniciar();
                 }
-            
-                this.juego.iniciar();
             }
         });
     }
