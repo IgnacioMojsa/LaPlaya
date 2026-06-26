@@ -636,10 +636,6 @@ class TejoJuego {
 
             this.detectarColisiones();
 
-            /* this.objetoActual.scale.x =
-                Math.abs(this.objetoActual.scale.x);
-                    
-            this.objetoActual.tiempoGiro = 0; */
 
             if (t >= 1) {
 
@@ -959,9 +955,6 @@ class TejoJuego {
 
                 this.pedirCambioLado();
 
-                /* console.log("CAMBIO DE LADO");
-
-                this.cambiarLado(); */
             }
         }
     }
