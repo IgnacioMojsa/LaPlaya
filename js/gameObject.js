@@ -23,3 +23,50 @@ class GameObject {
         )
     }
 }
+
+class Comida{
+    constructor(cantidad){
+        this.compraRequerida = cantidad;
+
+        this.mensaje = "un mensaje de compra";
+    }
+
+    cantidadAComprar(){
+        return this.compraRequerida
+    }
+}
+
+class Churro extends Comida{
+    constructor(cantidad){
+        super(cantidad)
+
+        this.mensajeDeCompra = this.cantidadAComprar() + " de churros";
+    }
+
+    cantidadAComprar(){
+        if(this.compraRequerida >= 12){
+            return " una docena"
+        }
+        else{
+            return " media docena"
+        }
+    }
+}
+
+class Choclo extends Comida{
+    constructor(cantidad){
+        super(cantidad)
+
+        this.mensajeDeCompra = this.cantidadAComprar();
+    }
+
+    cantidadAComprar(){
+        if(this.compraRequerida > 1){
+            return " 2 choclos"
+        }
+        else{
+            return " un choclo"
+        }
+    }
+}
+

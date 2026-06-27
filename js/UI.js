@@ -34,7 +34,7 @@ function cargarInterfaz(){
 function actualizarInterfaz(){
         const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
         miJuego.nenesPorRescatar.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
-        miJuego.comprasPendientes.text = "Comprar " + miJuego.cantidadDeComida + miJuego.comidaAComprar
+        miJuego.comprasPendientes.text = "Comprar" + miJuego.comidaAComprar.mensajeDeCompra;
         miJuego.dinero.text = "$" + miJuego.dineroDelJugador; //Acá se hace el update de la interfaz, funca en la consola
     }
 

@@ -9,8 +9,6 @@ class Juego{
         this.nuevoAhora = performance.now();
         this.listaDeTareas = new PIXI.Container();
         this.comidaAComprar = this.unaComidaAleatoria();
-        this.cantidadDeComida = this.cantidadAleatoriaSegunComida();
-
 
         this.cantAdultos = 100;
         this.cantNenes = 6;
@@ -356,22 +354,24 @@ class Juego{
     }
 
     unaComidaAleatoria(){
-        const comidasDisponibles = ["churros", "choclos"]
+        const comidasDisponibles = [new Churro(obtenerNumeroAleatorio(6,18)), new Choclo(obtenerNumeroAleatorio(1,2))]
 
         const comidaElegida = comidasDisponibles[obtenerNumeroAleatorio(0,1)]
 
-        if(comidaElegida === "choclos" && this.cantidadDeComida > 1){
+        /*if(comidaElegida.tipo === "choclo" && this.cantidadDeComida > 1){
             return "choclos"
         } 
-        else if(comidaElegida === "choclos" && this.cantidadDeComida === 1){
+        else if(comidaElegida === "choclo" && this.cantidadDeComida === 1){
             return "choclo"
         } 
         else{
             return comidaElegida
-        }
+        }*/
+
+        return comidaElegida
     }
 
-    cantidadAleatoriaSegunComida(){
+    /*cantidadAleatoriaSegunComida(){
         if(this.comidaAComprar === 'churros'){
             const numero = obtenerNumeroAleatorio(0,1);
 
@@ -392,7 +392,7 @@ class Juego{
                 return "2 "
             }
         }
-    }
+    }*/
     
     gameLoop() {
         const ahora = performance.now();
