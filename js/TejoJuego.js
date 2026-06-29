@@ -46,6 +46,8 @@ class TejoJuego {
         this.ladoActual = "izquierda";
         this.esperandoCambioLado = false;
 
+        this.partidaTerminada = false;
+
         window.addEventListener("resize", () => {
             if (this.activo) {
                 this.resize();
@@ -219,6 +221,8 @@ class TejoJuego {
 
         this.activo = true;
 
+        this.partidaTerminada = false;
+
         this.container.sortableChildren = true;
 
         // ------------------------
@@ -230,15 +234,11 @@ class TejoJuego {
         keys["a"] = false;
         keys["A"] = false;
 
-        this.activo = true;
-
-
         this.fuerza = 0;
         this.altura = 0;
         
         this.container.visible = true;
 
-        //this.container.removeChildren();
         this.container.removeChildren().forEach(c => c.destroy());
 
         this.cancha = null;
@@ -260,8 +260,13 @@ class TejoJuego {
 
         this.ladoActual = "izquierda";
 
+        this.puntosBlanco = 0;
+        this.puntosRojo = 0;
+
         this.tejosRestantesBlanco = 6;
         this.tejosRestantesRojo = 6;
+
+        this.esperandoCambioLado = false;
 
         this.barraFuerza = null;
         this.barraAltura = null;
@@ -1169,6 +1174,8 @@ class TejoJuego {
 
     pedirCambioLado() {
 
+        if (this.partidaTerminada) return;
+
         console.log("MOSTRANDO CAMBIO DE LADO");
 
         this.esperandoCambioLado = true;
@@ -1279,16 +1286,18 @@ class TejoJuego {
 
     finalizarPartida(ganador) {
 
+        this.partidaTerminada = true;
+
         this.textoTurno.visible = true;
-
-        this.textoTurno.text =
-            `GANA ${ganador}`;
-
-        this.esperandoCambioLado = true;
 
         this.textoCambioLado.visible = false;
 
-        console.log(`GANA ${ganador}`);
+        this.textoTurno.text =
+            `GANÓ ${ganador}`;
+
+        this.esperandoCambioLado = false;
+
+        console.log(`GANÓ ${ganador}`);
     }
 
     cambiarLado() {
@@ -1381,6 +1390,11 @@ class TejoJuego {
     update() {
 
         if (!this.activo) return;
+        if (this.partidaTerminada) {
+
+            // permitir salir con ESC
+            return;
+        }
         if (!this.barraFuerza || !this.barraAltura) return;
         if (!this.objetoActual) return;
 
