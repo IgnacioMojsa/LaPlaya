@@ -36,9 +36,9 @@ function cargarInterfaz(){
 
   miJuego.barraAmarilla = new PIXI.Graphics();
   miJuego.barraAmarilla.beginFill("#ffb700");
-  miJuego.barraAmarilla.drawRect(2, 2, miJuego.energiaDelJugador*4.6, 40);
+  miJuego.barraAmarilla.drawRect(2, 2, miJuego.energiaDelJugador * 3.6, 30);
   miJuego.barraAmarilla.endFill();
-  miJuego.barraAmarilla.x = -480;
+  miJuego.barraAmarilla.x = -370;
   miJuego.barraAmarilla.y = 25;
 
 
@@ -47,22 +47,22 @@ function cargarInterfaz(){
   miJuego.uiBarraEnergia.addChild(visualBarraEnergia);
   miJuego.uiBarraEnergia.addChild(miJuego.barraAmarilla)
   miJuego.app.stage.addChild(miJuego.uiBarraEnergia);
-  miJuego.uiBarraEnergia.x = 570;
+  miJuego.uiBarraEnergia.x = 430;
   miJuego.uiBarraEnergia.y = 10;
   miJuego.uiBarraEnergia.setChildIndex(miJuego.barraAmarilla, 0);
 
 
   miJuego.dinero = new PIXI.Text({text: miJuego.dineroDelJugador, style: {fill: "#ffb700", fontSize: 30, fontWeight: 900, fontFamily: "PixelFont"}});
-  miJuego.dinero.y = 24;
-  miJuego.dinero.x = -310;
+  miJuego.dinero.y = 19;
+  miJuego.dinero.x = -230;
 
   const visualDinero = new PIXI.Sprite(miJuego.dineroDisponible);
   visualDinero.anchor.set(1, 0);
   miJuego.uiDinero.addChild(visualDinero);
   miJuego.uiDinero.addChild(miJuego.dinero);
   miJuego.app.stage.addChild(miJuego.uiDinero);
-  miJuego.uiDinero.x = 417;
-  miJuego.uiDinero.y = 110;
+  miJuego.uiDinero.x = 316;
+  miJuego.uiDinero.y = 90;
 
   miJuego.comprasPendientes.y = 20;
 
@@ -78,10 +78,10 @@ function actualizarInterfaz(){
     miJuego.comprasPendientes.text = "Comprar" + miJuego.comidaAComprar.mensajeDeCompra;
     miJuego.dinero.text = miJuego.dineroDelJugador;
     
-    const energiaActual = miJuego.energiaDelJugador * 4.6;
+    const energiaActual = miJuego.energiaDelJugador * 3.6;
     miJuego.barraAmarilla.clear();
     miJuego.barraAmarilla.beginFill("#ffb700");
-    miJuego.barraAmarilla.drawRect(2, 2, energiaActual, 40);
+    miJuego.barraAmarilla.drawRect(2, 2, energiaActual, 30);
     miJuego.barraAmarilla.endFill();
   }
 
