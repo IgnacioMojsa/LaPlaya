@@ -4,8 +4,8 @@ function cargarInterfaz(){
   miJuego.nenesPorRescatar = new PIXI.Text({
     text: "Encontrar " + miJuego.perdidos + " nenes perdidos",
     style: {
-    fill: "#000000",
-    fontSize: 25,
+    fill: "#ffffff",
+    fontSize: 18,
     fontFamily: "PixelFont",
     },
   });
@@ -13,8 +13,8 @@ function cargarInterfaz(){
   miJuego.comprasPendientes = new PIXI.Text({
     text: "Comprar " + miJuego.cantidadDeComida + miJuego.comidaAComprar,
     style: {
-    fill: "#000000",
-    fontSize: 25,
+    fill: "#ffffff",
+    fontSize: 18,
     fontFamily: "PixelFont",
     },
   })
@@ -64,7 +64,13 @@ function cargarInterfaz(){
   miJuego.uiDinero.x = 316;
   miJuego.uiDinero.y = 90;
 
-  miJuego.comprasPendientes.y = 20;
+  miJuego.nenesPorRescatar.anchor.set(0,1);
+  miJuego.nenesPorRescatar.y = miJuego.uiObjetivosDesplegados.y + 80;
+  miJuego.nenesPorRescatar.x = miJuego.uiObjetivosDesplegados.x - 300;
+
+  miJuego.comprasPendientes.anchor.set(0,1);
+  miJuego.comprasPendientes.y = miJuego.uiObjetivosDesplegados.y + 100;
+  miJuego.comprasPendientes.x = miJuego.uiObjetivosDesplegados.x - 300;
 
   miJuego.listaDeTareas.addChild(miJuego.nenesPorRescatar);
   miJuego.listaDeTareas.addChild(miJuego.comprasPendientes);

@@ -120,9 +120,11 @@ class Jugador {
       if(desplegar){
         console.log("Tecla T presionada")
         miJuego.uiObjetivosDesplegados.visible = true;
+        miJuego.listaDeTareas.children.forEach(tarea => {tarea.visible = true});
       }
       else{
         miJuego.uiObjetivosDesplegados.visible = false;
+        miJuego.listaDeTareas.children.forEach(tarea => {tarea.visible = false});
       }
   }
   
