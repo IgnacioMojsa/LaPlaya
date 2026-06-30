@@ -10,6 +10,9 @@ class Juego{
         this.listaDeTareas = new PIXI.Container();
         this.comidaAComprar = this.unaComidaAleatoria();
 
+        this.uiObjetivosDesplegados = new PIXI.Container();
+        this.uiObjetivosContraidos = new PIXI.Container();
+
         this.cantAdultos = 100;
         this.cantNenes = 6;
         this.arrayDeNpc = [];
@@ -93,6 +96,8 @@ class Juego{
         this.sombrilla2 = await PIXI.Assets.load('assets/sombrilla2.png');
         this.sombrilla3 = await PIXI.Assets.load('assets/sombrilla3.png');
         this.sombra = await PIXI.Assets.load('assets/sombra.png');
+        this.objetivosDesplegados = await PIXI.Assets.load('assets/UIObjetivosDesplegado.png');
+        this.objetivosContraidos = await PIXI.Assets.load('assets/UIObjetivos.png');
         this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}}); 
     }
 
@@ -450,18 +455,22 @@ const keys = {
      s:false,
      d:false,
      e:false,
+     t:false,
      W:false,
      A:false,
      S:false,
      D:false,
-     E:false
+     E:false,
+     T:false
 };
 
 const keysProcesadas = {
     e: false,
     E: false,
     q: false,
-    Q: false
+    Q: false,
+    t: false,
+    T: false
 };
 
 window.addEventListener('keydown', (e) => {

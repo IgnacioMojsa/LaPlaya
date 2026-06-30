@@ -19,6 +19,21 @@ function cargarInterfaz(){
     },
   })
 
+  const visualObjetivosContraidos = new PIXI.Sprite(miJuego.objetivosContraidos);
+  visualObjetivosContraidos.anchor.set(1, 0);
+  miJuego.uiObjetivosContraidos.addChild(visualObjetivosContraidos)
+  miJuego.app.stage.addChild(miJuego.uiObjetivosContraidos);
+  miJuego.uiObjetivosContraidos.x = window.innerWidth - 10;
+  miJuego.uiObjetivosContraidos.y = window.innerHeight/60;
+
+  const visualObjetivosDesplegados = new PIXI.Sprite(miJuego.objetivosDesplegados);
+  visualObjetivosDesplegados.anchor.set(1, 0);
+  miJuego.uiObjetivosDesplegados.addChild(visualObjetivosDesplegados)
+  miJuego.app.stage.addChild(miJuego.uiObjetivosDesplegados);
+  miJuego.uiObjetivosDesplegados.x = window.innerWidth - 10;
+  miJuego.uiObjetivosDesplegados.y = window.innerHeight/60;
+  miJuego.uiObjetivosDesplegados.visible = false;
+
   miJuego.comprasPendientes.y = 20;
 
   miJuego.listaDeTareas.addChild(miJuego.nenesPorRescatar);
@@ -32,11 +47,11 @@ function cargarInterfaz(){
 }
 
 function actualizarInterfaz(){
-        const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
-        miJuego.nenesPorRescatar.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
-        miJuego.comprasPendientes.text = "Comprar" + miJuego.comidaAComprar.mensajeDeCompra;
-        miJuego.dinero.text = "$" + miJuego.dineroDelJugador; //Acá se hace el update de la interfaz, funca en la consola
-    }
+    const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
+    miJuego.nenesPorRescatar.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
+    miJuego.comprasPendientes.text = "Comprar" + miJuego.comidaAComprar.mensajeDeCompra;
+    miJuego.dinero.text = "$" + miJuego.dineroDelJugador; //Acá se hace el update de la interfaz, funca en la consola
+  }
 
 
 class UICompra {
@@ -162,6 +177,27 @@ class UICompra {
     else if (key === 'enter'){ this.comprarProducto();}
   }
   onKeyUp(e){ this.keysProcesadas[e.key.toLowerCase()] = false;}
+}
+
+class UIObjetivos{
+  constructor(texture){
+    this.container = new PIXI.Container();
+    this.texture = texture;
+
+    this.desplegado = false;
+  }
+
+  desplegar(){
+    if(!this.desplegado){
+      this.desplegado = true;
+    }
+  }
+
+  contraer(){
+    if(this.desplegado){
+      this.desplegado = false;
+    }
+  }
 }
 
 function menuDeCompra(app, juego, opciones) {

@@ -114,6 +114,16 @@ class Jugador {
         npcAhogadoCercano.rescatado = true;
         npcAhogadoCercano.ahogandose = false;
       }
+
+      const desplegar = (keys.t && !keysProcesadas.t) || (keys.T && !keysProcesadas.T);
+
+      if(desplegar){
+        console.log("Tecla T presionada")
+        miJuego.uiObjetivosDesplegados.visible = true;
+      }
+      else{
+        miJuego.uiObjetivosDesplegados.visible = false;
+      }
   }
   
   bloquearInput(estado = true){
