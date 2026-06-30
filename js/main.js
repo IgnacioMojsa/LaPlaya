@@ -36,6 +36,7 @@ class Juego{
         this.zonaPeligrosa = 390;
 
         this.dineroDelJugador = 10000;
+        this.energiaDelJugador = 100;
 
         this.bgm.loop = true;
     }

@@ -34,15 +34,25 @@ function cargarInterfaz(){
   miJuego.uiObjetivosDesplegados.y = window.innerHeight/60;
   miJuego.uiObjetivosDesplegados.visible = false;
 
+  miJuego.barraAmarilla = new PIXI.Graphics();
+  miJuego.barraAmarilla.beginFill("#ffb700");
+  miJuego.barraAmarilla.drawRect(2, 2, miJuego.energiaDelJugador*4.6, 40);
+  miJuego.barraAmarilla.endFill();
+  miJuego.barraAmarilla.x = -480;
+  miJuego.barraAmarilla.y = 25;
+
+
   const visualBarraEnergia = new PIXI.Sprite(miJuego.barraEnergia);
   visualBarraEnergia.anchor.set(1, 0);
   miJuego.uiBarraEnergia.addChild(visualBarraEnergia);
-  //miJuego.uiBarraEnergia.addChild(miJuego.barraAmarilla)
+  miJuego.uiBarraEnergia.addChild(miJuego.barraAmarilla)
   miJuego.app.stage.addChild(miJuego.uiBarraEnergia);
   miJuego.uiBarraEnergia.x = 570;
   miJuego.uiBarraEnergia.y = 10;
+  miJuego.uiBarraEnergia.setChildIndex(miJuego.barraAmarilla, 0);
 
-  miJuego.dinero = new PIXI.Text({text: miJuego.dineroDelJugador, style: {fill: "#ffb800", fontSize: 30, fontWeight: 900, fontFamily: "PixelFont"}});
+
+  miJuego.dinero = new PIXI.Text({text: miJuego.dineroDelJugador, style: {fill: "#ffb700", fontSize: 30, fontWeight: 900, fontFamily: "PixelFont"}});
   miJuego.dinero.y = 24;
   miJuego.dinero.x = -310;
 
@@ -67,6 +77,12 @@ function actualizarInterfaz(){
     miJuego.nenesPorRescatar.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
     miJuego.comprasPendientes.text = "Comprar" + miJuego.comidaAComprar.mensajeDeCompra;
     miJuego.dinero.text = miJuego.dineroDelJugador;
+    
+    const energiaActual = miJuego.energiaDelJugador * 4.6;
+    miJuego.barraAmarilla.clear();
+    miJuego.barraAmarilla.beginFill("#ffb700");
+    miJuego.barraAmarilla.drawRect(2, 2, energiaActual, 40);
+    miJuego.barraAmarilla.endFill();
   }
 
 
