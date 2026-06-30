@@ -12,6 +12,9 @@ class Juego{
 
         this.uiObjetivosDesplegados = new PIXI.Container();
         this.uiObjetivosContraidos = new PIXI.Container();
+        this.uiBarraEnergia = new PIXI.Container();
+        this.uiDinero = new PIXI.Container();
+        this.uiRelojBanderin = new PIXI.Container();
 
         this.cantAdultos = 100;
         this.cantNenes = 6;
@@ -96,8 +99,13 @@ class Juego{
         this.sombrilla2 = await PIXI.Assets.load('assets/sombrilla2.png');
         this.sombrilla3 = await PIXI.Assets.load('assets/sombrilla3.png');
         this.sombra = await PIXI.Assets.load('assets/sombra.png');
-        this.objetivosDesplegados = await PIXI.Assets.load('assets/UIObjetivosDesplegado.png');
-        this.objetivosContraidos = await PIXI.Assets.load('assets/UIObjetivos.png');
+
+        this.objetivosDesplegados = await PIXI.Assets.load('assets/ui/UIObjetivosDesplegado.png');
+        this.objetivosContraidos = await PIXI.Assets.load('assets/ui/UIObjetivos.png');
+        this.barraEnergia = await PIXI.Assets.load("assets/ui/energia.png");
+        this.dineroDisponible = await PIXI.Assets.load("assets/ui/dinero.png");
+        this.reloj = await PIXI.Assets.load("assets/ui/reloj.png");
+
         this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}}); 
     }
 

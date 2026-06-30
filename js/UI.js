@@ -34,23 +34,39 @@ function cargarInterfaz(){
   miJuego.uiObjetivosDesplegados.y = window.innerHeight/60;
   miJuego.uiObjetivosDesplegados.visible = false;
 
+  const visualBarraEnergia = new PIXI.Sprite(miJuego.barraEnergia);
+  visualBarraEnergia.anchor.set(1, 0);
+  miJuego.uiBarraEnergia.addChild(visualBarraEnergia);
+  //miJuego.uiBarraEnergia.addChild(miJuego.barraAmarilla)
+  miJuego.app.stage.addChild(miJuego.uiBarraEnergia);
+  miJuego.uiBarraEnergia.x = 570;
+  miJuego.uiBarraEnergia.y = 10;
+
+  miJuego.dinero = new PIXI.Text({text: miJuego.dineroDelJugador, style: {fill: "#ffb800", fontSize: 30, fontWeight: 900, fontFamily: "PixelFont"}});
+  miJuego.dinero.y = 24;
+  miJuego.dinero.x = -310;
+
+  const visualDinero = new PIXI.Sprite(miJuego.dineroDisponible);
+  visualDinero.anchor.set(1, 0);
+  miJuego.uiDinero.addChild(visualDinero);
+  miJuego.uiDinero.addChild(miJuego.dinero);
+  miJuego.app.stage.addChild(miJuego.uiDinero);
+  miJuego.uiDinero.x = 417;
+  miJuego.uiDinero.y = 110;
+
   miJuego.comprasPendientes.y = 20;
 
   miJuego.listaDeTareas.addChild(miJuego.nenesPorRescatar);
   miJuego.listaDeTareas.addChild(miJuego.comprasPendientes);
         
   miJuego.app.stage.addChild(miJuego.listaDeTareas);
-
-  miJuego.dinero = new PIXI.Text({text: "$" + miJuego.dineroDelJugador, style: {fill: "#009e42", fontSize: 30, fontWeight: 900, fontFamily: "PixelFont"}});
-  miJuego.dinero.y = 50;
-  miJuego.app.stage.addChild(miJuego.dinero)
 }
 
 function actualizarInterfaz(){
     const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
     miJuego.nenesPorRescatar.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
     miJuego.comprasPendientes.text = "Comprar" + miJuego.comidaAComprar.mensajeDeCompra;
-    miJuego.dinero.text = "$" + miJuego.dineroDelJugador; //Acá se hace el update de la interfaz, funca en la consola
+    miJuego.dinero.text = miJuego.dineroDelJugador;
   }
 
 
