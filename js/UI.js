@@ -41,16 +41,23 @@ function cargarInterfaz(){
   miJuego.barraAmarilla.x = -370;
   miJuego.barraAmarilla.y = 25;
 
+  miJuego.barraFondo = new PIXI.Graphics();
+  miJuego.barraFondo.beginFill("#770000");
+  miJuego.barraFondo.drawRect(2, 2, 360, 30);
+  miJuego.barraFondo.endFill();
+  miJuego.barraFondo.x = -370;
+  miJuego.barraFondo.y = 25;
 
   const visualBarraEnergia = new PIXI.Sprite(miJuego.barraEnergia);
   visualBarraEnergia.anchor.set(1, 0);
   miJuego.uiBarraEnergia.addChild(visualBarraEnergia);
-  miJuego.uiBarraEnergia.addChild(miJuego.barraAmarilla)
+  miJuego.uiBarraEnergia.addChild(miJuego.barraAmarilla);
+  miJuego.uiBarraEnergia.addChild(miJuego.barraFondo);
   miJuego.app.stage.addChild(miJuego.uiBarraEnergia);
   miJuego.uiBarraEnergia.x = 430;
   miJuego.uiBarraEnergia.y = 10;
   miJuego.uiBarraEnergia.setChildIndex(miJuego.barraAmarilla, 0);
-
+  miJuego.uiBarraEnergia.setChildIndex(miJuego.barraFondo, 0);
 
   miJuego.dinero = new PIXI.Text({text: miJuego.dineroDelJugador, style: {fill: "#ffb700", fontSize: 30, fontWeight: 900, fontFamily: "PixelFont"}});
   miJuego.dinero.y = 19;
