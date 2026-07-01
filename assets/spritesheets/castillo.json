@@ -1,0 +1,18 @@
+{"frames":{"castillo0.png":{"frame":{"x":0,"y":0,"w":45,"h":26},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":26},"sourceSize":{"w":45,"h":26}},"castillo1.png":{"frame":{"x":45,"y":0,"w":45,"h":26},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":26},"sourceSize":{"w":45,"h":26}},"castillo2.png":{"frame":{"x":0,"y":26,"w":45,"h":26},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":26},"sourceSize":{"w":45,"h":26}},"castillo3.png":{"frame":{"x":45,"y":26,"w":45,"h":26},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":26},"sourceSize":{"w":45,"h":26}},"castillo4.png":{"frame":{"x":0,"y":52,"w":45,"h":26},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":26},"sourceSize":{"w":45,"h":26}},"castillo5.png":{"frame":{"x":45,"y":52,"w":45,"h":26},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":45,"h":26},"sourceSize":{"w":45,"h":26}}},
+
+  "animations":{
+
+        "idle":[
+            "castillo0.png"
+        ],
+
+		"romperse":[
+            "castillo1.png",
+            "castillo2.png",
+            "castillo3.png",
+            "castillo4.png",
+            "castillo5.png"
+        ]
+	},
+
+"meta":{"app":"https://github.com/piskelapp/piskel/","version":"1.0","image":"castillo.png","format":"RGBA8888","size":{"w":90,"h":78}}}

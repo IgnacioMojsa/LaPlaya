@@ -1,0 +1,716 @@
+{
+    "frames": {
+        "hombre_4_drown_left_1.png": {
+            "frame": {
+                "x": 1,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_drown_left_2.png": {
+            "frame": {
+                "x": 67,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_drown_left_3.png": {
+            "frame": {
+                "x": 133,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_drown_left_4.png": {
+            "frame": {
+                "x": 199,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_drown_left_5.png": {
+            "frame": {
+                "x": 265,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_drown_right_1.png": {
+            "frame": {
+                "x": 1,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_drown_right_2.png": {
+            "frame": {
+                "x": 67,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_drown_right_3.png": {
+            "frame": {
+                "x": 133,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_drown_right_4.png": {
+            "frame": {
+                "x": 199,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_drown_right_5.png": {
+            "frame": {
+                "x": 265,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_rescatado_left.png": {
+            "frame": {
+                "x": 1,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_rescatado_right.png": {
+            "frame": {
+                "x": 67,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_swim_left_1.png": {
+            "frame": {
+                "x": 133,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_swim_left_2.png": {
+            "frame": {
+                "x": 199,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_swim_left_3.png": {
+            "frame": {
+                "x": 265,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_swim_left_4.png": {
+            "frame": {
+                "x": 1,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_swim_left_5.png": {
+            "frame": {
+                "x": 67,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_swim_right_1.png": {
+            "frame": {
+                "x": 133,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_swim_right_2.png": {
+            "frame": {
+                "x": 199,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_swim_right_3.png": {
+            "frame": {
+                "x": 265,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_swim_right_4.png": {
+            "frame": {
+                "x": 1,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "hombre_4_swim_right_5.png": {
+            "frame": {
+                "x": 67,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "left_1.png": {
+            "frame": {
+                "x": 133,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "left_2.png": {
+            "frame": {
+                "x": 199,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "left_3.png": {
+            "frame": {
+                "x": 265,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "left_4.png": {
+            "frame": {
+                "x": 331,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "left_5.png": {
+            "frame": {
+                "x": 331,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "right_1.png": {
+            "frame": {
+                "x": 331,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "right_2.png": {
+            "frame": {
+                "x": 331,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "right_3.png": {
+            "frame": {
+                "x": 331,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "right_4.png": {
+            "frame": {
+                "x": 1,
+                "y": 331,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "right_5.png": {
+            "frame": {
+                "x": 67,
+                "y": 331,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        }
+    },
+
+    "animations":{
+		"izq": [
+			"left_1.png",
+			"left_2.png",
+			"left_3.png",
+			"left_4.png",
+			"left_5.png"
+		],
+		"der": [
+			"right_1.png",
+			"right_2.png",
+			"right_3.png",
+			"right_4.png",
+			"right_5.png"
+		],
+		"swim_izq": [
+			"hombre_4_swim_left_1.png",
+			"hombre_4_swim_left_2.png",
+			"hombre_4_swim_left_3.png",
+			"hombre_4_swim_left_4.png",
+			"hombre_4_swim_left_5.png"
+		],
+		"swim_der":[
+			"hombre_4_swim_right_1.png",
+			"hombre_4_swim_right_2.png",
+			"hombre_4_swim_right_3.png",
+			"hombre_4_swim_right_4.png",
+			"hombre_4_swim_right_5.png"
+		],
+        "idle_swim_izq": [
+			"hombre_4_swim_left_1.png",
+			"hombre_4_swim_left_2.png",
+			"hombre_4_swim_left_3.png",
+			"hombre_4_swim_left_4.png",
+			"hombre_4_swim_left_5.png"
+		],
+		"idle_swim_der":[
+			"hombre_4_swim_right_1.png",
+			"hombre_4_swim_right_2.png",
+			"hombre_4_swim_right_3.png",
+			"hombre_4_swim_right_4.png",
+			"hombre_4_swim_right_5.png"
+		],
+        "drown_izq":[
+            "hombre_4_drown_left_1.png",
+            "hombre_4_drown_left_2.png",
+            "hombre_4_drown_left_3.png",
+            "hombre_4_drown_left_4.png",
+            "hombre_4_drown_left_5.png"
+        ],
+        "drown_der":[
+            "hombre_4_drown_right_1.png",
+            "hombre_4_drown_right_2.png",
+            "hombre_4_drown_right_3.png",
+            "hombre_4_drown_right_4.png",
+            "hombre_4_drown_right_5.png"
+        ],
+        "rescatado_izq":[
+            "hombre_4_rescatado_left.png"
+        ],
+        "rescatado_der":[
+            "hombre_4_rescatado_right.png"
+        ],
+        "idle_izq":[
+            "left_1.png"
+        ],
+        "idle_der":[
+            "right_1.png"
+        ]
+	},
+
+"meta":{"app":"https://github.com/piskelapp/piskel/","version":"1.0","image":"hombre4.png","format":"RGBA8888","size":{"w":396,"h":396}}}

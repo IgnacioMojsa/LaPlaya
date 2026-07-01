@@ -42,7 +42,7 @@ function cargarInterfaz(){
   miJuego.barraAmarilla.y = 25;
 
   miJuego.barraFondo = new PIXI.Graphics();
-  miJuego.barraFondo.beginFill("#770000");
+  miJuego.barraFondo.beginFill("#9f0006");
   miJuego.barraFondo.drawRect(2, 2, 360, 30);
   miJuego.barraFondo.endFill();
   miJuego.barraFondo.x = -370;

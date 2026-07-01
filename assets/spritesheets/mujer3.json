@@ -1,0 +1,716 @@
+{
+    "frames": {
+        "mujer_3_drown_left_1.png": {
+            "frame": {
+                "x": 1,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_drown_left_2.png": {
+            "frame": {
+                "x": 67,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_drown_left_3.png": {
+            "frame": {
+                "x": 133,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_drown_left_4.png": {
+            "frame": {
+                "x": 199,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_drown_left_5.png": {
+            "frame": {
+                "x": 265,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_drown_right_1.png": {
+            "frame": {
+                "x": 1,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_drown_right_2.png": {
+            "frame": {
+                "x": 67,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_drown_right_3.png": {
+            "frame": {
+                "x": 133,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_drown_right_4.png": {
+            "frame": {
+                "x": 199,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_drown_right_5.png": {
+            "frame": {
+                "x": 265,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_left_1.png": {
+            "frame": {
+                "x": 1,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_left_2.png": {
+            "frame": {
+                "x": 67,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_left_3.png": {
+            "frame": {
+                "x": 133,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_left_4.png": {
+            "frame": {
+                "x": 199,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_left_5.png": {
+            "frame": {
+                "x": 265,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_rescatada_left.png": {
+            "frame": {
+                "x": 1,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_rescatada_right.png": {
+            "frame": {
+                "x": 67,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_right_1.png": {
+            "frame": {
+                "x": 133,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_right_2.png": {
+            "frame": {
+                "x": 199,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_right_3.png": {
+            "frame": {
+                "x": 265,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_right_4.png": {
+            "frame": {
+                "x": 1,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_right_5.png": {
+            "frame": {
+                "x": 67,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_swim_left_1.png": {
+            "frame": {
+                "x": 133,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_swim_left_2.png": {
+            "frame": {
+                "x": 199,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_swim_left_3.png": {
+            "frame": {
+                "x": 265,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_swim_left_4.png": {
+            "frame": {
+                "x": 331,
+                "y": 1,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_swim_left_5.png": {
+            "frame": {
+                "x": 331,
+                "y": 67,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_swim_right_1.png": {
+            "frame": {
+                "x": 331,
+                "y": 133,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_swim_right_2.png": {
+            "frame": {
+                "x": 331,
+                "y": 199,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_swim_right_3.png": {
+            "frame": {
+                "x": 331,
+                "y": 265,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_swim_right_4.png": {
+            "frame": {
+                "x": 1,
+                "y": 331,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        "mujer_3_swim_right_5.png": {
+            "frame": {
+                "x": 67,
+                "y": 331,
+                "w": 64,
+                "h": 64
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 64,
+                "h": 64
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        }
+    },
+
+    "animations":{
+		"izq":[
+			"mujer_3_left_1.png",
+			"mujer_3_left_2.png",
+			"mujer_3_left_3.png",
+			"mujer_3_left_4.png",
+			"mujer_3_left_5.png"
+		],
+		"der":[
+			"mujer_3_right_1.png",
+			"mujer_3_right_2.png",
+			"mujer_3_right_3.png",
+			"mujer_3_right_4.png",
+			"mujer_3_right_5.png"
+		],
+		"swim_izq":[
+			"mujer_3_swim_left_1.png",
+			"mujer_3_swim_left_2.png",
+			"mujer_3_swim_left_3.png",
+			"mujer_3_swim_left_4.png",
+			"mujer_3_swim_left_5.png"
+		],
+		"swim_der":[
+			"mujer_3_swim_right_1.png",
+			"mujer_3_swim_right_2.png",
+			"mujer_3_swim_right_3.png",
+			"mujer_3_swim_right_4.png",
+			"mujer_3_swim_right_5.png"
+		], 
+        "idle_swim_izq":[
+			"mujer_3_swim_left_1.png",
+			"mujer_3_swim_left_2.png",
+			"mujer_3_swim_left_3.png",
+			"mujer_3_swim_left_4.png",
+			"mujer_3_swim_left_5.png"
+		],
+		"idle_swim_der":[
+			"mujer_3_swim_right_1.png",
+			"mujer_3_swim_right_2.png",
+			"mujer_3_swim_right_3.png",
+			"mujer_3_swim_right_4.png",
+			"mujer_3_swim_right_5.png"
+		], 
+        "drown_izq":[
+            "mujer_3_drown_left_1.png",
+            "mujer_3_drown_left_2.png",
+            "mujer_3_drown_left_3.png",
+            "mujer_3_drown_left_4.png",
+            "mujer_3_drown_left_5.png"
+        ],
+        "drown_der":[
+            "mujer_3_drown_right_1.png",
+            "mujer_3_drown_right_2.png",
+            "mujer_3_drown_right_3.png",
+            "mujer_3_drown_right_4.png",
+            "mujer_3_drown_right_5.png"
+        ],
+        "rescatado_izq":[
+            "mujer_3_rescatada_left.png"
+        ],
+        "rescatado_der":[
+            "mujer_3_rescatada_right.png"
+        ],
+        "idle_izq":[
+            "mujer_3_left_1.png"
+        ],
+        "idle_der":[
+            "mujer_3_right_1.png"
+        ]
+    },
+
+"meta":{"app":"https://github.com/piskelapp/piskel/","version":"1.0","image":"mujer3.png","format":"RGBA8888","size":{"w":396,"h":396}}}

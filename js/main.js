@@ -23,7 +23,7 @@ class Juego{
         this.totalNenes = [];
         this.nenesRescatados = [];
         this.totalVendedores = [];
-        this.vendedores = 2;
+        this.vendedores = 1;
         this.temporizador = 0;
         this.perdidos = obtenerNumeroAleatorio(2, 5);
         this.totalPersonasTemerarias = [];
@@ -85,9 +85,13 @@ class Juego{
     }
 
     async precargarAssets() {
-        this.hombreAssets = await PIXI.Assets.load("assets/spritesheets/hombre.json");
+        this.hombre1 = await PIXI.Assets.load("assets/spritesheets/hombre.json");
+        this.hombre2 = await PIXI.Assets.load("assets/spritesheets/hombre2.json");
+        this.hombre3 = await PIXI.Assets.load("assets/spritesheets/hombre3.json");
+        this.hombre4 = await PIXI.Assets.load("assets/spritesheets/hombre4.json");
         this.mujer1 = await PIXI.Assets.load("assets/spritesheets/mujer.json");
         this.mujer2 = await PIXI.Assets.load("assets/spritesheets/mujer2.json");
+        this.mujer3 = await PIXI.Assets.load("assets/spritesheets/mujer3.json");
         this.mujer4 = await PIXI.Assets.load("assets/spritesheets/mujer4.json");
         this.neneAssets = await PIXI.Assets.load("assets/spritesheets/nene.json");
         this.jugadorAssets = await PIXI.Assets.load('assets/spritesheets/player.json');
@@ -204,10 +208,10 @@ class Juego{
 
     async cargarMujeres(){
         const cantAdultos = this.cantAdultos;
-        const texturasNPCS = [this.mujer1, this.mujer2, this.mujer4];
+        const texturasNPCS = [this.mujer1, this.mujer2, this.mujer3, this.mujer4];
 
         for(let i = 0; i < cantAdultos; i++){
-            const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,2)];    
+            const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,3)];    
             await this.cargarUnPersonajeNoJugable(Mujer, texturaAleatoria, 1)
         };
 
@@ -216,10 +220,10 @@ class Juego{
 
     async cargarHombres(){
         const cantAdultos = this.cantAdultos;
-        const texturasNPCS = [this.hombreAssets];
+        const texturasNPCS = [this.hombre1, this.hombre2, this.hombre3, this.hombre4];
 
         for(let i = 0; i < cantAdultos; i++){
-            const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,0)]  ;    
+            const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,3)]  ;    
             await this.cargarUnPersonajeNoJugable(Hombre, texturaAleatoria, 1)
         };
 
