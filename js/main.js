@@ -476,7 +476,8 @@ const keys = {
      S:false,
      D:false,
      E:false,
-     T:false
+     T:false,
+    Enter:false 
 };
 
 const keysProcesadas = {

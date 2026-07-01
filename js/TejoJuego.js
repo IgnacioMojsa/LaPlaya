@@ -48,6 +48,25 @@ class TejoJuego {
 
         this.partidaTerminada = false;
 
+        // ------------------------
+        // MODOS DE JUEGO
+        // ------------------------
+
+        this.enterPresionadoAntes = false;
+        this.wPresionadaAntes = false;
+        this.sPresionadaAntes = false;
+
+        this.comHabilitada = false;
+
+        // "pvp" o "pvc"
+        this.modoJuego = null;
+
+        this.menuModoVisible = false;
+
+        this.opcionSeleccionada = 0;
+
+        this.opcionesMenu = [];
+
         window.addEventListener("resize", () => {
             if (this.activo) {
                 this.resize();
@@ -57,6 +76,129 @@ class TejoJuego {
 
         console.log("NUEVA INSTANCIA", this);
     }
+
+    mostrarMenuModo() {
+
+        this.menuModoVisible = true;
+
+        this.opcionSeleccionada = 0;
+
+        this.menuContainer = new PIXI.Container();
+
+        this.container.addChild(this.menuContainer);
+
+        // fondo oscuro
+        const fondo = new PIXI.Graphics();
+
+        fondo.beginFill(0x000000, 0.75);
+
+        fondo.drawRect(
+            0,
+            0,
+            this.app.screen.width,
+            this.app.screen.height
+        );
+
+        fondo.endFill();
+
+        this.menuContainer.addChild(fondo);
+
+        // titulo
+        const titulo = new PIXI.Text({
+            text: "SELECCIONAR MODO",
+            style: {
+                fill: "#ffffff",
+                fontSize: this.app.screen.width * 0.04,
+                fontFamily: "Arial",
+                fontWeight: "bold"
+            }
+        });
+
+        titulo.anchor.set(0.5);
+
+        titulo.x = this.app.screen.width / 2;
+        titulo.y = this.app.screen.height * 0.35;
+
+        this.menuContainer.addChild(titulo);
+
+        // opciones
+        this.opcionesMenu = [];
+
+        const opciones = [
+            "Jugador 1 vs Jugador 2"
+        ];
+
+        if (this.comHabilitada) {
+
+            opciones.push("Jugador 1 vs COM");
+        }
+
+        opciones.forEach((texto, i) => {
+
+            const opcion = new PIXI.Text({
+                text: texto,
+                style: {
+                    fill: "#aaaaaa",
+                    fontSize: this.app.screen.width * 0.03,
+                    fontFamily: "Arial",
+                    fontWeight: "bold"
+                }
+            });
+
+            opcion.anchor.set(0.5);
+
+            opcion.x = this.app.screen.width / 2;
+
+            opcion.y =
+                this.app.screen.height * 0.48
+                + (i * 60);
+
+            this.menuContainer.addChild(opcion);
+
+            this.opcionesMenu.push(opcion);
+        });
+
+        this.actualizarMenuModo();
+    }
+
+    actualizarMenuModo() {
+
+        this.opcionesMenu.forEach((opcion, i) => {
+
+            opcion.style.fill =
+                i === this.opcionSeleccionada
+                ? "#ffff00"
+                : "#aaaaaa";
+        });
+    }
+
+    confirmarModoJuego() {
+
+        console.log("CONFIRMAR MODO");
+
+        if (this.opcionSeleccionada === 0) {
+
+            this.modoJuego = "pvp";
+        }
+        else {
+
+            this.modoJuego = "pvc";
+        }
+
+        console.log(
+            "Modo seleccionado:",
+            this.modoJuego
+        );
+
+        this.menuModoVisible = false;
+
+        this.container.removeChild(this.menuContainer);
+
+        this.menuContainer.destroy({
+            children: true
+        });
+    }
+
     resize() {
 
         if (!this.cancha) return;
@@ -542,6 +684,8 @@ class TejoJuego {
         this.container.addChild(this.barraAltura);
         
         this.resize();
+
+        this.mostrarMenuModo();
 
         console.log("INICIAR", this);
         
@@ -1389,10 +1533,85 @@ class TejoJuego {
 
     update() {
 
+        console.log("MENU:", this.menuModoVisible);
+
         if (!this.activo) return;
         if (this.partidaTerminada) {
 
             // permitir salir con ESC
+            return;
+        }
+
+        // ------------------------
+        // MENU MODO DE JUEGO
+        // ------------------------
+
+        if (this.menuModoVisible) {
+        
+            if (keys["w"] || keys["W"]) {
+            
+                if (!this.wPresionadaAntes) {
+                
+                    this.opcionSeleccionada--;
+                
+                    if (this.opcionSeleccionada < 0) {
+                    
+                        this.opcionSeleccionada =
+                            this.opcionesMenu.length - 1;
+                    }
+                
+                    this.actualizarMenuModo();
+                }
+            
+                this.wPresionadaAntes = true;
+            }
+            else {
+            
+                this.wPresionadaAntes = false;
+            }
+        
+            if (keys["s"] || keys["S"]) {
+            
+                if (!this.sPresionadaAntes) {
+                
+                    this.opcionSeleccionada++;
+                
+                    if (
+                        this.opcionSeleccionada >=
+                        this.opcionesMenu.length
+                    ) {
+                        this.opcionSeleccionada = 0;
+                    }
+                
+                    this.actualizarMenuModo();
+                }
+            
+                this.sPresionadaAntes = true;
+            }
+            else {
+            
+                this.sPresionadaAntes = false;
+            }
+
+            window.addEventListener("keydown", e => {
+                console.log(e.key);
+            });
+        
+            // ENTER
+            if (keys["Enter"]) {
+            
+                if (!this.enterPresionadoAntes) {
+                
+                    this.confirmarModoJuego();
+                }
+            
+                this.enterPresionadoAntes = true;
+            }
+            else {
+            
+                this.enterPresionadoAntes = false;
+            }
+        
             return;
         }
         if (!this.barraFuerza || !this.barraAltura) return;
