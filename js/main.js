@@ -97,6 +97,7 @@ class Juego{
         this.jugadorAssets = await PIXI.Assets.load('assets/spritesheets/player.json');
         this.churrosAssets = await PIXI.Assets.load("assets/spritesheets/vendedora1.json")
         this.chocloAssets = await PIXI.Assets.load("assets/spritesheets/choclo.json")
+        this.heladoAssets = await PIXI.Assets.load("assets/spritesheets/vendedor2.json")
         //this.pochocloAssets = await PIXI.Assets.load("assets/spritesheets/vendedor3.json")
         this.playaTextura = await PIXI.Assets.load('assets/playa3.png');
         this.garitaTextura = await PIXI.Assets.load('assets/garitaGuardavidas.png')
@@ -247,6 +248,7 @@ class Juego{
         await this.cargarUnPersonajeNoJugable(Nenes, this.neneAssets, (this.cantNenes + this.perdidos));
         await this.cargarUnPersonajeNoJugable(VendedoraChurros, this.churrosAssets, (this.vendedores));
         await this.cargarUnPersonajeNoJugable(VendedorChoclos, this.chocloAssets, (this.vendedores));
+        await this.cargarUnPersonajeNoJugable(AguaYHelado, this.heladoAssets, (this.vendedores));
         this.asignarNenesPerdidos((this.cantNenes + this.perdidos))
         //this.cargarUnPersonajeNoJugable(VendedorPochoclos, this.pochocloAssets, (this.vendedores));
         console.log("assets cargados")

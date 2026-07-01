@@ -1,0 +1,26 @@
+{"frames":{"vendedor20.png":{"frame":{"x":0,"y":0,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor21.png":{"frame":{"x":66,"y":0,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor22.png":{"frame":{"x":132,"y":0,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor23.png":{"frame":{"x":0,"y":66,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor24.png":{"frame":{"x":66,"y":66,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor25.png":{"frame":{"x":132,"y":66,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor26.png":{"frame":{"x":0,"y":132,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor27.png":{"frame":{"x":66,"y":132,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor28.png":{"frame":{"x":132,"y":132,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor29.png":{"frame":{"x":0,"y":198,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor210.png":{"frame":{"x":66,"y":198,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}},"vendedor211.png":{"frame":{"x":132,"y":198,"w":66,"h":66},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":66,"h":66},"sourceSize":{"w":66,"h":66}}},
+
+"animations":{
+		"idle_izq":[
+			"vendedor20.png",
+            "vendedor21.png"
+		],
+		"idle_der":[
+			"vendedor26.png",
+            "vendedor27.png"
+		],
+		"izq":[
+			"vendedor22.png",
+            "vendedor23.png",
+            "vendedor24.png",
+            "vendedor25.png"
+		],
+		"der":[
+			"vendedor28.png",
+            "vendedor29.png",
+            "vendedor210.png",
+            "vendedor211.png"
+        ]
+	},
+
+"meta":{"app":"https://github.com/piskelapp/piskel/","version":"1.0","image":"vendedor2.png","format":"RGBA8888","size":{"w":198,"h":264}}}

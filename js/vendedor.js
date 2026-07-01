@@ -156,5 +156,11 @@ class AguaYHelado extends Vendedor{
        dineroDelJugador: miJuego.dineroDelJugador,
       }
     );
+
+    this.velocidadMax = 0.8;
+    this.pausaTiempo = 0;
+    this.pausaDuracion = 5;
+    this.tiempoCaminando = 60;
+      
     }
 }
