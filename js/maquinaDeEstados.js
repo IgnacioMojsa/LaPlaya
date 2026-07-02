@@ -227,6 +227,7 @@ class RescuedState{
 
         if(!this.personaje.ahogandose && !this.personaje.rescatado){
             this.personaje.maquinaDeEstados.cambiarA('DEFAULT')
+            miJuego.dineroDelJugador += 3000;
         }
     }
 
