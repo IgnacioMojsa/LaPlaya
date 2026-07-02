@@ -45,10 +45,10 @@ class Churro extends Comida{
 
     cantidadAComprar(){
         if(this.compraRequerida >= 12){
-            return " una docena"
+            return "una docena"
         }
         else{
-            return " media docena"
+            return "media docena"
         }
     }
 }
@@ -62,11 +62,44 @@ class Choclo extends Comida{
 
     cantidadAComprar(){
         if(this.compraRequerida > 1){
-            return " 2 choclos"
+            return "2 choclos"
         }
         else{
-            return " un choclo"
+            return "un choclo"
         }
     }
 }
 
+class Agua extends Comida{
+    constructor (cantidad){
+        super(cantidad)
+
+        this.mensajeDeCompra = this.compraRequerida + this.cantidadAComprar();
+    }
+
+    cantidadAComprar(){
+        if(this.compraRequerida > 1){
+            return " botellas de agua"
+        }
+        else{
+            return " botella de agua"
+        }
+    }
+}
+
+class Helado extends Comida{
+    constructor (cantidad){
+        super(cantidad)
+
+        this.mensajeDeCompra = this.compraRequerida + this.cantidadAComprar();
+    }
+
+    cantidadAComprar(){
+        if(this.compraRequerida > 1){
+            return " helados"
+        }
+        else{
+            return " helado"
+        }
+    }
+}

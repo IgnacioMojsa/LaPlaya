@@ -88,7 +88,7 @@ function cargarInterfaz(){
 function actualizarInterfaz(){
     const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
     miJuego.nenesPorRescatar.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
-    miJuego.comprasPendientes.text = "Comprar" + miJuego.comidaAComprar.mensajeDeCompra;
+    miJuego.comprasPendientes.text = "Comprar " + miJuego.comidaAComprar.mensajeDeCompra;
     miJuego.dinero.text = miJuego.dineroDelJugador;
     
     const energiaActual = miJuego.energiaDelJugador * 3.6;

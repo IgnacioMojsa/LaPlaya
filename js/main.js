@@ -374,9 +374,14 @@ class Juego{
     }
 
     unaComidaAleatoria(){
-        const comidasDisponibles = [new Churro(obtenerNumeroAleatorio(6,18)), new Choclo(obtenerNumeroAleatorio(1,2))]
+        const comidasDisponibles = [
+            new Churro(obtenerNumeroAleatorio(6,18)), 
+            new Choclo(obtenerNumeroAleatorio(1,2)), 
+            new Agua(obtenerNumeroAleatorio(1,3)),
+            new Helado(obtenerNumeroAleatorio(1,5))
+        ]
 
-        const comidaElegida = comidasDisponibles[obtenerNumeroAleatorio(0,1)]
+        const comidaElegida = comidasDisponibles[obtenerNumeroAleatorio(0,3)]
 
         /*if(comidaElegida.tipo === "choclo" && this.cantidadDeComida > 1){
             return "choclos"
