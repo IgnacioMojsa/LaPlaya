@@ -161,7 +161,6 @@ class UICompra {
     this.hoverOpcion();
 
     this.infoTxt = new PIXI.Text({
-      //Esto está para modificar después en la construcción de la UI
       text: "W y S Elegir | Enter Comprar | E Salir", 
       style: {fontFamily: "PixelFont", fontSize: 20, fill: "#ffb700"}}); 
     this.infoTxt.x = x + 25; this.infoTxt.y = y + menuAltura + 40;
