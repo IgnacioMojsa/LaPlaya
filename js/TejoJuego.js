@@ -1665,6 +1665,11 @@ class TejoJuego {
             return;
         }
 
+        const cpuControlando =
+        this.modoJuego === "pvc" &&
+        this.turnoActual === "rojo" &&
+        this.cpuJugando;
+
         // ------------------------
         // MENU MODO DE JUEGO
         // ------------------------
@@ -1760,7 +1765,7 @@ class TejoJuego {
         // CARGA FUERZA / ALTURA
         // ------------------------
         
-        if (!this.lanzando && !controlesBloqueados) {
+        if (!this.lanzando && !controlesBloqueados && !cpuControlando) {
         
             if (keys["f"] || keys["F"]) {
             
@@ -1789,7 +1794,7 @@ class TejoJuego {
         // MOVIMIENTO
         // ------------------------
     
-        if (!this.lanzando && !controlesBloqueados) {
+        if (!this.lanzando && !controlesBloqueados && !cpuControlando) {
         
             if (keys["w"] || keys["W"]) {
 
@@ -1838,7 +1843,7 @@ class TejoJuego {
     
         const fApretada = keys["f"] || keys["F"];
     
-        if (this.fPresionadaAntes && !fApretada) {
+        if (this.fPresionadaAntes && !fApretada && !cpuControlando) {
             this.lanzarObjeto();
         }
     
@@ -1850,7 +1855,7 @@ class TejoJuego {
     
         const aApretada = keys["a"] || keys["A"];
     
-        if (this.aPresionadaAntes && !aApretada) {
+        if (this.aPresionadaAntes && !aApretada && !cpuControlando) {
             this.lanzarObjeto();
         }
     
