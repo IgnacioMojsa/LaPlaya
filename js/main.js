@@ -104,6 +104,7 @@ class Juego{
         this.sombrilla1 = await PIXI.Assets.load('assets/sombrilla.png');
         this.sombrilla2 = await PIXI.Assets.load('assets/sombrilla2.png');
         this.sombrilla3 = await PIXI.Assets.load('assets/sombrilla3.png');
+        this.castilloAssets = await PIXI.Assets.load("assets/spritesheets/castillo.json");
         this.sombra = await PIXI.Assets.load('assets/sombra.png');
 
         this.objetivosDesplegados = await PIXI.Assets.load('assets/ui/UIObjetivosDesplegado.png');
@@ -207,6 +208,28 @@ class Juego{
         }
     }
 
+    async cargarCastillos() {
+        const maxCastillos = this.cantNenes;
+        this.castillos = [];
+
+        for (let i = 0; i < maxCastillos; i++) {
+            const x = Math.random() * this.fondo.width;
+            const y = this.orillaDelMar + Math.random() * (this.fondo.height - this.orillaDelMar);
+
+            const castillo = new PIXI.AnimatedSprite(this.castilloAssets.animations.idle);
+            castillo.x = x; castillo.y = y;
+            castillo.animationSpeed = 0.1;
+            castillo.loop = false;
+            castillo.play();
+
+            castillo.estadoActual = "idle";
+            castillo.estaRoto = false;
+
+            this.castillos.push(castillo);
+            this.mundo.addChild(castillo);
+        }
+    }
+
     async cargarMujeres(){
         const cantAdultos = this.cantAdultos;
         const texturasNPCS = [this.mujer1, this.mujer2, this.mujer3, this.mujer4];
@@ -215,7 +238,6 @@ class Juego{
             const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,3)];    
             await this.cargarUnPersonajeNoJugable(Mujer, texturaAleatoria, 1)
         };
-
         console.log("mujeres creadas");
     }
 
@@ -227,7 +249,6 @@ class Juego{
             const texturaAleatoria = texturasNPCS[obtenerNumeroAleatorio(0,3)]  ;    
             await this.cargarUnPersonajeNoJugable(Hombre, texturaAleatoria, 1)
         };
-
         console.log("hombres creados");
     }
 
@@ -249,14 +270,15 @@ class Juego{
         await this.cargarUnPersonajeNoJugable(VendedoraChurros, this.churrosAssets, (this.vendedores));
         await this.cargarUnPersonajeNoJugable(VendedorChoclos, this.chocloAssets, (this.vendedores));
         await this.cargarUnPersonajeNoJugable(AguaYHelado, this.heladoAssets, (this.vendedores));
-        this.asignarNenesPerdidos((this.cantNenes + this.perdidos))
         //this.cargarUnPersonajeNoJugable(VendedorPochoclos, this.pochocloAssets, (this.vendedores));
+        this.asignarNenesPerdidos((this.cantNenes + this.perdidos))
         console.log("assets cargados")
 
         window.addEventListener('resize', onResize);
 
         await this.cargarGarita();
         await this.cargarSombrillas();
+        await this.cargarCastillos();
         
         this.tejoJuego = new TejoJuego(this.app);
 
@@ -462,7 +484,6 @@ class Juego{
         else if (enMiniJuego) {
             this.tejoJuego.update();
         }
-
         //requestAnimationFrame(this.gameLoop); // SIEMPRE SE LLAMA
     }
 }
