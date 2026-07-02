@@ -109,17 +109,18 @@ class UICompra {
     const menuAncho = 700;
     const menuAltura = 120;
     const x = window.innerWidth/2 - 350;
-    const y = window.innerHeight - 140;
+    const y = window.innerHeight - 210;
 
-    const fondoMenu = new PIXI.Graphics();
+    /* const fondoMenu = new PIXI.Graphics();
     fondoMenu.fill(0xffffff);
     fondoMenu.roundRect(0, 0, menuAncho, menuAltura, 8);
-    fondoMenu.endFill();
-    fondoMenu.x = x; fondoMenu.y = y;
+    fondoMenu.endFill();*/
+    const fondoMenu = new PIXI.Sprite(miJuego.menuCompra);
+    fondoMenu.x = x; fondoMenu.y = y; 
     this.container.addChild(fondoMenu);
 
-    this.title = new PIXI.Text({text: "¿Qué te gustaría comprar?", style: {fontFamily: "PixelFont", fontSize: 20, fill: 0x000000, fontWeight: 900}});
-    this.title.x = x + 15; this.title.y = y + 8;
+    this.title = new PIXI.Text({text: "¿Qué te gustaría comprar?", style: {fontFamily: "PixelFont", fontSize: 25, fill: "#ffb700", fontWeight: 900}});
+    this.title.x = x + 20; this.title.y = y + 16;
     this.container.addChild(this.title);
 
     this.opciones = [
@@ -129,16 +130,26 @@ class UICompra {
 
     this.textoOpciones = [];
     const bordeY = y + 40;
+    const bordeYOpcion2 = bordeY + 10;
     const izqX = x + 20;
-    const derX = x + menuAncho / 2 + 10;
+    //const derX = x + menuAncho / 2 + 10;
+
+    const inicioY = y + 60;
+    const separacion = 40;
 
     this.opciones.forEach((opc, i) => {
-      const texto = new PIXI.Text({text: opc.label, style: {fontFamily: "PixelFont", fontSize: 16, fill: "#000000"}});
-      texto.x = i === 0 ? izqX : derX;
-      texto.y = bordeY;
+      const texto = new PIXI.Text({
+        text: opc.label,
+        style: { fontFamily: "PixelFont", fontSize: 23, fill: "#ffffff" }
+      });
+
+      texto.x = x + 20;
+      texto.y = inicioY + i * separacion;
+
       this.container.addChild(texto);
       this.textoOpciones.push(texto);
     });
+
 
     this.hover = new PIXI.Graphics();
     this.hover.x = izqX - 6;
@@ -151,9 +162,9 @@ class UICompra {
 
     this.infoTxt = new PIXI.Text({
       //Esto está para modificar después en la construcción de la UI
-      text: "A o D para elegir producto    |    Enter para confirmar compra                                                           Salir (E)", 
-      style: {fontFamily: "PixelFont", fontSize: 14, fill: "#000000"}}); 
-    this.infoTxt.x = x + 18; this.infoTxt.y = y + menuAltura - 28;
+      text: "W y S Elegir | Enter Comprar | E Salir", 
+      style: {fontFamily: "PixelFont", fontSize: 20, fill: "#ffb700"}}); 
+    this.infoTxt.x = x + 25; this.infoTxt.y = y + menuAltura + 40;
     this.container.addChild(this.infoTxt);
 
     this.confirmarCompra = opciones.confirmarCompra || ((idx,opc) => console.log("Compró", idx, opc));
@@ -193,23 +204,35 @@ class UICompra {
     const x0 = this.textoOpciones[0].x - 6;
     const x1 = this.textoOpciones[1].x - 6;
     this.hover.x = this.indexOpcion === 0 ? x0 : x1;
-    //Le cambia el color y el grosor del texto a la opcion seleccionada
-    this.textoOpciones.forEach((texto,i) => texto.style.fill = i===this.indexOpcion ? "#048000" : "#000000");
+    this.textoOpciones.forEach((texto,i) => texto.style.fill = i===this.indexOpcion ? "#ffffff" : "#ffffff");
     this.textoOpciones.forEach((texto,i) => texto.style.fontWeight = i===this.indexOpcion ? 900 : 100);
   }
 
   comprarProducto(){
-    const opc = this.opciones[this.indexOpcion];
-    if (miJuego.dineroDelJugador >= opc.price){
-      miJuego.dineroDelJugador -= opc.price;
-      this.confirmarCompra(this.indexOpcion, opc);
-    } else {
-      //Le cambia el color cuando no te alcanza la plata para comprar algo, por 500 ms
-      const errorDeCompra = this.textoOpciones[this.indexOpcion].style.fill;
-      this.textoOpciones[this.indexOpcion].style.fill = "#ff0000";
-      setTimeout(()=> this.textoOpciones[this.indexOpcion].style.fill = errorDeCompra, 500);
-    }
+  const opc = this.opciones[this.indexOpcion];
+  if (miJuego.dineroDelJugador >= opc.price){
+    miJuego.dineroDelJugador -= opc.price;
+    this.confirmarCompra(this.indexOpcion, opc);
+    const compraCorrecta = this.textoOpciones[this.indexOpcion].style.fill;
+    this.textoOpciones[this.indexOpcion].style.fill = "#ffb700";
+    setTimeout(() => {this.textoOpciones[this.indexOpcion].style.fill = compraCorrecta;}, 500);
+  } else {
+    if (this.mensajeError) this.mensajeError.destroy();
+    const opcion = this.textoOpciones[this.indexOpcion];
+    this.mensajeError = new PIXI.Text({
+      text: "Dinero insuficiente",
+      style: { fontFamily: "PixelFont", fontSize: 25, fill: "#ffffff" }
+    });
+    this.mensajeError.x = opcion.x + opcion.width + 10;
+    this.mensajeError.y = opcion.y;
+    this.container.addChild(this.mensajeError);
+    setTimeout(() => { if (this.mensajeError){
+        this.container.removeChild(this.mensajeError);
+        this.mensajeError.destroy();
+        this.mensajeError = null;}
+    },800);
   }
+}
 
   onKeyDown(e){
     const key = e.key.toLowerCase();
@@ -217,8 +240,8 @@ class UICompra {
     this.keysProcesadas[key] = true;
     actualizarInterfaz();
     if (!this.abierto) return;
-         if (key === 'a'){ this.indexOpcion = 0; this.hoverOpcion();}
-    else if (key === 'd'){ this.indexOpcion = 1; this.hoverOpcion();}
+         if (key === 'w'){ this.indexOpcion = 0; this.hoverOpcion();}
+    else if (key === 's'){ this.indexOpcion = 1; this.hoverOpcion();}
     else if (key === 'enter'){ this.comprarProducto();}
   }
   onKeyUp(e){ this.keysProcesadas[e.key.toLowerCase()] = false;}

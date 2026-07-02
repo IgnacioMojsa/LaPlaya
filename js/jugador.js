@@ -115,6 +115,7 @@ class Jugador {
         npcAhogadoCercano.ahogandose = false;
       }
 
+      //Interfaz
       const desplegar = (keys.t && !keysProcesadas.t) || (keys.T && !keysProcesadas.T);
 
       if(desplegar){

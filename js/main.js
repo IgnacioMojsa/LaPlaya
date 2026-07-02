@@ -107,10 +107,12 @@ class Juego{
         this.castilloAssets = await PIXI.Assets.load("assets/spritesheets/castillo.json");
         this.sombra = await PIXI.Assets.load('assets/sombra.png');
 
+        //Interfaz
         this.objetivosDesplegados = await PIXI.Assets.load('assets/ui/UIObjetivosDesplegado.png');
         this.objetivosContraidos = await PIXI.Assets.load('assets/ui/UIObjetivos.png');
         this.barraEnergia = await PIXI.Assets.load("assets/ui/energia.png");
         this.dineroDisponible = await PIXI.Assets.load("assets/ui/dinero.png");
+        this.menuCompra = await PIXI.Assets.load("assets/ui/menuCompra.png");
         this.reloj = await PIXI.Assets.load("assets/ui/reloj.png");
 
         this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}}); 
@@ -142,7 +144,6 @@ class Juego{
             if (instanciaDeNPC instanceof Nenes) this.totalNenes.push(instanciaDeNPC);
             else if (instanciaDeNPC instanceof Vendedor) this.totalVendedores.push(instanciaDeNPC)
             else this.totalAdultos.push(instanciaDeNPC);
-
             
             this.generarTemerosidadEnNpc(instanciaDeNPC);
             
