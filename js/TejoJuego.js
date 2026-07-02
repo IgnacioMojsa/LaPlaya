@@ -56,10 +56,16 @@ class TejoJuego {
         this.wPresionadaAntes = false;
         this.sPresionadaAntes = false;
 
-        this.comHabilitada = false;
+        this.comHabilitada = true;
 
         // "pvp" o "pvc"
-        this.modoJuego = null;
+        //this.modoJuego = null;
+        this.modoJuego = "pvp";
+
+        // facil | normal | dificil
+        this.dificultadCPU = "normal";
+
+        this.cpuJugando = false;
 
         this.menuModoVisible = false;
 
@@ -196,6 +202,34 @@ class TejoJuego {
 
         this.menuContainer.destroy({
             children: true
+        });
+    }
+
+    async updateCPU() {
+
+        if (this.cpuJugando) return;
+
+        if (this.lanzando) return;
+
+        if (this.turnoActual !== "rojo") return;
+
+        if (this.modoJuego !== "pvc") return;
+
+        this.cpuJugando = true;
+
+        // pequeña pausa "humana"
+        await this.esperar(800);
+
+        await this.realizarTiroCPU();
+
+        this.cpuJugando = false;
+    }
+
+    esperar(ms) {
+
+        return new Promise(resolve => {
+        
+            setTimeout(resolve, ms);
         });
     }
 
@@ -363,6 +397,8 @@ class TejoJuego {
 
         this.activo = true;
 
+        this.faltaProcesada = false;
+
         this.partidaTerminada = false;
 
         this.container.sortableChildren = true;
@@ -497,6 +533,33 @@ class TejoJuego {
         this.textoTejinValido.visible = false;
         
         this.container.addChild(this.textoTejinValido);
+
+        // ------------------------
+        // TEXTO FALTA
+        // ------------------------
+
+        this.textoFalta = new PIXI.Text({
+            text: "",
+            style: {
+                fill: "#ff4444",
+                fontSize: this.app.screen.width * 0.03,
+                fontFamily: "Arial",
+                fontWeight: "bold",
+                align: "center"
+            }
+        });
+
+        this.textoFalta.anchor.set(0.5);
+
+        this.textoFalta.x =
+            this.app.screen.width / 2;
+
+        this.textoFalta.y =
+            this.cancha.y - this.cancha.height * 0.12;
+
+        this.textoFalta.visible = false;
+
+        this.container.addChild(this.textoFalta);
         
         // ------------------------
         // TEXTO TURNO
@@ -790,17 +853,28 @@ class TejoJuego {
 
                 this.app.ticker.remove(animar);
 
-                this.lanzando = false;
-
-
-                if (this.turnoActual === "tejin") {
+                const esperarDetencion = () => {
                 
-                    this.verificarTejin();
-                }
-                else {
+                    if (!this.todosLosObjetosQuietos()) {
+                    
+                        requestAnimationFrame(esperarDetencion);
+                    
+                        return;
+                    }
                 
-                    this.verificarTejo();
-                }
+                    this.lanzando = false;
+                
+                    if (this.turnoActual === "tejin") {
+                    
+                        this.verificarTejin();
+                    }
+                    else {
+                    
+                        this.verificarTejo();
+                    }
+                };
+            
+                esperarDetencion();
             }
         };
 
@@ -948,6 +1022,31 @@ class TejoJuego {
             if (Math.abs(obj.velX) < 0.05) obj.velX = 0;
             if (Math.abs(obj.velY) < 0.05) obj.velY = 0;
         });
+    }
+
+    todosLosObjetosQuietos() {
+
+        const objetos = [
+            this.tejin,
+            ...this.tejosBlancos,
+            ...this.tejosRojos
+        ];
+
+        for (const obj of objetos) {
+
+            if (!obj) continue;
+
+            const moviendose =
+                Math.abs(obj.velX || 0) > 0.05 ||
+                Math.abs(obj.velY || 0) > 0.05;
+
+            if (moviendose) {
+
+                return false;
+            }
+        }
+
+        return true;
     }
 
     golpearObjeto(obj) {
@@ -1157,10 +1256,18 @@ class TejoJuego {
             }
         
             this.actualizarTextoTejos();
-        
+
+            // si el tejin salió
+            if (!this.tejinSigueValido()) {
+            
+                this.procesarFaltaTejin();
+            
+                return;
+            }
+
             // cambiar turno
             this.decidirSiguienteTurno();
-        
+
             return;
         }
 
@@ -1184,6 +1291,18 @@ class TejoJuego {
         }
 
         this.actualizarTextoTejos();
+
+        // ------------------------
+        // VERIFICAR SI EL TEJIN
+        // QUEDÓ FUERA
+        // ------------------------
+
+        if (!this.tejinSigueValido()) {
+        
+            this.procesarFaltaTejin();
+        
+            return;
+        }
 
         // ------------------------
         // CAMBIO DE TURNO
@@ -1453,6 +1572,10 @@ class TejoJuego {
         this
         );
 
+        this.faltaProcesada = false;
+
+        this.textoFalta.visible = false;
+
         if (this.ladoActual === "izquierda") {
 
             this.ladoActual = "derecha";
@@ -1592,10 +1715,6 @@ class TejoJuego {
             
                 this.sPresionadaAntes = false;
             }
-
-            window.addEventListener("keydown", e => {
-                console.log(e.key);
-            });
         
             // ENTER
             if (keys["Enter"]) {
@@ -1738,6 +1857,227 @@ class TejoJuego {
         this.aPresionadaAntes = aApretada;
 
         this.moverObjetos();
+
+        this.updateCPU();
+    }
+
+    async realizarTiroCPU() {
+
+        let objetivoX;
+
+        // ------------------------
+        // SI NO HAY TEJOS
+        // ------------------------
+
+        if (
+            this.tejosBlancos.length <= 0 &&
+            this.tejosRojos.length <= 0
+        ) {
+
+            objetivoX = this.tejin.x;
+        }
+        else {
+
+            // apuntar al tejin
+            objetivoX = this.tejin.x;
+        }
+
+        // distancia horizontal
+        const distancia =
+            Math.abs(
+                objetivoX - this.objetoActual.x
+            );
+
+        // fuerza ideal
+        let fuerzaIdeal =
+            (distancia / (this.cancha.width * 1.4))
+            * this.maxCarga;
+
+        // error según dificultad
+        fuerzaIdeal += this.obtenerErrorCPU();
+
+        // clamp
+        fuerzaIdeal = Math.max(
+            20,
+            Math.min(this.maxCarga, fuerzaIdeal)
+        );
+
+        this.fuerza = fuerzaIdeal;
+
+        // altura
+        this.altura =
+            20 + Math.random() * 40;
+
+        // mover verticalmente
+        await this.moverCPUVertical();
+
+        await this.esperar(700);
+
+        // lanzar
+        this.lanzarObjeto();
+
+        this.fuerza = 0;
+        this.altura = 0;
+        
+        this.dibujarBarras();
+    }
+
+    obtenerErrorCPU() {
+
+        switch (this.dificultadCPU) {
+
+            case "facil":
+                return obtenerNumeroAleatorio(-35, 35);
+
+            case "normal":
+                return obtenerNumeroAleatorio(-18, 18);
+
+            case "dificil":
+                return obtenerNumeroAleatorio(-8, 8);
+        }
+
+        return 0;
+    }
+
+    async moverCPUVertical() {
+
+        const centroLanzamiento =
+            this.cancha.y + this.cancha.height * 0.25;
+
+        const objetivoY =
+            centroLanzamiento +
+            this.obtenerErrorVerticalCPU();
+
+        while (
+            Math.abs(
+                this.objetoActual.yPiso - objetivoY
+            ) > 2
+        ) {
+
+            const direccion =
+                objetivoY > this.objetoActual.yPiso
+                ? 1
+                : -1;
+
+            this.objetoActual.yPiso +=
+                direccion * 0.7;
+
+            // límites
+            if (this.objetoActual.yPiso < this.limiteSuperior) {
+
+                this.objetoActual.yPiso =
+                    this.limiteSuperior;
+            }
+
+            if (this.objetoActual.yPiso > this.limiteInferior) {
+
+                this.objetoActual.yPiso =
+                    this.limiteInferior;
+            }
+
+            this.objetoActual.y =
+                this.objetoActual.yPiso
+                - (this.objetoActual.alturaVisual || 0);
+
+            await this.esperar(25);
+        }
+    }
+
+    obtenerErrorVerticalCPU() {
+
+        switch (this.dificultadCPU) {
+
+            case "facil":
+                return obtenerNumeroAleatorio(-80, 80);
+
+            case "normal":
+                return obtenerNumeroAleatorio(-40, 40);
+
+            case "dificil":
+                return obtenerNumeroAleatorio(-15, 15);
+        }
+
+        return 0;
+    }
+
+    tejinSigueValido() {
+
+        let objetivoMinX;
+        let objetivoMaxX;
+
+        if (this.ladoActual === "izquierda") {
+
+            objetivoMinX = this.cancha.x;
+
+            objetivoMaxX =
+                this.cancha.x + this.cancha.width * 0.45;
+        }
+        else {
+
+            objetivoMinX =
+                this.cancha.x - this.cancha.width * 0.45;
+
+            objetivoMaxX = this.cancha.x;
+        }
+
+        return (
+            this.tejin.x >= objetivoMinX &&
+            this.tejin.x <= objetivoMaxX
+        );
+    }
+
+
+    procesarFaltaTejin() {
+
+        if (this.esperandoCambioLado) return;
+        if (this.partidaTerminada) return;
+
+        let jugadorQueCometioFalta =
+            this.turnoActual;
+
+        let ganador;
+
+        if (jugadorQueCometioFalta === "blanco") {
+
+            ganador = "rojo";
+
+            this.puntosRojo += 3;
+        }
+        else {
+
+            ganador = "blanco";
+
+            this.puntosBlanco += 3;
+        }
+
+        // actualizar UI
+        this.textoPuntosBlanco.text =
+            `BLANCO: ${this.puntosBlanco}`;
+
+        this.textoPuntosRojo.text =
+            `ROJO: ${this.puntosRojo}`;
+
+        // mensaje
+        this.textoFalta.text =
+            `FALTA DE ${jugadorQueCometioFalta.toUpperCase()} - 3 PUNTOS PARA ${ganador.toUpperCase()}`;
+
+        this.textoFalta.visible = true;
+
+        // terminar partida
+        if (this.puntosBlanco >= 15) {
+
+            this.finalizarPartida("BLANCO");
+            return;
+        }
+
+        if (this.puntosRojo >= 15) {
+
+            this.finalizarPartida("ROJO");
+            return;
+        }
+
+        // cambio de lado
+        this.pedirCambioLado();
     }
 
     dibujarBarras() {
