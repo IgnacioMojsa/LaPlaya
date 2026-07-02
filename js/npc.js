@@ -33,6 +33,19 @@ class Npc {
 
         this.temporizador = 0;
 
+        this.mensaje = new PIXI.Text({
+          text: "Pulsa E para rescatar",
+          style: {
+            fill: "white",
+            fontSize: 18,
+            fontFamily: "PixelFont"
+          }
+        });
+        this.mensaje.anchor.set(0.5);
+        this.mensaje.visible = false;
+        this.mensaje.y = -80;
+        this.container.addChild(this.mensaje);
+
         this.cargarSpritesAnimados(animacion);
         this.cambiarAnimacion(Object.keys(animacion.animations)[0]);
 

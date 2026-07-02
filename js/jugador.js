@@ -211,6 +211,20 @@ class Jugador {
     }
   }
 
+  actualizarMensajesDeAhogados(){ 
+    const ahogado = this.npcAhogadoMasCercano();
+    
+    miJuego.totalPersonasTemerarias.forEach(temerario => {
+      temerario.mensaje.visible = false;
+
+      if(this.estaCercaDeUnAhogado()){
+      ahogado.mensaje.zIndex = ahogado.container.y;
+
+      ahogado.mensaje.visible = true;
+    }
+    });
+  }
+
   estaCargandoUnNene(){
     return this.neneRescatado && this.neneRescatado.rescatado 
   }
@@ -227,6 +241,7 @@ class Jugador {
       this.container.zIndex = this.container.y;
 
       this.actualizarMensajesDeNenes();
+      this.actualizarMensajesDeAhogados();
 
       this.maquinaDeEstados.update(dt);
 
