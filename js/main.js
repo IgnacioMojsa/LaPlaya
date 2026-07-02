@@ -28,7 +28,8 @@ class Juego{
         this.perdidos = obtenerNumeroAleatorio(2, 5);
         this.totalPersonasTemerarias = [];
         this.maxPersonasTemerarias = obtenerNumeroAleatorio(5, 10); 
-        this.cantidadTotalDeNpc = this.cantAdultos + this.cantNenes + this.perdidos + this.vendedores
+        this.cantidadTotalDeNpc = this.cantAdultos + this.cantNenes + this.perdidos + this.vendedores; 
+        this.cantidadDePersonasRescatadas = 0;
 
         this.orillaDelMar = 690;
         this.horizonte = 300;
@@ -418,7 +419,7 @@ class Juego{
 
         return comidaElegida
     }
-
+    
     /*cantidadAleatoriaSegunComida(){
         if(this.comidaAComprar === 'churros'){
             const numero = obtenerNumeroAleatorio(0,1);

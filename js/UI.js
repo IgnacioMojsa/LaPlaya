@@ -19,6 +19,15 @@ function cargarInterfaz(){
     },
   })
 
+  miJuego.ahogadosARescatar = new PIXI.Text({
+    text: "Rescatar " + miJuego.cantidadDeAhogadosARescatar +" personas ahogadas",
+    style: {
+    fill: "#ffffff",
+    fontSize: 18,
+    fontFamily: "PixelFont",
+    },
+  })
+
   const visualObjetivosContraidos = new PIXI.Sprite(miJuego.objetivosContraidos);
   visualObjetivosContraidos.anchor.set(1, 0);
   miJuego.uiObjetivosContraidos.addChild(visualObjetivosContraidos)
@@ -79,6 +88,11 @@ function cargarInterfaz(){
   miJuego.comprasPendientes.y = miJuego.uiObjetivosDesplegados.y + 100;
   miJuego.comprasPendientes.x = miJuego.uiObjetivosDesplegados.x - 300;
 
+  miJuego.ahogadosARescatar.anchor.set(0,1);
+  miJuego.ahogadosARescatar.y = miJuego.uiObjetivosDesplegados.y + 120;
+  miJuego.ahogadosARescatar.x = miJuego.uiObjetivosDesplegados.x - 300;
+
+  miJuego.listaDeTareas.addChild(miJuego.ahogadosARescatar);
   miJuego.listaDeTareas.addChild(miJuego.nenesPorRescatar);
   miJuego.listaDeTareas.addChild(miJuego.comprasPendientes);
         
@@ -87,8 +101,10 @@ function cargarInterfaz(){
 
 function actualizarInterfaz(){
     const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
+    const cantidadDeAhogadosPorRescatar = Math.round(miJuego.totalPersonasTemerarias.length / 2 - miJuego.cantidadDePersonasRescatadas);
     miJuego.nenesPorRescatar.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
     miJuego.comprasPendientes.text = "Comprar " + miJuego.comidaAComprar.mensajeDeCompra;
+    miJuego.ahogadosARescatar.text = "Rescatar " + cantidadDeAhogadosPorRescatar + " personas ahogadas",
     miJuego.dinero.text = miJuego.dineroDelJugador;
     
     const energiaActual = miJuego.energiaDelJugador * 3.6;
