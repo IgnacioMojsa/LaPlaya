@@ -239,6 +239,28 @@ class Jugador {
     }
   }
 
+  actualizarFlechaGarita(){
+  if (!this.estaCargandoUnNene()){
+    if (this.flecha) this.flecha.visible = false;
+    return;
+  }
+
+  if (!this.flecha){
+    this.flecha = new PIXI.Sprite(miJuego.flechaGarita);
+    this.flecha.zIndex = 999;
+    this.flecha.anchor.set(0.5);
+    miJuego.mundo.addChild(this.flecha);
+  }
+
+  this.flecha.visible = true;
+  this.flecha.x = this.container.x - 20;
+  this.flecha.y = this.container.y - 100;
+
+  const dx = miJuego.garita.x - this.flecha.x;
+  const dy = miJuego.garita.y - this.flecha.y;
+  this.flecha.rotation = Math.atan2(dy, dx);
+}
+
   update(dt){
       this.container.x += this.velocidad.x * dt;
       this.container.y += this.velocidad.y * dt;
@@ -246,6 +268,7 @@ class Jugador {
 
       this.actualizarMensajesDeNenes();
       this.actualizarMensajesDeAhogados();
+      this.actualizarFlechaGarita();
 
       this.maquinaDeEstados.update(dt);
 
