@@ -105,7 +105,8 @@ class Juego{
         this.sombrilla1 = await PIXI.Assets.load('assets/sombrilla.png');
         this.sombrilla2 = await PIXI.Assets.load('assets/sombrilla2.png');
         this.sombrilla3 = await PIXI.Assets.load('assets/sombrilla3.png');
-        this.castilloAssets = await PIXI.Assets.load("assets/spritesheets/castillo.json");
+        this.castilloAsset = await PIXI.Assets.load("assets/castillo.png")
+        this.castilloAnimacion = await PIXI.Assets.load("assets/spritesheets/castillo.json");
         this.sombra = await PIXI.Assets.load('assets/sombra.png');
 
         //Interfaz
@@ -182,6 +183,19 @@ class Juego{
         this.mensajeDeGarita.visible = false;
     }
 
+    async cargarCastillos(){
+        const maxCastillos = this.cantNenes;
+        this.castillos = [];
+        for (let i = 0; i < maxCastillos; i++) {
+            const x = Math.random() * this.fondo.width;
+            const y = this.orillaDelMar + Math.random() * 200;
+            const castillo = new PIXI.Sprite(this.castilloAsset);
+            castillo.x = x; castillo.y = y;
+            this.castillos.push(castillo);
+            this.mundo.addChild(castillo);
+        }
+    }
+
     async cargarSombrillas(){
         const maxSombrillas = 20;
         const texturasDeSombrilla = [this.sombrilla1, this.sombrilla2, this.sombrilla3];
@@ -207,28 +221,6 @@ class Juego{
 
                 this.mundo.addChild(sombrillaNueva.container);
             }
-        }
-    }
-
-    async cargarCastillos() {
-        const maxCastillos = this.cantNenes;
-        this.castillos = [];
-
-        for (let i = 0; i < maxCastillos; i++) {
-            const x = Math.random() * this.fondo.width;
-            const y = this.orillaDelMar + Math.random() * (this.fondo.height - this.orillaDelMar);
-
-            const castillo = new PIXI.AnimatedSprite(this.castilloAssets.animations.idle);
-            castillo.x = x; castillo.y = y;
-            castillo.animationSpeed = 0.1;
-            castillo.loop = false;
-            castillo.play();
-
-            castillo.estadoActual = "idle";
-            castillo.estaRoto = false;
-
-            this.castillos.push(castillo);
-            this.mundo.addChild(castillo);
         }
     }
 
@@ -481,13 +473,19 @@ class Juego{
             }
 
             this.portalTejo.update(this.jugador);
+
+            if (this.jugador.estaCercaDeCastillo()){
+                this.jugador.romperCastillo();
+            }
         }
 
         else if (enMiniJuego) {
             this.tejoJuego.update();
         }
+
         //requestAnimationFrame(this.gameLoop); // SIEMPRE SE LLAMA
     }
+    
 }
 
 const miJuego = new Juego()

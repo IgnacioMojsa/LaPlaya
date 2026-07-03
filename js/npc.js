@@ -457,6 +457,7 @@ class Npc {
        this.mantenerEnLimites(dt);
        this.agrupar(miJuego.arrayDeNpc);
        this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
+       miJuego.castillos.forEach(castillo => {this.evitarAlgo(castillo.x, castillo.y, castillo.destruido);});
        this.maquinaDeEstados.update(dt)
     }
 }

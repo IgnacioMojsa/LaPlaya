@@ -150,6 +150,10 @@ class Jugador {
     return distancia(this.container.x, miJuego.garita.x, this.container.y, miJuego.garita.y) < 60;
   }
 
+  estaCercaDeCastillo(){
+  return miJuego.castillos.some(castillo => !castillo.destruido && distancia(this.container.x, castillo.x + 20, this.container.y, castillo.y) < 40)
+}
+
   estaCercaDeAlgunNenePerdido(){
     // Devuelve un booleano. Es verdadero si el personaje esta cerca de algun nene perdido, sino devuelve falso
 
@@ -315,6 +319,28 @@ class Jugador {
       this.cambiarAnimacion("izq_con_nene")
     }
   }*/
+
+  romperCastillo(){
+    const index = miJuego.castillos.findIndex(castillo => !castillo.destruido && distancia(this.container.x, castillo.x, this.container.y, castillo.y) < 40);
+
+    if (index === -1) return;
+
+    const castillo = miJuego.castillos[index];
+    castillo.destruido = true;
+    miJuego.mundo.removeChild(castillo);
+
+    const animacion = new PIXI.AnimatedSprite(miJuego.castilloAnimacion.animations.romperse);
+    animacion.x = castillo.x;
+    animacion.y = castillo.y;
+    animacion.loop = false;
+    animacion.animationSpeed = 0.15;
+
+    animacion.onComplete = () => {animacion.gotoAndStop(animacion.totalFrames - 1);}
+    animacion.play();
+    miJuego.mundo.addChild(animacion);
+    miJuego.castillos[index] = animacion;
+    animacion.destruido = true; // opcional, para no tocarlo después
+  }
 
   //PARAMETRO QUE TOMA EN MAIN.JS PARA QUE NO PASE EL LIMITE DE AGUA
   mantenerEnPantalla(limiteAguaY, anchoFondo, altoFondo) {

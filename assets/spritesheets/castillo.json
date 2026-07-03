@@ -2,10 +2,6 @@
 
   "animations":{
 
-        "idle":[
-            "castillo0.png"
-        ],
-
 		"romperse":[
             "castillo1.png",
             "castillo2.png",
