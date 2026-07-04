@@ -105,6 +105,7 @@ class Juego{
         this.sombrilla1 = await PIXI.Assets.load('assets/sombrilla.png');
         this.sombrilla2 = await PIXI.Assets.load('assets/sombrilla2.png');
         this.sombrilla3 = await PIXI.Assets.load('assets/sombrilla3.png');
+        this.sombrilla4 = await PIXI.Assets.load('assets/sombrilla4.png');
         this.castilloAsset = await PIXI.Assets.load("assets/castillo.png")
         this.castilloAnimacion = await PIXI.Assets.load("assets/spritesheets/castillo.json");
         this.sombra = await PIXI.Assets.load('assets/sombra.png');
@@ -185,7 +186,7 @@ class Juego{
     }
 
     async cargarCastillos(){
-        const maxCastillos = this.cantNenes;
+        const maxCastillos = 10;
         this.castillos = [];
         for (let i = 0; i < maxCastillos; i++) {
             const x = Math.random() * this.fondo.width;
@@ -199,14 +200,14 @@ class Juego{
 
     async cargarSombrillas(){
         const maxSombrillas = 20;
-        const texturasDeSombrilla = [this.sombrilla1, this.sombrilla2, this.sombrilla3];
+        const texturasDeSombrilla = [this.sombrilla1, this.sombrilla2, this.sombrilla3, this.sombrilla4];
 
         this.sombrillas = [];
 
         for(let i = 0; i < maxSombrillas; i++){
             const coordenadaXDeSombrilla = Math.min(Math.random() * this.fondo.width, this.fondo.width);
             const coordenadaYDeSombrilla = Math.min(this.orillaDelMar + Math.random() * this.fondo.height, this.fondo.height);
-            const texturaAleatoria = texturasDeSombrilla[obtenerNumeroAleatorio(0,2)] ;    
+            const texturaAleatoria = texturasDeSombrilla[obtenerNumeroAleatorio(0,3)] ;    
             const ubicacionLibre = false;
 
             const sombrillaNueva = new GameObject(coordenadaXDeSombrilla, coordenadaYDeSombrilla, texturaAleatoria, i);

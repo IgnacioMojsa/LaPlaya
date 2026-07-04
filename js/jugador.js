@@ -172,6 +172,25 @@ class Jugador {
     return npcAhogado
   }
 
+  npcAhogadoMasCercanoEnMapa(){
+  let masCercano = null;
+  let menorDistancia = Infinity;
+  for (const npc of miJuego.totalPersonasTemerarias){
+    if (!npc.ahogandose) continue;
+    const d = distancia(
+      this.container.x,
+      npc.container.x,
+      this.container.y,
+      npc.container.y
+    );
+    if (d < menorDistancia){
+      menorDistancia = d;
+      masCercano = npc;
+    }
+  }
+  return masCercano;
+}
+
   nenePerdidoMasCercano(){
     // Devuelve al nene perdido que mas cerca se encuentra del jugador
     
@@ -247,7 +266,7 @@ class Jugador {
 
   if (!this.flecha){
     this.flecha = new PIXI.Sprite(miJuego.flechaGarita);
-    this.flecha.zIndex = 999;
+    this.flecha.zIndex = 9999;
     this.flecha.anchor.set(0.5);
     miJuego.mundo.addChild(this.flecha);
   }
@@ -261,6 +280,37 @@ class Jugador {
   this.flecha.rotation = Math.atan2(dy, dx);
 }
 
+actualizarFlechaAhogado(){
+  //Por ahora cuando hay 2 ahogados se genera 1 sola flecha, pero señala al que tenés mas cerca.
+  //Si ya rescataste a 1, la flecha no desaparece y señala al siguiente ahogado.
+
+  if (!miJuego.hayPersonasAhogadas()){
+    if (this.flecha) this.flecha.visible = false;
+    return;
+  }
+
+  const npc = this.npcAhogadoMasCercanoEnMapa();
+  if (!npc){
+    if (this.flecha) this.flecha.visible = false;
+    return;
+  }
+
+  if (!this.flecha){
+    this.flecha = new PIXI.Sprite(miJuego.flechaGarita);
+    this.flecha.zIndex = 9999;
+    this.flecha.anchor.set(0.5);
+    miJuego.mundo.addChild(this.flecha);
+  }
+
+  this.flecha.visible = true;
+  this.flecha.x = this.container.x - 20;
+  this.flecha.y = this.container.y - 100;
+  const dx = npc.container.x - this.flecha.x;
+  const dy = npc.container.y - this.flecha.y;
+  this.flecha.rotation = Math.atan2(dy, dx);
+}
+
+
   update(dt){
       this.container.x += this.velocidad.x * dt;
       this.container.y += this.velocidad.y * dt;
@@ -269,6 +319,7 @@ class Jugador {
       this.actualizarMensajesDeNenes();
       this.actualizarMensajesDeAhogados();
       this.actualizarFlechaGarita();
+      this.actualizarFlechaAhogado();
 
       this.maquinaDeEstados.update(dt);
 
