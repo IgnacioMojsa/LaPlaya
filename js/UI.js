@@ -138,7 +138,7 @@ class UICompra {
     /* const fondoMenu = new PIXI.Graphics();
     fondoMenu.fill(0xffffff);
     fondoMenu.roundRect(0, 0, menuAncho, menuAltura, 8);
-    fondoMenu.endFill();*/
+    fondoMenu.endFill() ;*/
     const fondoMenu = new PIXI.Sprite(miJuego.menuCompra);
     fondoMenu.x = x; fondoMenu.y = y; 
     this.container.addChild(fondoMenu);
