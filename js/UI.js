@@ -1,26 +1,43 @@
 //HUD
+class Objetivos {
+  constructor(unMensaje, x, y){
+    this.container = new PIXI.Container();
+    
+    this.mensaje = new PIXI.Text({
+        text: unMensaje,
+        style: {
+        fill: "#ffffff",
+        fontSize: 18,
+        fontFamily: "PixelFont",
+      }});
+    
+    this.casillero = new PIXI.Sprite(miJuego.casillero);
+    this.completado = new PIXI.Sprite(miJuego.tilde);
+
+    this.mensaje.anchor.set(0,1);
+    this.mensaje.x = x;
+    this.mensaje.y = y;
+
+    this.completado.anchor.set(0, 0.5);
+    this.completado.x = this.mensaje.x - 30;
+    this.completado.y = this.mensaje.y - 5;
+    this.completado.visible = false;
+
+    this.casillero.anchor.set(0, 0.5);
+    this.casillero.x = this.mensaje.x - 30;
+    this.casillero.y = this.mensaje.y - 5;
+
+    this.container.addChild(this.mensaje);
+    this.container.addChild(this.casillero);
+    this.container.addChild(this.completado);
+
+    miJuego.listaDeTareas.addChild(this.container);
+  }
+}
 
 function cargarInterfaz(){
-  miJuego.nenesPorRescatar = new PIXI.Text({
-    text: "Encontrar " + miJuego.perdidos + " nenes perdidos",
-    style: {
-    fill: "#ffffff",
-    fontSize: 18,
-    fontFamily: "PixelFont",
-    },
-  });
-
   miJuego.comprasPendientes = new PIXI.Text({
     text: "Comprar " + miJuego.cantidadDeComida + miJuego.comidaAComprar,
-    style: {
-    fill: "#ffffff",
-    fontSize: 18,
-    fontFamily: "PixelFont",
-    },
-  })
-
-  miJuego.ahogadosARescatar = new PIXI.Text({
-    text: "Rescatar " + miJuego.cantidadDeAhogadosARescatar +" personas ahogadas",
     style: {
     fill: "#ffffff",
     fontSize: 18,
@@ -88,21 +105,23 @@ function cargarInterfaz(){
   miJuego.uiDinero.x = 316;
   miJuego.uiDinero.y = 90;
 
-  miJuego.nenesPorRescatar.anchor.set(0,1);
-  miJuego.nenesPorRescatar.y = miJuego.uiObjetivosDesplegados.y + 80;
-  miJuego.nenesPorRescatar.x = miJuego.uiObjetivosDesplegados.x - 300;
+  miJuego.nenesPorRescatar = new Objetivos(
+    "Encontrar " + miJuego.perdidos + " nenes perdidos", 
+    miJuego.uiObjetivosDesplegados.x - 300, 
+    miJuego.uiObjetivosDesplegados.y + 80
+  );
 
-  miJuego.comprasPendientes.anchor.set(0,1);
-  miJuego.comprasPendientes.y = miJuego.uiObjetivosDesplegados.y + 100;
-  miJuego.comprasPendientes.x = miJuego.uiObjetivosDesplegados.x - 300;
+  miJuego.ahogadosARescatar = new Objetivos(
+    "Rescatar " + miJuego.cantidadDeAhogadosARescatar + " personas ahogadas", 
+    miJuego.uiObjetivosDesplegados.x - 300, 
+    miJuego.uiObjetivosDesplegados.y + 160
+  );
 
-  miJuego.ahogadosARescatar.anchor.set(0,1);
-  miJuego.ahogadosARescatar.y = miJuego.uiObjetivosDesplegados.y + 120;
-  miJuego.ahogadosARescatar.x = miJuego.uiObjetivosDesplegados.x - 300;
-
-  miJuego.listaDeTareas.addChild(miJuego.ahogadosARescatar);
-  miJuego.listaDeTareas.addChild(miJuego.nenesPorRescatar);
-  miJuego.listaDeTareas.addChild(miJuego.comprasPendientes);
+  miJuego.comprasPendientes = new Objetivos(
+    "Comprar " + miJuego.comidaAComprar.mensajeDeCompra, 
+    miJuego.uiObjetivosDesplegados.x - 300, 
+    miJuego.uiObjetivosDesplegados.y + 120
+  );
         
   miJuego.app.stage.addChild(miJuego.listaDeTareas);
 }
@@ -110,9 +129,9 @@ function cargarInterfaz(){
 function actualizarInterfaz(){
     const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
     const cantidadDeAhogadosPorRescatar = Math.round(miJuego.totalPersonasTemerarias.length / 2 - miJuego.cantidadDePersonasRescatadas);
-    miJuego.nenesPorRescatar.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos"
-    miJuego.comprasPendientes.text = "Comprar " + miJuego.comidaAComprar.mensajeDeCompra;
-    miJuego.ahogadosARescatar.text = "Rescatar " + cantidadDeAhogadosPorRescatar + " personas ahogadas",
+    miJuego.nenesPorRescatar.mensaje.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos";
+    miJuego.comprasPendientes.mensaje.text = "Comprar " + miJuego.comidaAComprar.mensajeDeCompra;
+    miJuego.ahogadosARescatar.mensaje.text = "Rescatar " + cantidadDeAhogadosPorRescatar + " personas ahogadas",
     miJuego.dinero.text = miJuego.dineroDelJugador;
     
     const energiaActual = miJuego.energiaDelJugador * 3.6;

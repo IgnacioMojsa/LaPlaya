@@ -118,6 +118,8 @@ class Juego{
         this.menuCompra = await PIXI.Assets.load("assets/ui/menuCompra.png");
         this.reloj = await PIXI.Assets.load("assets/ui/reloj.png");
         this.flechaGarita = await PIXI.Assets.load("assets/ui/flecha.png");
+        this.casillero = await PIXI.Assets.load("assets/ui/casillero.png");
+        this.tilde = await PIXI.Assets.load("assets/ui/tilde.png");
 
         this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}}); 
     }
