@@ -227,6 +227,7 @@ class RescuedState{
 
         if(!this.personaje.ahogandose && !this.personaje.rescatado){
             this.personaje.maquinaDeEstados.cambiarA('DEFAULT')
+            if(this.personaje instanceof Hombre || this.personaje instanceof Mujer){miJuego.cantidadDePersonasRescatadas += 1;};
             miJuego.dineroDelJugador += 3000;
         }
     }
