@@ -252,7 +252,6 @@ class UICompra {
       this.textoOpciones.push(texto);
     });
 
-
     this.hover = new PIXI.Graphics();
     this.hover.x = izqX - 6;
     this.hover.y = bordeY - 4;
@@ -337,8 +336,8 @@ class UICompra {
         this.mensajeError.destroy();
         this.mensajeError = null;}
     },800);
+    }
   }
-}
 
   onKeyDown(e){
     const key = e.key.toLowerCase();
