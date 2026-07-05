@@ -16,6 +16,8 @@ class Jugador {
 
     this.sombra = new PIXI.Sprite(miJuego.sombra);
 
+    this.comidasCompradas = [];
+
     this.velMaxima = 80;
     this.aceleracion = 80;
     this.friccion = 0.95;

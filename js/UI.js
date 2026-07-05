@@ -10,6 +10,8 @@ class Objetivos {
         fontSize: 18,
         fontFamily: "PixelFont",
       }});
+
+    this.condicion = true;
     
     this.casillero = new PIXI.Sprite(miJuego.casillero);
     this.completado = new PIXI.Sprite(miJuego.tilde);
@@ -32,6 +34,16 @@ class Objetivos {
     this.container.addChild(this.completado);
 
     miJuego.listaDeTareas.addChild(this.container);
+  }
+
+  corroborarYCambiarACompletado(){
+    if(!this.condicion){
+      this.completado.visible = true;
+    }
+  }
+
+  actualizarCondicion(condicion){
+    this.condicion = condicion;
   }
 }
 
@@ -122,24 +134,63 @@ function cargarInterfaz(){
     miJuego.uiObjetivosDesplegados.x - 300, 
     miJuego.uiObjetivosDesplegados.y + 120
   );
+
+  miJuego.objetivoTejo = new Objetivos(
+    "Ganar una partida de tejo", 
+    miJuego.uiObjetivosDesplegados.x - 300, 
+    miJuego.uiObjetivosDesplegados.y + 200
+  )
         
   miJuego.app.stage.addChild(miJuego.listaDeTareas);
+}
+
+function quedanNenesPorRescatar(){
+  const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
+
+  return cantNenesPerdidos > 0;
+}
+
+function quedanAhogadosPorRescatar(){
+  const cantidadDeAhogadosPorRescatar = Math.round(miJuego.totalPersonasTemerarias.length / 2 - miJuego.cantidadDePersonasRescatadas);
+  
+  return cantidadDeAhogadosPorRescatar > 0;
+}
+
+function quedanComprasPendientes(){
+  return true;
+}
+
+function partidaDeTejoPorGanar(){
+  const partidaPorGanar = miJuego.tejoJuego.partidaTerminada && miJuego.tejoJuego.ganador === "BLANCO";
+
+  return !partidaPorGanar
 }
 
 function actualizarInterfaz(){
     const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
     const cantidadDeAhogadosPorRescatar = Math.round(miJuego.totalPersonasTemerarias.length / 2 - miJuego.cantidadDePersonasRescatadas);
+
     miJuego.nenesPorRescatar.mensaje.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos";
     miJuego.comprasPendientes.mensaje.text = "Comprar " + miJuego.comidaAComprar.mensajeDeCompra;
     miJuego.ahogadosARescatar.mensaje.text = "Rescatar " + cantidadDeAhogadosPorRescatar + " personas ahogadas",
     miJuego.dinero.text = miJuego.dineroDelJugador;
+
+    miJuego.nenesPorRescatar.actualizarCondicion(quedanNenesPorRescatar());
+    miJuego.comprasPendientes.actualizarCondicion(quedanComprasPendientes());
+    miJuego.ahogadosARescatar.actualizarCondicion(quedanAhogadosPorRescatar());
+    miJuego.objetivoTejo.actualizarCondicion(partidaDeTejoPorGanar());
+
+    miJuego.nenesPorRescatar.corroborarYCambiarACompletado();
+    miJuego.comprasPendientes.corroborarYCambiarACompletado();
+    miJuego.ahogadosARescatar.corroborarYCambiarACompletado();
+    miJuego.objetivoTejo.corroborarYCambiarACompletado();
     
     const energiaActual = miJuego.energiaDelJugador * 3.6;
     miJuego.barraAmarilla.clear();
     miJuego.barraAmarilla.beginFill("#ffb700");
     miJuego.barraAmarilla.drawRect(2, 2, energiaActual, 30);
     miJuego.barraAmarilla.endFill();
-  }
+}
 
 
 class UICompra {
@@ -258,6 +309,7 @@ class UICompra {
     const compraCorrecta = this.textoOpciones[this.indexOpcion].style.fill;
     this.textoOpciones[this.indexOpcion].style.fill = "#ffb700";
     setTimeout(() => {this.textoOpciones[this.indexOpcion].style.fill = compraCorrecta;}, 500);
+    miJuego.jugador.comidasCompradas.push(this.textoOpciones[this.indexOpcion]);
   } else {
     if (this.mensajeError) this.mensajeError.destroy();
     const opcion = this.textoOpciones[this.indexOpcion];

@@ -46,6 +46,8 @@ class TejoJuego {
         this.ladoActual = "izquierda";
         this.esperandoCambioLado = false;
 
+        this.ganador = null;
+
         this.partidaTerminada = false;
 
         // ------------------------
@@ -1548,6 +1550,7 @@ class TejoJuego {
     }
 
     finalizarPartida(ganador) {
+        this.ganador = ganador; 
 
         this.partidaTerminada = true;
 
@@ -1556,11 +1559,11 @@ class TejoJuego {
         this.textoCambioLado.visible = false;
 
         this.textoTurno.text =
-            `GANÓ ${ganador}`;
+            `GANÓ ${this.ganador}`;
 
         this.esperandoCambioLado = false;
 
-        console.log(`GANÓ ${ganador}`);
+        console.log(`GANÓ ${this.ganador}`);
     }
 
     cambiarLado() {
