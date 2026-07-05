@@ -44,6 +44,9 @@ class Jugador {
     this.sombra.alpha = 0.5;
 
     miJuego.mundo.addChild(this.sombra);
+
+    this.tiempoGastoEnergia = 0;
+    this.intervaloGastoEnergia = 1500;
   }
 
   inputTeclado(dt, keys){
@@ -319,7 +322,18 @@ actualizarFlechaAhogado(){
       this.actualizarFlechaAhogado();
       this.actualizarFlechaGarita();
       
+      const velocidadActual = Math.hypot(this.velocidad.x, this.velocidad.y);
 
+      if(velocidadActual > 0.1){
+        this.tiempoGastoEnergia += miJuego.app.ticker.deltaMS;
+        if (this.tiempoGastoEnergia >= this.intervaloGastoEnergia) {
+          miJuego.energiaDelJugador = Math.max(0, miJuego.energiaDelJugador - 1);
+          this.tiempoGastoEnergia = 0;
+        }
+      }else{
+        this.tiempoGastoEnergia = 0;
+      }
+      
       this.maquinaDeEstados.update(dt);
 
       /*this.cambiarDeSpriteDeDireccion();
