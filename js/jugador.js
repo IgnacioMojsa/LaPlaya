@@ -20,6 +20,7 @@ class Jugador {
 
     this.velMaxima = 80;
     this.aceleracion = 80;
+    
     this.friccion = 0.95;
     this.ultimaDireccion = "der";
     this.neneRescatado = null;
@@ -173,7 +174,6 @@ class Jugador {
 
   npcAhogadoMasCercano(){
     const npcAhogado = miJuego.totalPersonasTemerarias.find(npc => npc.ahogandose && distancia(this.container.x, npc.container.x, this.container.y, npc.container.y) < 20);
-    
     return npcAhogado
   }
 
@@ -332,6 +332,15 @@ actualizarFlechaAhogado(){
         }
       }else{
         this.tiempoGastoEnergia = 0;
+      }
+
+      const energia = miJuego.energiaDelJugador;
+      if(energia <= 0){
+        this.velMaxima = 40; 
+        this.aceleracion = 40;
+      }else{
+        this.velMaxima = 80;
+        this.aceleracion = 80;
       }
       
       this.maquinaDeEstados.update(dt);
