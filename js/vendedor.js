@@ -109,8 +109,8 @@ class VendedoraChurros extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
     this.infoVenta = menuDeCompra(miJuego.app, miJuego,
-      {opcion1: "Media docena de churros - $5000", precio1: 5000,
-       opcion2: "Una docena de churros - $12000", precio2: 12000,
+      {opcion1: "6 churros", precio1: 5000, energia1: 30,
+       opcion2: "12 churros", precio2: 12000, energia2: 60,
        dineroDelJugador: miJuego.dineroDelJugador,
       }
     );
@@ -121,8 +121,8 @@ class VendedorPochoclos extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
     this.infoVenta = menuDeCompra(miJuego.app, miJuego,
-      {opcion1: "Pochoclo chico - $2000", precio1: 2000,
-       opcion2: "Pochoclo grande - $5000", precio2: 5000,
+      {opcion1: "Pochoclo chico", precio1: 2000, energia1: 10,
+       opcion2: "Pochoclo grande", precio2: 5000, energia2: 30,
        dineroDelJugador: miJuego.dineroDelJugador,
       }
     );
@@ -133,8 +133,8 @@ class VendedorChoclos extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
     this.infoVenta = menuDeCompra(miJuego.app, miJuego,
-      {opcion1: "Un choclo - $2000", precio1: 2000,
-       opcion2: "Dos choclos - $5000", precio2: 5000,
+      {opcion1: "Un choclo", precio1: 2000, energia1: 20,
+       opcion2: "Dos choclos", precio2: 5000, energia2: 40,
        dineroDelJugador: miJuego.dineroDelJugador,
       }
     );
@@ -143,7 +143,6 @@ class VendedorChoclos extends Vendedor{
     this.pausaTiempo = 0;
     this.pausaDuracion = 10;
     this.tiempoCaminando = 60;
-
     }
 }
 
@@ -151,13 +150,13 @@ class AguaYHelado extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
     this.infoVenta = menuDeCompra(miJuego.app, miJuego,
-      {opcion1: "Botella de agua - $1000", precio1: 1000,
-       opcion2: "Helado - $2000", precio2: 2000,
+      {opcion1: "Botella de agua", precio1: 1000, energia1: 30,
+       opcion2: "Helado", precio2: 2000, energia2: 10,
        dineroDelJugador: miJuego.dineroDelJugador,
       }
     );
 
-    this.velocidadMax = 0.8;
+    this.velocidadMax = 1;
     this.pausaTiempo = 0;
     this.pausaDuracion = 5;
     this.tiempoCaminando = 60;

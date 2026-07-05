@@ -218,9 +218,17 @@ class UICompra {
     this.container.addChild(this.title);
 
     this.opciones = [
-      {label: opciones.opcion1 , price: opciones.precio1},
-      {label: opciones.opcion2 , price: opciones.precio2}
+    { label: `${opciones.opcion1} - $${opciones.precio1} (+${opciones.energia1} energía)`,
+    price: opciones.precio1,
+    energia: opciones.energia1
+    },
+
+    { label: `${opciones.opcion2} - $${opciones.precio2} (+${opciones.energia2} energía)`,
+    price: opciones.precio2,
+    energia: opciones.energia2
+    }
     ];
+
 
     this.textoOpciones = [];
     const bordeY = y + 40;
@@ -303,14 +311,18 @@ class UICompra {
 
   comprarProducto(){
   const opc = this.opciones[this.indexOpcion];
+
   if (miJuego.dineroDelJugador >= opc.price){
     miJuego.dineroDelJugador -= opc.price;
+    miJuego.energiaDelJugador += opc.energia;
+    miJuego.energiaDelJugador = Math.min(100, miJuego.energiaDelJugador);
     this.confirmarCompra(this.indexOpcion, opc);
+
     const compraCorrecta = this.textoOpciones[this.indexOpcion].style.fill;
     this.textoOpciones[this.indexOpcion].style.fill = "#ffb700";
     setTimeout(() => {this.textoOpciones[this.indexOpcion].style.fill = compraCorrecta;}, 500);
     miJuego.jugador.comidasCompradas.push(this.textoOpciones[this.indexOpcion]);
-  } else {
+  }else{
     if (this.mensajeError) this.mensajeError.destroy();
     const opcion = this.textoOpciones[this.indexOpcion];
     this.mensajeError = new PIXI.Text({
