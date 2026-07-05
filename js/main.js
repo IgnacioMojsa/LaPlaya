@@ -161,7 +161,8 @@ class Juego{
 
         //ajustarFondo(this.fondo);
 
-        this.mundo.addChildAt(this.fondo, 2);
+        this.fondo.zIndex = 0;
+        this.mundo.addChild(this.fondo);
     }
 
     async cargarGarita(){
@@ -252,7 +253,7 @@ class Juego{
 
     async prepararEscena(){
         await cargarCielo(this.app);
-        await cargarSolYLuna(this.mundo); 
+        await cargarSolYLuna(this.mundo);
         await this.cargarFondo();
 
         crearFlashRelampago(this.app);
@@ -292,6 +293,8 @@ class Juego{
         // Aca va el cambio de clima
         iniciarSistemaDeClima();
         window.addEventListener("resize", () => onResize(this.app))
+
+        generarNubes(this.fondo);
     }
 
     actualizarCamara(){
@@ -470,6 +473,7 @@ class Juego{
             this.llevarTemerariosAlMar(dt);
             actualizarCielo(this.fondo);
             actualizarAstros(this.fondo);
+            actualizarNubes(this.fondo, dt);
             actualizarRelampagos();
 
             for (let i = 0; i < this.arrayDeNpc.length; i++){

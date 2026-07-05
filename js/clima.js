@@ -11,6 +11,14 @@ let relampagoActivo = false;
 let tiempoRelampago = 0;
 let flashRelampago;
 
+//NUBES
+let contenedorNubes;
+let nubes = [];
+
+let texturaNublado;
+let texturaLluvia;
+let texturaTormenta;
+
 //SOL Y LUNA
 let sol;
 let luna;
@@ -21,9 +29,15 @@ let texturaLuna;
 async function cargarSolYLuna(app) {
     texturaSol = await PIXI.Assets.load('assets/sol.png');
     texturaLuna = await PIXI.Assets.load('assets/luna.png');
+    texturaNublado = await PIXI.Assets.load('assets/nublado.png');
+    texturaLluvia = await PIXI.Assets.load('assets/lluvia.png');
+    texturaTormenta = await PIXI.Assets.load('assets/tormenta.png');
 
     sol = new PIXI.Sprite(texturaSol);
     luna = new PIXI.Sprite(texturaLuna);
+
+    sol.zIndex = 0;
+    luna.zIndex = 0;
 
     // tamaño opcional
     sol.scale.set(0.15);
@@ -31,6 +45,14 @@ async function cargarSolYLuna(app) {
 
     app.addChild(sol);
     app.addChild(luna);
+
+    contenedorNubes = new PIXI.Container();
+
+    contenedorNubes.y = 0;
+
+    contenedorNubes.sortableChildren = true;
+
+    app.addChild(contenedorNubes);
     
 }
 
@@ -42,9 +64,113 @@ function resetearAstros() {
     luna.y = 100;
 }
 
+function limpiarNubes() {
+
+    for (const nube of nubes) {
+        contenedorNubes.removeChild(nube);
+        nube.destroy();
+    }
+
+    nubes = [];
+}
+
 // =======================
 // FONDO
 // =======================
+
+function generarNubes(fondo) {
+
+    if (!fondo) return;
+
+    limpiarNubes();
+
+    let cantidad = 0;
+    let textura;
+
+    switch (climaActual) {
+
+        case "nublado":
+            cantidad = 8;
+            textura = texturaNublado;
+            break;
+
+        case "lluvia":
+            cantidad = 100;
+            textura = texturaLluvia;
+            break;
+
+        case "tormenta":
+            cantidad = 200;
+            textura = texturaTormenta;
+            break;
+
+        default:
+            return;
+    }
+
+    const cieloAltura = miJuego.horizonte;
+
+    for (let i = 0; i < cantidad; i++) {
+
+        const nube = new PIXI.Sprite(textura);
+
+        // posición horizontal sobre TODO el mapa
+        nube.progreso = Math.random();
+
+        // solo dentro del cielo
+        nube.y = 20 + Math.random() * (cieloAltura - nube.height - 20);
+
+        // tamaños variados
+        const escala = 0.4 + Math.random() * 0.6;
+        nube.scale.set(escala);
+
+        // profundidad visual
+        nube.zIndex = 20;
+
+        // alpha objetivo
+        nube.alphaObjetivo = 0.75 + Math.random() * 0.25;
+
+        // empieza invisible
+        nube.alpha = 0;
+
+        // PARALLAX
+        nube.velocidad = escala * 0.3;
+
+        contenedorNubes.addChild(nube);
+
+        nubes.push(nube);
+    }
+}
+
+function actualizarNubes(fondo, dt) {
+
+    if (!fondo) return;
+
+    const nivelW = fondo.width;
+
+    for (const nube of nubes) {
+
+        nube.progreso += dt * 0.01 * nube.velocidad;
+
+        if (nube.progreso > 1) {
+            nube.progreso = 0;
+        }
+
+        nube.x = nivelW - (nivelW * nube.progreso);
+
+        // FADE IN / FADE OUT
+        let alphaDeseado = 0;
+
+        if (climaActual !== "despejado") {
+            alphaDeseado = nube.alphaObjetivo;
+        }
+
+        // velocidad transición
+        const velocidadFade = dt * 0.5;
+
+        nube.alpha += (alphaDeseado - nube.alpha) * velocidadFade;
+    }
+}
 
 function actualizarAstros(fondo) {
 
@@ -264,16 +390,22 @@ function iniciarSistemaDeClima() {
         "nublado",
         "nublado",
         "lluvia",
+        "lluvia",
         "tormenta"
     ];
 
-    
+    console.log("Nuevo clima:", climaActual);
 
-    console.log("Clima actual:", climaActual);
+    generarNubes(miJuego.fondo);        
 
     intervaloClima = setInterval(() => {
+
         climaActual = climas[Math.floor(Math.random() * climas.length)];
+
         console.log("Nuevo clima:", climaActual);
+
+        generarNubes(miJuego.fondo);
+
     }, 20000);
 }
 
