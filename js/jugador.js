@@ -258,58 +258,54 @@ class Jugador {
     }
   }
 
-  actualizarFlechaGarita(){
-  if (!this.estaCargandoUnNene()){
-    if (this.flecha) this.flecha.visible = false;
+actualizarFlechaGarita(){
+  if(!this.estaCargandoUnNene()){
+    if (this.flechaGarita) this.flechaGarita.visible = false;
     return;
   }
 
-  if (!this.flecha){
-    this.flecha = new PIXI.Sprite(miJuego.flechaGarita);
-    this.flecha.zIndex = 9999;
-    this.flecha.anchor.set(0.5);
-    miJuego.mundo.addChild(this.flecha);
+  if(!this.flechaGarita){
+    this.flechaGarita = new PIXI.Sprite(miJuego.flechaGarita);
+    this.flechaGarita.zIndex = 9999;
+    this.flechaGarita.anchor.set(0.5);
+    miJuego.mundo.addChild(this.flechaGarita);
   }
 
-  this.flecha.visible = true;
-  this.flecha.x = this.container.x - 20;
-  this.flecha.y = this.container.y - 100;
-
-  const dx = miJuego.garita.x - this.flecha.x;
-  const dy = miJuego.garita.y - this.flecha.y;
-  this.flecha.rotation = Math.atan2(dy, dx);
+  this.flechaGarita.visible = true;
+  this.flechaGarita.x = this.container.x - 20;
+  this.flechaGarita.y = this.container.y - 100;
+  const dx = miJuego.garita.x - this.flechaGarita.x;
+  const dy = miJuego.garita.y - this.flechaGarita.y;
+  this.flechaGarita.rotation = Math.atan2(dy, dx);
 }
 
 actualizarFlechaAhogado(){
-  //Por ahora cuando hay 2 ahogados se genera 1 sola flecha, pero señala al que tenés mas cerca.
-  //Si ya rescataste a 1, la flecha no desaparece y señala al siguiente ahogado.
-
-  if (!miJuego.hayPersonasAhogadas()){
-    if (this.flecha) this.flecha.visible = false;
+  if(!miJuego.hayPersonasAhogadas()){
+    if (this.flechaAhogado) this.flechaAhogado.visible = false;
     return;
   }
 
   const npc = this.npcAhogadoMasCercanoEnMapa();
   if (!npc){
-    if (this.flecha) this.flecha.visible = false;
+    if (this.flechaAhogado) this.flechaAhogado.visible = false;
     return;
   }
 
-  if (!this.flecha){
-    this.flecha = new PIXI.Sprite(miJuego.flechaGarita);
-    this.flecha.zIndex = 9999;
-    this.flecha.anchor.set(0.5);
-    miJuego.mundo.addChild(this.flecha);
+  if(!this.flechaAhogado){
+    this.flechaAhogado = new PIXI.Sprite(miJuego.flechaPeligro);
+    this.flechaAhogado.zIndex = 9999;
+    this.flechaAhogado.anchor.set(0.5);
+    miJuego.mundo.addChild(this.flechaAhogado);
   }
 
-  this.flecha.visible = true;
-  this.flecha.x = this.container.x - 20;
-  this.flecha.y = this.container.y - 100;
-  const dx = npc.container.x - this.flecha.x;
-  const dy = npc.container.y - this.flecha.y;
-  this.flecha.rotation = Math.atan2(dy, dx);
-}
+  this.flechaAhogado.visible = true;
+  this.flechaAhogado.x = this.container.x + 10;
+  this.flechaAhogado.y = this.container.y - 100;
 
+  const dx = npc.container.x - this.flechaAhogado.x;
+  const dy = npc.container.y - this.flechaAhogado.y;
+  this.flechaAhogado.rotation = Math.atan2(dy, dx);
+}
 
   update(dt){
       this.container.x += this.velocidad.x * dt;
@@ -318,8 +314,9 @@ actualizarFlechaAhogado(){
 
       this.actualizarMensajesDeNenes();
       this.actualizarMensajesDeAhogados();
-      this.actualizarFlechaGarita();
       this.actualizarFlechaAhogado();
+      this.actualizarFlechaGarita();
+      
 
       this.maquinaDeEstados.update(dt);
 
