@@ -2,7 +2,7 @@ let LIMITE_AGUA = {x: 0, y: 0};
 const AGUA_Y_EN_IMAGEN = 335; // 👈 AJUSTALO a ojo fino
 //CLIMA
 let tiempoDelDia = 0; // 0 a 1 (0 = amanecer, 0.5 = mediodía, 1 = noche)
-let velocidadTiempo = 0.0005//0.00005;
+let velocidadTiempo = 0.00005//0.00005;
 
 let climaActual = "despejado"; // opciones: "despejado", "nublado", "lluvia", "tormenta"
 let ultimoPeriodoDelDia = "";
@@ -46,11 +46,14 @@ function resetearAstros() {
 // FONDO
 // =======================
 
-function actualizarAstros() {
+function actualizarAstros(fondo) {
 
-    const screenW = window.innerWidth;
-    const cieloAltura = -window.innerHeight * 0.25; // 👈 MISMO que usás en cargarCielo
-    const offsetY = 120; // margen desde arriba
+    if (!fondo) return;
+
+    const nivelW = fondo.width;
+
+    const cieloAltura = window.innerHeight * 0.25;
+    const offsetY = 120;
 
     // 🌞 SOL
     if (tiempoDelDia < 0.85) {
@@ -60,12 +63,13 @@ function actualizarAstros() {
 
         let progreso = tiempoDelDia / 0.85;
 
-        // derecha → izquierda
-        sol.x = screenW - (screenW * progreso);
+        // recorrer TODO el nivel
+        sol.x = nivelW - (nivelW * progreso);
 
-        // arco SOLO dentro del cielo
-        sol.y = offsetY + Math.sin(progreso * Math.PI) * (cieloAltura * 0.8);
-    } 
+        // arco del cielo
+        sol.y = offsetY + Math.sin(progreso * Math.PI) * (-cieloAltura * 0.8);
+    }
+
     // 🌙 LUNA
     else {
 
@@ -74,9 +78,10 @@ function actualizarAstros() {
 
         let progreso = (tiempoDelDia - 0.85) / 0.15;
 
-        luna.x = screenW - (screenW * progreso);
+        // recorrer TODO el nivel
+        luna.x = nivelW - (nivelW * progreso);
 
-        luna.y = offsetY + Math.sin(progreso * Math.PI) * (cieloAltura * 0.8);
+        luna.y = offsetY + Math.sin(progreso * Math.PI) * (-cieloAltura * 0.8);
     }
 }
 

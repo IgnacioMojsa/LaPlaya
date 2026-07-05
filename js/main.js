@@ -469,7 +469,7 @@ class Juego{
             this.mostrarMensajeDeGarita();
             this.llevarTemerariosAlMar(dt);
             actualizarCielo(this.fondo);
-            actualizarAstros();
+            actualizarAstros(this.fondo);
             actualizarRelampagos();
 
             for (let i = 0; i < this.arrayDeNpc.length; i++){
