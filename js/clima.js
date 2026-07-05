@@ -19,6 +19,10 @@ let texturaNublado;
 let texturaLluvia;
 let texturaTormenta;
 
+//LUVIA
+let contenedorLluvia;
+let gotas = [];
+
 //SOL Y LUNA
 let sol;
 let luna;
@@ -54,6 +58,36 @@ async function cargarSolYLuna(app) {
 
     app.addChild(contenedorNubes);
     
+}
+
+function crearSistemaLluvia(app) {
+
+    contenedorLluvia = new PIXI.Container();
+
+    contenedorLluvia.zIndex = 30;
+
+    app.addChild(contenedorLluvia);
+
+    for (let i = 0; i < 250; i++) {
+
+        const gota = new PIXI.Graphics();
+
+        gota.moveTo(0, 0);
+        gota.lineTo(0, 12);
+        gota.stroke({
+            color: 0xaadcff,
+            width: 2
+        });
+
+        gota.alpha = 0;
+
+        gota.velocidad = 0;
+        gota.activa = false;
+
+        contenedorLluvia.addChild(gota);
+
+        gotas.push(gota);
+    }
 }
 
 function resetearAstros() {
@@ -169,6 +203,62 @@ function actualizarNubes(fondo, dt) {
         const velocidadFade = dt * 0.5;
 
         nube.alpha += (alphaDeseado - nube.alpha) * velocidadFade;
+    }
+}
+
+function actualizarLluvia(fondo, dt) {
+
+    if (!fondo) return;
+
+    let intensidad = 0;
+
+    if (climaActual === "lluvia") {
+        intensidad = 200;
+    }
+    else if (climaActual === "tormenta") {
+        intensidad = 500;
+    }
+
+    const ancho = window.innerWidth;
+    const alto = window.innerHeight;
+
+    for (let i = 0; i < gotas.length; i++) {
+
+        const gota = gotas[i];
+
+        if (i < intensidad) {
+
+            gota.activa = true;
+
+            gota.alpha += (0.6 - gota.alpha) * dt * 8;
+
+            if (gota.velocidad === 0) {
+
+                gota.x = Math.random() * ancho;
+                gota.y = Math.random() * alto;
+
+                gota.velocidad = 700 + Math.random() * 400;
+            }
+
+            gota.y += gota.velocidad * dt;
+            gota.x -= gota.velocidad * 0.15 * dt;
+
+            if (gota.y > alto) {
+
+                gota.y = -20;
+                gota.x = Math.random() * ancho;
+            }
+        }
+        else {
+
+            gota.alpha += (0 - gota.alpha) * dt * 5;
+
+            if (gota.alpha < 0.01) {
+
+                gota.velocidad = 0;
+                gota.activa = false;
+            }
+        }
     }
 }
 

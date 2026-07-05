@@ -254,6 +254,7 @@ class Juego{
     async prepararEscena(){
         await cargarCielo(this.app);
         await cargarSolYLuna(this.mundo);
+        crearSistemaLluvia(this.app.stage);
         await this.cargarFondo();
 
         crearFlashRelampago(this.app);
@@ -474,6 +475,7 @@ class Juego{
             actualizarCielo(this.fondo);
             actualizarAstros(this.fondo);
             actualizarNubes(this.fondo, dt);
+            actualizarLluvia(this.fondo, dt);
             actualizarRelampagos();
 
             for (let i = 0; i < this.arrayDeNpc.length; i++){
