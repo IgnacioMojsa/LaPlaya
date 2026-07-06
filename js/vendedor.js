@@ -9,6 +9,9 @@ class Vendedor extends Npc {
     this.direccion = Math.random() < 0.5 ? -1 : 1; //Es un if mathRandom < 0,5 return -1 else return 1 pero sirve para evitar anidar ifs
     this.velocidad.x = this.direccion * this.velocidadMax;
 
+    this.producto = null;
+    this.cantidades = null;
+
     this.mensaje = new PIXI.Text({
           text: "Pulsa E para comprar",
           style: {
@@ -108,11 +111,16 @@ class Vendedor extends Npc {
 class VendedoraChurros extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
+
+    this.producto = new Churro();
+    this.cantidades = [6, 12];
+
     this.infoVenta = menuDeCompra(miJuego.app, miJuego,
-      {opcion1: "6 churros", precio1: 5000, energia1: 30,
-       opcion2: "12 churros", precio2: 12000, energia2: 60,
+      {opcion1: this.cantidades[0] + " churros", precio1: 5000, energia1: 30, cantidad1: this.cantidades[0],
+       opcion2: this.cantidades[1] + " churros", precio2: 12000, energia2: 60, cantidad2: this.cantidades[1],
        dineroDelJugador: miJuego.dineroDelJugador,
-      }
+      },
+      this
     );
   }
 }
@@ -120,6 +128,7 @@ class VendedoraChurros extends Vendedor{
 class VendedorPochoclos extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
+
     this.infoVenta = menuDeCompra(miJuego.app, miJuego,
       {opcion1: "Pochoclo chico", precio1: 2000, energia1: 10,
        opcion2: "Pochoclo grande", precio2: 5000, energia2: 30,
@@ -132,11 +141,17 @@ class VendedorPochoclos extends Vendedor{
 class VendedorChoclos extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
+
+    this.producto = new Choclo();
+
+    this.cantidades = [1, 2]
+
     this.infoVenta = menuDeCompra(miJuego.app, miJuego,
-      {opcion1: "Un choclo", precio1: 2000, energia1: 20,
-       opcion2: "Dos choclos", precio2: 5000, energia2: 40,
+      {opcion1: this.cantidades[0] + " choclo", precio1: 2000, energia1: 20, cantidad1: this.cantidades[0],
+       opcion2: this.cantidades[1] + " choclos", precio2: 5000, energia2: 40, cantidad2: this.cantidades[1],
        dineroDelJugador: miJuego.dineroDelJugador,
-      }
+      },
+      this
     );
 
     this.velocidadMax = 0.2;
@@ -149,11 +164,17 @@ class VendedorChoclos extends Vendedor{
 class AguaYHelado extends Vendedor{
   constructor(x, y, animacion, i) {
     super(x, y, animacion, i);
+
+    this.producto = [new Agua(), new Helado()];
+
+    this.cantidades = 1;
+
     this.infoVenta = menuDeCompra(miJuego.app, miJuego,
-      {opcion1: "Botella de agua", precio1: 1000, energia1: 30,
-       opcion2: "Helado", precio2: 2000, energia2: 10,
+      {opcion1: "Botella de agua", precio1: 1000, energia1: 30, cantiodad1: 1,
+       opcion2: "Helado", precio2: 2000, energia2: 10, cantidad2: 1,
        dineroDelJugador: miJuego.dineroDelJugador,
-      }
+      },
+      this
     );
 
     this.velocidadMax = 1;

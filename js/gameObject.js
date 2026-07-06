@@ -57,15 +57,15 @@ class Choclo extends Comida{
     constructor(cantidad){
         super(cantidad)
 
-        this.mensajeDeCompra = this.cantidadAComprar();
+        this.mensajeDeCompra = this.compraRequerida + this.cantidadAComprar();
     }
 
     cantidadAComprar(){
         if(this.compraRequerida > 1){
-            return "2 choclos"
+            return " choclos"
         }
         else{
-            return "un choclo"
+            return " choclo"
         }
     }
 }

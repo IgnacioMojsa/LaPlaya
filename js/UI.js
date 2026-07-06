@@ -192,13 +192,14 @@ function actualizarInterfaz(){
     miJuego.barraAmarilla.endFill();
 }
 
-
 class UICompra {
-  constructor(app, opciones){
+  constructor(app, opciones, vendedor){
     this.app = app;
     this.container = new PIXI.Container();
     this.container.visible = false;
     this.app.stage.addChild(this.container);
+
+    this.vendedor = vendedor;
 
     const menuAncho = 700;
     const menuAltura = 120;
@@ -217,15 +218,20 @@ class UICompra {
     this.title.x = x + 20; this.title.y = y + 16;
     this.container.addChild(this.title);
 
+    this.cantidadOpcion1 = null;
+    this.cantidadOpcion2 = null;
+
     this.opciones = [
     { label: `${opciones.opcion1} - $${opciones.precio1} (+${opciones.energia1} energía)`,
     price: opciones.precio1,
-    energia: opciones.energia1
+    energia: opciones.energia1,
+    cantidad: opciones.cantidad1
     },
 
     { label: `${opciones.opcion2} - $${opciones.precio2} (+${opciones.energia2} energía)`,
     price: opciones.precio2,
-    energia: opciones.energia2
+    energia: opciones.energia2,
+    cantidad: opciones.cantidad2
     }
     ];
 
@@ -320,7 +326,17 @@ class UICompra {
     const compraCorrecta = this.textoOpciones[this.indexOpcion].style.fill;
     this.textoOpciones[this.indexOpcion].style.fill = "#ffb700";
     setTimeout(() => {this.textoOpciones[this.indexOpcion].style.fill = compraCorrecta;}, 500);
-    miJuego.jugador.comidasCompradas.push(this.textoOpciones[this.indexOpcion]);
+    
+    for (let i = 0; i < opc.cantidad; i++){
+      if (Array.isArray(this.vendedor.producto)) {
+        this.vendedor.producto[this.indexOpcion] ? 
+        miJuego.jugador.comidasCompradas.push(this.vendedor.producto[this.indexOpcion]) : null;
+      } else {
+        miJuego.jugador.comidasCompradas.push(this.vendedor.producto);
+      }
+    }
+    
+
   }else{
     if (this.mensajeError) this.mensajeError.destroy();
     const opcion = this.textoOpciones[this.indexOpcion];
@@ -373,8 +389,8 @@ class UIObjetivos{
   }
 }
 
-function menuDeCompra(app, juego, opciones) {
-  const menu = new UICompra(app, opciones);
+function menuDeCompra(app, juego, opciones, vendedor) {
+  const menu = new UICompra(app, opciones, vendedor);
   if (typeof juego.jugadorDinero !== "undefined") menu.mostrarDinero(juego.jugadorDinero);
 
   menu.confirmarCompra = (index, option) => {
