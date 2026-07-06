@@ -9,6 +9,7 @@ class Juego{
         this.nuevoAhora = performance.now();
         this.listaDeTareas = new PIXI.Container();
         this.comidaAComprar = this.unaComidaAleatoria();
+        this.obstaculos = [];
 
         this.uiObjetivosDesplegados = new PIXI.Container();
         this.uiObjetivosContraidos = new PIXI.Container();
@@ -167,6 +168,9 @@ class Juego{
         this.garita.y = this.orillaDelMar + 200;
         this.garita.x = this.fondo.width/2;
         this.garita.zIndex = this.garita.y;
+        
+        this.garita.radioColision = 35;
+        this.obstaculos.push(this.garita);
 
         this.mensajeDeGarita.anchor.set(0.5);
         this.mensajeDeGarita.x = this.garita.x;
@@ -202,7 +206,11 @@ class Juego{
 
             const sombrillaNueva = new GameObject(coordenadaXDeSombrilla, coordenadaYDeSombrilla, texturaAleatoria, i);
 
-            this.sombrillas.push(sombrillaNueva);
+            sombrillaNueva.container.radioColision = 25;
+
+            this.obstaculos.push(sombrillaNueva.container); 
+
+            this.sombrillas.push(sombrillaNueva);  
 
             if(!sombrillaNueva.haySombrillaCerca()){
                 this.mundo.addChild(sombrillaNueva.container);
@@ -212,6 +220,31 @@ class Juego{
                 sombrillaNueva.container.y = Math.min(this.orillaDelMar + Math.random() * this.fondo.height, this.fondo.height);
 
                 this.mundo.addChild(sombrillaNueva.container);
+            }
+        }
+    }
+
+    resolverColisiones(personaje){
+        const radioPersonaje = 25;
+
+        for(const obstaculo of this.obstaculos){
+
+            const dx = personaje.container.x - obstaculo.x;
+            const dy = personaje.container.y - obstaculo.y;
+
+            const distancia = Math.sqrt(dx * dx + dy * dy);
+
+            const distanciaMinima =
+                radioPersonaje + obstaculo.radioColision;
+
+            if(distancia < distanciaMinima){
+
+                const angulo = Math.atan2(dy, dx);
+
+                const overlap = distanciaMinima - distancia;
+
+                personaje.container.x += Math.cos(angulo) * overlap;
+                personaje.container.y += Math.sin(angulo) * overlap;
             }
         }
     }
@@ -460,6 +493,8 @@ class Juego{
 
             this.jugador.mantenerEnPantalla(300, this.fondo.width, this.fondo.height + 50);
             this.jugador.update(dt);
+
+            this.resolverColisiones(this.jugador);
             
             this.actualizarCamara();
             actualizarInterfaz();
@@ -473,6 +508,8 @@ class Juego{
 
             for (let i = 0; i < this.arrayDeNpc.length; i++){
                 this.arrayDeNpc[i].update(dt);
+
+                this.resolverColisiones(this.arrayDeNpc[i]);
             }
 
             this.portalTejo.update(this.jugador);
