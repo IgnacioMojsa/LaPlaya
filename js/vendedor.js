@@ -170,7 +170,7 @@ class AguaYHelado extends Vendedor{
     this.cantidades = 1;
 
     this.infoVenta = menuDeCompra(miJuego.app, miJuego,
-      {opcion1: "Botella de agua", precio1: 1000, energia1: 30, cantiodad1: 1,
+      {opcion1: "Botella de agua", precio1: 1000, energia1: 30, cantidad1: 1,
        opcion2: "Helado", precio2: 2000, energia2: 10, cantidad2: 1,
        dineroDelJugador: miJuego.dineroDelJugador,
       },
