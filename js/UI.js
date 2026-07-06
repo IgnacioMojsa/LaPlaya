@@ -150,7 +150,7 @@ function quedanNenesPorRescatar(){
 }
 
 function quedanAhogadosPorRescatar(){
-  const cantidadDeAhogadosPorRescatar = Math.round(miJuego.totalPersonasTemerarias.length / 2 - miJuego.cantidadDePersonasRescatadas);
+  const cantidadDeAhogadosPorRescatar = Math.round(miJuego.totalPersonasTemerarias.length / 2) - miJuego.cantidadDePersonasRescatadas;
   
   return cantidadDeAhogadosPorRescatar > 0;
 }
@@ -168,7 +168,7 @@ function partidaDeTejoPorGanar(){
 
 function actualizarInterfaz(){
     const cantNenesPerdidos = miJuego.totalNenes.filter(nene => nene.perdido).length
-    const cantidadDeAhogadosPorRescatar = Math.round(miJuego.totalPersonasTemerarias.length / 2 - miJuego.cantidadDePersonasRescatadas);
+    const cantidadDeAhogadosPorRescatar = Math.round(miJuego.totalPersonasTemerarias.length / 2) - miJuego.cantidadDePersonasRescatadas;
 
     miJuego.nenesPorRescatar.mensaje.text = "Encontrar " + cantNenesPerdidos + " nenes perdidos";
     miJuego.comprasPendientes.mensaje.text = "Comprar " + miJuego.comidaAComprar.mensajeDeCompra;

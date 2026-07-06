@@ -410,7 +410,7 @@ class Juego{
     cantidadComidaRequeridaComprada(){
         const comidaActual = this.comidaAComprar.constructor.name;
         
-        return miJuego.jugador.comidasCompradas.filter(e => e.constructor.name === comidaActual)
+        return miJuego.jugador.comidasCompradas.filter(e => e.constructor.name === comidaActual).length
     }
     
     /*cantidadAleatoriaSegunComida(){
