@@ -566,4 +566,16 @@ window.addEventListener("keydown", (e) => {
     }
 });
 
+window.addEventListener('wheel', (event) => {
+    if (event.ctrlKey) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+window.addEventListener('keydown', (event) => {
+    if (event.ctrlKey && (event.key === '+' || event.key === '-' || event.key === '=' || event.key === '0')) {
+        event.preventDefault();
+    }
+});
+
 miJuego.arrancar()
