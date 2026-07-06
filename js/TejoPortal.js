@@ -35,7 +35,6 @@ class TejoPortal {
         this.mensaje.visible = false;
         this.mensaje.x = this.sprite.x;
         this.mensaje.y = this.sprite.y;
-        
 
         this.mundo.addChild(this.mensaje);
 

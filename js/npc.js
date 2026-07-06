@@ -57,26 +57,6 @@ class Npc {
         miJuego.mundo.addChild(this.sombra);
     }
 
-/*     mantenerEnLimites(){
-        //this.container.y = this.container.y + this.velocidadY;
-        //this.container.x = this.container.x + this.velocidadX;
-
-        if (this.container.y > window.innerHeight){
-            this.container.y = -this.container.height - Math.random()*100;
-        }
-
-        if (this.container.y < -this.container.height){
-            this.container.y = window.innerHeight;
-        }
-
-        if (this.container.x < -this.container.width){
-            this.container.x = window.innerWidth
-        }
-
-         if (this.container.x > window.innerWidth){
-            this.container.x = 0
-        } */
-
     mantenerEnLimites(dt){
         if (this.container.x < 0) { this.container.x = 0; this.velocidad.x *= -1; }
         if (this.container.x > miJuego.fondo.width) { this.container.x = miJuego.fondo.width; this.velocidad.x *= -1; }
@@ -89,7 +69,6 @@ class Npc {
                 this.evitarAgua();
             }
         }
-        
 
         if (this.container.y > miJuego.fondo.height) { this.container.y =  miJuego.fondo.height; this.velocidad.y *= -1; }
     }
@@ -207,12 +186,11 @@ class Npc {
             );
 
             if (otro !== this && d < distanciaDeseada) {
-                // Calculamos un vector que apunta en dirección opuesta al otro NPC
+                //Calculamos un vector que apunta en dirección opuesta al otro NPC
                 let diffX = this.container.x - otro.container.x;
                 let diffY = this.container.y - otro.container.y;
 
-                // Cuanto más cerca está el otro, más fuerte es el empuje de alejamiento para eso se divide 
-                // por la distancia
+                //Cuanto más cerca está el otro, más fuerte es el empuje de alejamiento para eso se divide por la distancia
                 diffX /= d;
                 diffY /= d;
 
@@ -226,8 +204,7 @@ class Npc {
             direccionAlejamiento.x /= total;
             direccionAlejamiento.y /= total;
 
-            // Aplicamos la fuerza de separación y uso un valor un poco más alto que en cohesión para que la prioridad 
-            // sea no chocar
+            //Aplicamos la fuerza de separación y uso un valor un poco más alto que en cohesión para que la prioridad sea no chocar
             this.sumarAceleracion(direccionAlejamiento.x * 0.1, direccionAlejamiento.y * 0.1);
         }
     }
@@ -376,12 +353,17 @@ class Npc {
         // nivel de temerosidad debe reducirse a 3 o menos y se debe recompoensar al jugador con x cantidad de dinero.
         // Tambien hay que eliminar al npc rescatado de la lista de personas temerarias
 
+        const sfxAplauso = new Audio("assets/audio/aplauso.mp3")
+        sfxAplauso.preload = "auto";
+        sfxAplauso.volume = 0.5;
+        sfxAplauso.cloneNode(true);
+
         if(this.container.y > miJuego.orillaDelMar + 15){
             this.velocidad.x = 0;
             this.velocidad.y = 0;
             this.aceleracion.x = 0;
             this.aceleracion.y = 0;
-
+            
             if(this.ultimaDir === "izq"){
                 this.cambiarAnimacion("idle_izq")
             }
@@ -395,6 +377,7 @@ class Npc {
                 this.rescatado = false;
                 this.temerosidad = obtenerNumeroAleatorio(1,3);
                 miJuego.jugador.personaAhogada = null;
+                sfxAplauso.play();
             }
         }
     }
@@ -424,7 +407,14 @@ class Npc {
     }
 
     update(dt){
-        /*
+       this.render();
+       this.mantenerEnLimites(dt);
+       this.agrupar(miJuego.arrayDeNpc);
+       this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
+       miJuego.castillos.forEach(castillo => {this.evitarAlgo(castillo.x, castillo.y, castillo.destruido);});
+       this.maquinaDeEstados.update(dt)
+
+          /*
         if(this.ahogandose && !this.rescatado){
             this.ahogarse();
             return;
@@ -453,11 +443,5 @@ class Npc {
 
         this.actualizarPosicionDeSombra()
         */
-       this.render();
-       this.mantenerEnLimites(dt);
-       this.agrupar(miJuego.arrayDeNpc);
-       this.evitarAlgo(miJuego.jugador.container.x, miJuego.jugador.container.y);
-       miJuego.castillos.forEach(castillo => {this.evitarAlgo(castillo.x, castillo.y, castillo.destruido);});
-       this.maquinaDeEstados.update(dt)
     }
 }

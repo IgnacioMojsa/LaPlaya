@@ -61,10 +61,13 @@ class Choclo extends Comida{
     }
 
     cantidadAComprar(){
+
         if(this.compraRequerida > 1){
+            return "2 choclos"
             return " choclos"
         }
         else{
+            return "un choclo"
             return " choclo"
         }
     }

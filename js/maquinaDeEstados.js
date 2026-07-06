@@ -229,6 +229,10 @@ class RescuedState{
             this.personaje.maquinaDeEstados.cambiarA('DEFAULT')
             if(this.personaje instanceof Hombre || this.personaje instanceof Mujer){miJuego.cantidadDePersonasRescatadas += 1;};
             miJuego.dineroDelJugador += 3000;
+            const sfxRecompensa = new Audio("assets/audio/recompensa.mp3");
+            sfxRecompensa.volume = 0.5;
+            sfxRecompensa.cloneNode(false);
+            sfxRecompensa.play()
         }
     }
 

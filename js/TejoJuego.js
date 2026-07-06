@@ -117,7 +117,7 @@ class TejoJuego {
             style: {
                 fill: "#ffffff",
                 fontSize: this.app.screen.width * 0.04,
-                fontFamily: "Arial",
+                fontFamily: "PixelFont",
                 fontWeight: "bold"
             }
         });
@@ -148,7 +148,7 @@ class TejoJuego {
                 style: {
                     fill: "#aaaaaa",
                     fontSize: this.app.screen.width * 0.03,
-                    fontFamily: "Arial",
+                    fontFamily: "PixelFont",
                     fontWeight: "bold"
                 }
             });
@@ -175,7 +175,7 @@ class TejoJuego {
 
             opcion.style.fill =
                 i === this.opcionSeleccionada
-                ? "#ffff00"
+                ? "#ffb700"
                 : "#aaaaaa";
         });
     }
@@ -477,7 +477,7 @@ class TejoJuego {
             style: {
                 fill: "#ffffff",
                 fontSize: this.app.screen.width * 0.018,
-                fontFamily: "Arial",
+                fontFamily: "PixelFont",
                 fontWeight: "bold",
                 align: "center"
             }
@@ -501,7 +501,7 @@ class TejoJuego {
             style: {
                 fill: "#ffffff",
                 fontSize: this.app.screen.width * 0.02,
-                fontFamily: "Arial",
+                fontFamily: "PixelFont",
                 fontWeight: "bold"
             }
         });
@@ -521,7 +521,7 @@ class TejoJuego {
             style: {
                 fill: "#ffffff",
                 fontSize: this.app.screen.width * 0.03,
-                fontFamily: "Arial",
+                fontFamily: "PixelFont",
                 fontWeight: "bold"
             }
         });
@@ -545,7 +545,7 @@ class TejoJuego {
             style: {
                 fill: "#ff4444",
                 fontSize: this.app.screen.width * 0.03,
-                fontFamily: "Arial",
+                fontFamily: "PixelFont",
                 fontWeight: "bold",
                 align: "center"
             }
@@ -572,7 +572,7 @@ class TejoJuego {
             style: {
                 fill: "#ffffff",
                 fontSize: this.app.screen.width * 0.03,
-                fontFamily: "Arial",
+                fontFamily: "PixelFont",
                 fontWeight: "bold"
             }
         });
@@ -598,7 +598,7 @@ class TejoJuego {
             style: {
                 fill: "#ffffff",
                 fontSize: this.app.screen.width * 0.022,
-                fontFamily: "Arial",
+                fontFamily: "PixelFont",
                 fontWeight: "bold"
             }
         });
@@ -627,7 +627,7 @@ class TejoJuego {
             style: {
                 fill: "#ffffff",
                 fontSize: this.app.screen.width * 0.025,
-                fontFamily: "Arial",
+                fontFamily: "PixelFont",
                 fontWeight: "bold"
             }
         });
@@ -649,7 +649,7 @@ class TejoJuego {
             style: {
                 fill: "#ffffff",
                 fontSize: this.app.screen.width * 0.025,
-                fontFamily: "Arial",
+                fontFamily: "PixelFont",
                 fontWeight: "bold"
             }
         });
@@ -671,9 +671,9 @@ class TejoJuego {
         this.textoCambioLado = new PIXI.Text({
             text: "PRESIONE E PARA CAMBIAR DE LADO",
             style: {
-                fill: "#ffff00",
+                fill: "#ffb700",
                 fontSize: this.app.screen.width * 0.03,
-                fontFamily: "Arial",
+                fontFamily: "PixelFont",
                 fontWeight: "bold"
             }
         });

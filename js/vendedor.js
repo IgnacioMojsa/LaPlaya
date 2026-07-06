@@ -6,7 +6,7 @@ class Vendedor extends Npc {
     this.pausaDuracion = 5;
     this.tiempoCaminando = 20;
     this.timerCaminar = Math.random() * this.tiempoCaminando;
-    this.direccion = Math.random() < 0.5 ? -1 : 1; //Es un if mathRandom < 0,5 return -1 else return 1 pero sirve para evitar anidar ifs
+    this.direccion = Math.random() < 0.5 ? -1 : 1;
     this.velocidad.x = this.direccion * this.velocidadMax;
 
     this.producto = null;

@@ -158,7 +158,6 @@ function quedanAhogadosPorRescatar(){
 
 function quedanComprasPendientes(){
   const comprasPendientes = miJuego.comidaAComprar.compraRequerida - miJuego.cantidadComidaRequeridaComprada();
-  
   return comprasPendientes;
 }
 
@@ -200,6 +199,18 @@ class UICompra {
     this.container = new PIXI.Container();
     this.container.visible = false;
     this.app.stage.addChild(this.container);
+
+    this.sfxOpcion = new Audio("assets/audio/opcion.mp3")
+    this.sfxOpcion.preload = "auto";
+    this.sfxOpcion.volume = 0.2;
+
+    this.sfxError = new Audio("assets/audio/errorcompra.mp3");
+    this.sfxError.preload = "auto";
+    this.sfxError.volume = 0.2;
+
+    this.sfxCompra = new Audio("assets/audio/compra.mp3");
+    this.sfxCompra.preload = "auto";
+    this.sfxCompra.volume = 0.2;
 
     this.vendedor = vendedor;
 
@@ -324,10 +335,12 @@ class UICompra {
     miJuego.energiaDelJugador += opc.energia;
     miJuego.energiaDelJugador = Math.min(100, miJuego.energiaDelJugador);
     this.confirmarCompra(this.indexOpcion, opc);
-
+  
     const compraCorrecta = this.textoOpciones[this.indexOpcion].style.fill;
     this.textoOpciones[this.indexOpcion].style.fill = "#ffb700";
     setTimeout(() => {this.textoOpciones[this.indexOpcion].style.fill = compraCorrecta;}, 500);
+    const sfxCompraCorrecta = this.sfxCompra.cloneNode(false);
+    sfxCompraCorrecta.play()
     
     for (let i = 0; i < opc.cantidad; i++){
       if (Array.isArray(this.vendedor.producto)) {
@@ -354,6 +367,8 @@ class UICompra {
         this.mensajeError.destroy();
         this.mensajeError = null;}
     },800);
+    const sfxErrorDeCompra = this.sfxError.cloneNode(false);
+    sfxErrorDeCompra.play()
     }
   }
 
@@ -363,9 +378,17 @@ class UICompra {
     this.keysProcesadas[key] = true;
     actualizarInterfaz();
     if (!this.abierto) return;
-         if (key === 'w'){ this.indexOpcion = 0; this.hoverOpcion();}
-    else if (key === 's'){ this.indexOpcion = 1; this.hoverOpcion();}
-    else if (key === 'enter'){ this.comprarProducto();}
+      if (key === 'w'){
+        this.indexOpcion = 0; this.hoverOpcion();
+        const sfx = this.sfxOpcion.cloneNode(false);
+        sfx.play()
+      }
+      else if (key === 's'){
+        this.indexOpcion = 1; this.hoverOpcion();
+        const sfx = this.sfxOpcion.cloneNode(false);
+        sfx.play()
+      }
+      else if (key === 'enter'){this.comprarProducto();}
   }
   onKeyUp(e){ this.keysProcesadas[e.key.toLowerCase()] = false;}
 }

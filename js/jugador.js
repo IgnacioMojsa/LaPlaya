@@ -198,14 +198,11 @@ class Jugador {
 
   nenePerdidoMasCercano(){
     // Devuelve al nene perdido que mas cerca se encuentra del jugador
-    
     const nenePerdido = miJuego.totalNenes.find(nene => nene.perdido && distancia(this.container.x, nene.container.x, this.container.y, nene.container.y) < 20);
-
     return nenePerdido
   }
 
   actualizarMensajesDeNenes(){
-  
     // Si ya tengo un nene conmigo, no mostrar mensajes
     const tieneNeneRescatado = miJuego.totalNenes.some(
       nene => nene.adulto === this
@@ -215,7 +212,6 @@ class Jugador {
 
       // Resetear
       nene.mensaje.visible = false;
-
       // Solo mostrar si:
       // - está perdido
       // - estoy cerca
@@ -285,6 +281,11 @@ actualizarFlechaGarita(){
 }
 
 actualizarFlechaAhogado(){
+  const sfxSorpresa = new Audio("assets/audio/gasp.mp3");
+  sfxSorpresa.preload = "auto";
+  sfxSorpresa.volume = 0.5;
+  sfxSorpresa.cloneNode(true);
+
   if(!miJuego.hayPersonasAhogadas()){
     if (this.flechaAhogado) this.flechaAhogado.visible = false;
     return;
@@ -301,6 +302,7 @@ actualizarFlechaAhogado(){
     this.flechaAhogado.zIndex = 9999;
     this.flechaAhogado.anchor.set(0.5);
     miJuego.mundo.addChild(this.flechaAhogado);
+    sfxSorpresa.play()
   }
 
   this.flechaAhogado.visible = true;
@@ -342,13 +344,8 @@ actualizarFlechaAhogado(){
         this.velMaxima = 80;
         this.aceleracion = 80;
       }
-      
+ 
       this.maquinaDeEstados.update(dt);
-
-      /*this.cambiarDeSpriteDeDireccion();
-      this.evitarQueEntreAlAguaConNene();
-      this.mostrarMensajeDeRescate()
-      this.actualizarMensajesDeNenes();*/
   }
 
   cargarSpritesAnimados(spritesACargar){
@@ -376,7 +373,51 @@ actualizarFlechaAhogado(){
     this.spriteAnimadoActual = this.spritesAnimados[nuevaAnimacion];
   }
 
-  /*cambiarDeSpriteDeDireccion(){
+  romperCastillo(){
+    const index = miJuego.castillos.findIndex(castillo => !castillo.destruido && distancia(this.container.x, castillo.x, this.container.y, castillo.y) < 40);
+
+    if (index === -1) return;
+
+    const castillo = miJuego.castillos[index];
+    castillo.destruido = true;
+    miJuego.mundo.removeChild(castillo);
+
+    const animacion = new PIXI.AnimatedSprite(miJuego.castilloAnimacion.animations.romperse);
+    animacion.x = castillo.x;
+    animacion.y = castillo.y;
+    animacion.loop = false;
+    animacion.animationSpeed = 0.15;
+
+    animacion.onComplete = () => {animacion.gotoAndStop(animacion.totalFrames - 1);}
+    animacion.play();
+    miJuego.mundo.addChild(animacion);
+    miJuego.castillos[index] = animacion;
+    animacion.destruido = true;
+  }
+
+  mantenerEnPantalla(limiteAguaY, anchoFondo, altoFondo) {
+    const mitadW = this.container.width / 2;
+    const mitadH = this.container.height / 2;
+
+    //Limites pantalla
+    this.container.x = Math.max(mitadW, Math.min(anchoFondo - mitadW, this.container.x));
+    this.container.y = Math.max(mitadH, Math.min(altoFondo - mitadH, this.container.y));
+      
+    //Agua
+    if (this.container.y < limiteAguaY) {
+      this.container.y = limiteAguaY - 0.5;
+    }
+  }
+
+  getPosicion() {
+    return {
+        x: this.container?.x ?? this.x ?? 0,
+        y: this.container?.y ?? this.y ?? 0
+    };
+  }
+}
+
+/*cambiarDeSpriteDeDireccion(){
     if (this.velocidad.x > 0) this.ultimaDireccion = "der";
     if (this.velocidad.x < 0) this.ultimaDireccion = "izq";
     
@@ -415,49 +456,3 @@ actualizarFlechaAhogado(){
       this.cambiarAnimacion("izq_con_nene")
     }
   }*/
-
-  romperCastillo(){
-    const index = miJuego.castillos.findIndex(castillo => !castillo.destruido && distancia(this.container.x, castillo.x, this.container.y, castillo.y) < 40);
-
-    if (index === -1) return;
-
-    const castillo = miJuego.castillos[index];
-    castillo.destruido = true;
-    miJuego.mundo.removeChild(castillo);
-
-    const animacion = new PIXI.AnimatedSprite(miJuego.castilloAnimacion.animations.romperse);
-    animacion.x = castillo.x;
-    animacion.y = castillo.y;
-    animacion.loop = false;
-    animacion.animationSpeed = 0.15;
-
-    animacion.onComplete = () => {animacion.gotoAndStop(animacion.totalFrames - 1);}
-    animacion.play();
-    miJuego.mundo.addChild(animacion);
-    miJuego.castillos[index] = animacion;
-    animacion.destruido = true; // opcional, para no tocarlo después
-  }
-
-  //PARAMETRO QUE TOMA EN MAIN.JS PARA QUE NO PASE EL LIMITE DE AGUA
-  mantenerEnPantalla(limiteAguaY, anchoFondo, altoFondo) {
-    const mitadW = this.container.width / 2;
-    const mitadH = this.container.height / 2;
-
-    // límites normales de pantalla
-    this.container.x = Math.max(mitadW, Math.min(anchoFondo - mitadW, this.container.x));
-    this.container.y = Math.max(mitadH, Math.min(altoFondo - mitadH, this.container.y));
-      
-    // agua (misma lógica que NPC)
-    if (this.container.y < limiteAguaY) {
-      this.container.y = limiteAguaY - 0.5;
-    }
-  }
-
-  getPosicion() {
-    return {
-        x: this.container?.x ?? this.x ?? 0,
-        y: this.container?.y ?? this.y ?? 0
-    };
-  }
-
-}

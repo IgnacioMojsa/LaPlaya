@@ -36,19 +36,13 @@ class Juego{
         this.limitePermitido = 515;
         this.zonaPeligrosa = 390;
 
-        this.dineroDelJugador = 10000;
+        this.dineroDelJugador = 1000;
         this.energiaDelJugador = 100;
 
         this.bgm.loop = true;
     }
 
-    async arrancar() {
-        /* const opcionesDePixi = {
-            width: window.innerWidth,
-            height: window.innerHeight,
-            background: "#000000"
-        }; */
-        
+    async arrancar(){        
         const opcionesDePixi = {
             resizeTo: window,
             background: "#000000"
@@ -69,7 +63,6 @@ class Juego{
         await this.precargarAssets();
         await this.prepararEscena();
 
-        //Espera a que el usuario interactúe con el documento antes de reproducir la música, y no lanza error en la consola
         this.bgmIniciada = false;
         const iniciarBgm = () => {
             this.bgm.play()
@@ -85,7 +78,8 @@ class Juego{
         this.app.ticker.add(() => this.gameLoop());
     }
 
-    async precargarAssets() {
+    async precargarAssets(){
+        //Personajes
         this.hombre1 = await PIXI.Assets.load("assets/spritesheets/hombre.json");
         this.hombre2 = await PIXI.Assets.load("assets/spritesheets/hombre2.json");
         this.hombre3 = await PIXI.Assets.load("assets/spritesheets/hombre3.json");
@@ -96,10 +90,11 @@ class Juego{
         this.mujer4 = await PIXI.Assets.load("assets/spritesheets/mujer4.json");
         this.neneAssets = await PIXI.Assets.load("assets/spritesheets/nene.json");
         this.jugadorAssets = await PIXI.Assets.load('assets/spritesheets/player.json');
-        this.churrosAssets = await PIXI.Assets.load("assets/spritesheets/vendedora1.json")
-        this.chocloAssets = await PIXI.Assets.load("assets/spritesheets/choclo.json")
-        this.heladoAssets = await PIXI.Assets.load("assets/spritesheets/vendedor2.json")
-        //this.pochocloAssets = await PIXI.Assets.load("assets/spritesheets/vendedor3.json")
+        this.churrosAssets = await PIXI.Assets.load("assets/spritesheets/vendedora1.json");
+        this.chocloAssets = await PIXI.Assets.load("assets/spritesheets/choclo.json");
+        this.heladoAssets = await PIXI.Assets.load("assets/spritesheets/vendedor2.json");
+
+        //Fondo
         this.playaTextura = await PIXI.Assets.load('assets/playa3.png');
         this.garitaTextura = await PIXI.Assets.load('assets/garitaGuardavidas.png')
         this.sombrilla1 = await PIXI.Assets.load('assets/sombrilla.png');
@@ -121,20 +116,15 @@ class Juego{
         this.flechaPeligro = await PIXI.Assets.load("assets/ui/flechaPeligro2.png");
         this.casillero = await PIXI.Assets.load("assets/ui/casillero.png");
         this.tilde = await PIXI.Assets.load("assets/ui/tilde.png");
-
+        this.alertaPeligro = await PIXI.Assets.load("assets/ui/UIAlerta.png")
         this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}}); 
     }
 
     async cargarJugador() {
         const coordenadaXdeJugador = window.innerWidth / 2
         const coordenadaYdeJugador = this.orillaDelMar + window.innerHeight / 2
-
-        //Se crea el jugador
         this.jugador = new Jugador(coordenadaXdeJugador, coordenadaYdeJugador, this.jugadorAssets);
-        
-        //Se lo agrega en el mundo, no en el stage
         this.mundo.addChild(this.jugador.container);
-        //this.app.stage.addChild(this.jugador.mensaje);
     }
 
     async cargarUnPersonajeNoJugable(unPersonaje, unaImagen, cantidad) {
@@ -153,15 +143,11 @@ class Juego{
             else this.totalAdultos.push(instanciaDeNPC);
             
             this.generarTemerosidadEnNpc(instanciaDeNPC);
-            
         }
     }
 
     async cargarFondo() {
         this.fondo = new PIXI.Sprite(this.playaTextura);
-
-        //ajustarFondo(this.fondo);
-
         this.fondo.zIndex = 0;
         this.mundo.addChild(this.fondo);
     }
@@ -271,7 +257,6 @@ class Juego{
         await this.cargarUnPersonajeNoJugable(VendedoraChurros, this.churrosAssets, (this.vendedores));
         await this.cargarUnPersonajeNoJugable(VendedorChoclos, this.chocloAssets, (this.vendedores));
         await this.cargarUnPersonajeNoJugable(AguaYHelado, this.heladoAssets, (this.vendedores));
-        //this.cargarUnPersonajeNoJugable(VendedorPochoclos, this.pochocloAssets, (this.vendedores));
         this.asignarNenesPerdidos((this.cantNenes + this.perdidos))
         console.log("assets cargados")
 
@@ -292,7 +277,7 @@ class Juego{
 
         this.portalTejo.init();
 
-        // Aca va el cambio de clima
+        //Cambio de clima
         iniciarSistemaDeClima();
         window.addEventListener("resize", () => onResize(this.app))
 
@@ -308,7 +293,7 @@ class Juego{
         let targetX = centroX - this.jugador.container.x;
         let targetY = centroY - this.jugador.container.y;
 
-        // Límites para que la cámara no muestre el "vacío" negro
+        //Límites para que la cámara no muestre el "vacío" negro
         const limiteDerecho = -(this.fondo.width - window.innerWidth);
         const limiteInferior = -(this.fondo.height - window.innerHeight);
 
@@ -379,7 +364,7 @@ class Juego{
                 this.totalNenes[nenesActuales].adulto = null;
             }
 
-            //Asignar adulto a nenes
+            //Asigna adulto a nenes
             const adultosDisponibles = this.totalAdultos.filter(adulto => !adulto.neneACargo);
 
             if(adultosDisponibles.length > 0){
@@ -495,14 +480,11 @@ class Juego{
                 this.jugador.romperCastillo();
             }
         }
-
         else if (enMiniJuego) {
             this.tejoJuego.update();
         }
-
-        //requestAnimationFrame(this.gameLoop); // SIEMPRE SE LLAMA
+        //requestAnimationFrame(this.gameLoop);
     }
-    
 }
 
 const miJuego = new Juego()
