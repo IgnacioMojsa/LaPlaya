@@ -157,7 +157,9 @@ function quedanAhogadosPorRescatar(){
 }
 
 function quedanComprasPendientes(){
-  return true;
+  const comprasPendientes = miJuego.comidaAComprar.compraRequerida - miJuego.cantidadComidaRequeridaComprada();
+  
+  return comprasPendientes;
 }
 
 function partidaDeTejoPorGanar(){

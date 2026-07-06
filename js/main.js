@@ -420,6 +420,12 @@ class Juego{
 
         return comidaElegida
     }
+
+    cantidadComidaRequeridaComprada(){
+        const comidaActual = this.comidaAComprar.constructor.name;
+        
+        return miJuego.jugador.comidasCompradas.filter(e => e.constructor.name === comidaActual)
+    }
     
     /*cantidadAleatoriaSegunComida(){
         if(this.comidaAComprar === 'churros'){
