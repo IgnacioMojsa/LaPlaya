@@ -121,7 +121,7 @@ class Juego{
     }
 
     async cargarJugador() {
-        const coordenadaXdeJugador = window.innerWidth / 2
+        const coordenadaXdeJugador = this.garita.x
         const coordenadaYdeJugador = this.orillaDelMar + window.innerHeight / 2
         this.jugador = new Jugador(coordenadaXdeJugador, coordenadaYdeJugador, this.jugadorAssets);
         this.mundo.addChild(this.jugador.container);
@@ -165,7 +165,7 @@ class Juego{
 
         this.garita.anchor.set(0.5, 0.9);
         this.garita.y = this.orillaDelMar + 200;
-        this.garita.x = this.orillaDelMar + Math.random();
+        this.garita.x = this.fondo.width/2;
         this.garita.zIndex = this.garita.y;
 
         this.mensajeDeGarita.anchor.set(0.5);
@@ -250,6 +250,8 @@ class Juego{
 
         cargarInterfaz();
     
+        await this.cargarGarita();
+
         await this.cargarJugador();
         await this.cargarHombres();
         await this.cargarMujeres();
@@ -262,7 +264,6 @@ class Juego{
 
         window.addEventListener('resize', onResize);
 
-        await this.cargarGarita();
         await this.cargarSombrillas();
         await this.cargarCastillos();
         

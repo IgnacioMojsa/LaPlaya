@@ -259,7 +259,7 @@ class Jugador {
     }
   }
 
-actualizarFlechaGarita(){
+  actualizarFlechaGarita(){
   if(!this.estaCargandoUnNene()){
     if (this.flechaGarita) this.flechaGarita.visible = false;
     return;
@@ -278,9 +278,9 @@ actualizarFlechaGarita(){
   const dx = miJuego.garita.x - this.flechaGarita.x;
   const dy = miJuego.garita.y - this.flechaGarita.y;
   this.flechaGarita.rotation = Math.atan2(dy, dx);
-}
+  }
 
-actualizarFlechaAhogado(){
+  actualizarFlechaAhogado(){
   const sfxSorpresa = new Audio("assets/audio/gasp.mp3");
   sfxSorpresa.preload = "auto";
   sfxSorpresa.volume = 0.5;
@@ -312,7 +312,7 @@ actualizarFlechaAhogado(){
   const dx = npc.container.x - this.flechaAhogado.x;
   const dy = npc.container.y - this.flechaAhogado.y;
   this.flechaAhogado.rotation = Math.atan2(dy, dx);
-}
+  }
 
   update(dt){
       this.container.x += this.velocidad.x * dt;
