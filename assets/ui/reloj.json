@@ -1,0 +1,1556 @@
+{
+    "frames": {
+        "reloj_0800.png": {
+            "frame": {
+                "x": 1,
+                "y": 1,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0810.png": {
+            "frame": {
+                "x": 375,
+                "y": 1,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0820.png": {
+            "frame": {
+                "x": 749,
+                "y": 1,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0830.png": {
+            "frame": {
+                "x": 1123,
+                "y": 1,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0840.png": {
+            "frame": {
+                "x": 1,
+                "y": 123,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0850.png": {
+            "frame": {
+                "x": 375,
+                "y": 123,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0900.png": {
+            "frame": {
+                "x": 749,
+                "y": 123,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0910.png": {
+            "frame": {
+                "x": 1123,
+                "y": 123,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0920.png": {
+            "frame": {
+                "x": 1,
+                "y": 245,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0930.png": {
+            "frame": {
+                "x": 375,
+                "y": 245,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0940.png": {
+            "frame": {
+                "x": 749,
+                "y": 245,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_0950.png": {
+            "frame": {
+                "x": 1123,
+                "y": 245,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1000.png": {
+            "frame": {
+                "x": 1,
+                "y": 367,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1010.png": {
+            "frame": {
+                "x": 375,
+                "y": 367,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1020.png": {
+            "frame": {
+                "x": 749,
+                "y": 367,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1030.png": {
+            "frame": {
+                "x": 1123,
+                "y": 367,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1040.png": {
+            "frame": {
+                "x": 1,
+                "y": 489,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1050.png": {
+            "frame": {
+                "x": 375,
+                "y": 489,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1100.png": {
+            "frame": {
+                "x": 749,
+                "y": 489,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1110.png": {
+            "frame": {
+                "x": 1123,
+                "y": 489,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1120.png": {
+            "frame": {
+                "x": 1,
+                "y": 611,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1130.png": {
+            "frame": {
+                "x": 375,
+                "y": 611,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1140.png": {
+            "frame": {
+                "x": 749,
+                "y": 611,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1150.png": {
+            "frame": {
+                "x": 1123,
+                "y": 611,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1200.png": {
+            "frame": {
+                "x": 1,
+                "y": 733,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1210.png": {
+            "frame": {
+                "x": 375,
+                "y": 733,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1220.png": {
+            "frame": {
+                "x": 749,
+                "y": 733,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1230.png": {
+            "frame": {
+                "x": 1123,
+                "y": 733,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1240.png": {
+            "frame": {
+                "x": 1,
+                "y": 855,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1250.png": {
+            "frame": {
+                "x": 375,
+                "y": 855,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1300.png": {
+            "frame": {
+                "x": 749,
+                "y": 855,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1310.png": {
+            "frame": {
+                "x": 1123,
+                "y": 855,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1320.png": {
+            "frame": {
+                "x": 1,
+                "y": 977,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1330.png": {
+            "frame": {
+                "x": 375,
+                "y": 977,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1340.png": {
+            "frame": {
+                "x": 749,
+                "y": 977,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1350.png": {
+            "frame": {
+                "x": 1123,
+                "y": 977,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1400.png": {
+            "frame": {
+                "x": 1,
+                "y": 1099,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1410.png": {
+            "frame": {
+                "x": 375,
+                "y": 1099,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1420.png": {
+            "frame": {
+                "x": 749,
+                "y": 1099,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1430.png": {
+            "frame": {
+                "x": 1123,
+                "y": 1099,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1440.png": {
+            "frame": {
+                "x": 1,
+                "y": 1221,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1450.png": {
+            "frame": {
+                "x": 375,
+                "y": 1221,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1500.png": {
+            "frame": {
+                "x": 749,
+                "y": 1221,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1510.png": {
+            "frame": {
+                "x": 1123,
+                "y": 1221,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1520.png": {
+            "frame": {
+                "x": 1,
+                "y": 1343,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1530.png": {
+            "frame": {
+                "x": 375,
+                "y": 1343,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1540.png": {
+            "frame": {
+                "x": 749,
+                "y": 1343,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1550.png": {
+            "frame": {
+                "x": 1123,
+                "y": 1343,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1600.png": {
+            "frame": {
+                "x": 1,
+                "y": 1465,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1610.png": {
+            "frame": {
+                "x": 375,
+                "y": 1465,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1620.png": {
+            "frame": {
+                "x": 749,
+                "y": 1465,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1630.png": {
+            "frame": {
+                "x": 1123,
+                "y": 1465,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1640.png": {
+            "frame": {
+                "x": 1,
+                "y": 1587,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1650.png": {
+            "frame": {
+                "x": 375,
+                "y": 1587,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1700.png": {
+            "frame": {
+                "x": 749,
+                "y": 1587,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1710.png": {
+            "frame": {
+                "x": 1123,
+                "y": 1587,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1720.png": {
+            "frame": {
+                "x": 1497,
+                "y": 1,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1730.png": {
+            "frame": {
+                "x": 1497,
+                "y": 123,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1740.png": {
+            "frame": {
+                "x": 1497,
+                "y": 245,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1750.png": {
+            "frame": {
+                "x": 1497,
+                "y": 367,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1800.png": {
+            "frame": {
+                "x": 1497,
+                "y": 489,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1810.png": {
+            "frame": {
+                "x": 1497,
+                "y": 611,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1820.png": {
+            "frame": {
+                "x": 1497,
+                "y": 733,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1830.png": {
+            "frame": {
+                "x": 1497,
+                "y": 855,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1840.png": {
+            "frame": {
+                "x": 1497,
+                "y": 977,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1850.png": {
+            "frame": {
+                "x": 1497,
+                "y": 1099,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1900.png": {
+            "frame": {
+                "x": 1497,
+                "y": 1221,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1910.png": {
+            "frame": {
+                "x": 1497,
+                "y": 1343,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1920.png": {
+            "frame": {
+                "x": 1497,
+                "y": 1465,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1930.png": {
+            "frame": {
+                "x": 1497,
+                "y": 1587,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1940.png": {
+            "frame": {
+                "x": 1,
+                "y": 1709,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_1950.png": {
+            "frame": {
+                "x": 375,
+                "y": 1709,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        },
+        "reloj_2000.png": {
+            "frame": {
+                "x": 749,
+                "y": 1709,
+                "w": 372,
+                "h": 120
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 372,
+                "h": 120
+            },
+            "sourceSize": {
+                "w": 372,
+                "h": 120
+            }
+        }
+    },
+
+    "animations":{
+        "reloj":[
+            "reloj_0800.png",
+            "reloj_0810.png",
+            "reloj_0820.png",
+            "reloj_0830.png",
+            "reloj_0840.png",
+            "reloj_0850.png",
+            "reloj_0900.png",
+            "reloj_0910.png",
+            "reloj_0920.png",
+            "reloj_0930.png",
+            "reloj_0940.png",
+            "reloj_0950.png",
+            "reloj_1000.png",
+            "reloj_1010.png",
+            "reloj_1020.png",
+            "reloj_1030.png",
+            "reloj_1040.png",
+            "reloj_1050.png",
+            "reloj_1100.png",
+            "reloj_1110.png",
+            "reloj_1120.png",
+            "reloj_1130.png",
+            "reloj_1140.png",
+            "reloj_1150.png",
+            "reloj_1200.png",
+            "reloj_1210.png",
+            "reloj_1220.png",
+            "reloj_1230.png",
+            "reloj_1240.png",
+            "reloj_1250.png",
+            "reloj_1300.png",
+            "reloj_1310.png",
+            "reloj_1320.png",
+            "reloj_1330.png",
+            "reloj_1340.png",
+            "reloj_1350.png",
+            "reloj_1400.png",
+            "reloj_1410.png",
+            "reloj_1420.png",
+            "reloj_1430.png",
+            "reloj_1440.png",
+            "reloj_1450.png",
+            "reloj_1500.png",
+            "reloj_1510.png",
+            "reloj_1520.png",
+            "reloj_1530.png",
+            "reloj_1540.png",
+            "reloj_1550.png",
+            "reloj_1600.png",
+            "reloj_1610.png",
+            "reloj_1620.png",
+            "reloj_1630.png",
+            "reloj_1640.png",
+            "reloj_1650.png",
+            "reloj_1700.png",
+            "reloj_1710.png",
+            "reloj_1720.png",
+            "reloj_1730.png",
+            "reloj_1740.png",
+            "reloj_1750.png",
+            "reloj_1800.png",
+            "reloj_1810.png",
+            "reloj_1820.png",
+            "reloj_1830.png",
+            "reloj_1840.png",
+            "reloj_1850.png",
+            "reloj_1900.png",
+            "reloj_1910.png",
+            "reloj_1920.png",
+            "reloj_1930.png",
+            "reloj_1940.png",
+            "reloj_1950.png",
+            "reloj_2000.png"
+        ]
+    }
+    ,
+
+    "meta": {
+        "app": "https://www.codeandweb.com/texturepacker",
+        "version": "1.0",
+        "image": "reloj.png",
+        "format": "RGBA8888",
+        "size": {
+            "w": 1870,
+            "h": 1830
+        },
+        "scale": "1",
+        "comment": "Created with TexturePacker Online (free version)\nhttps://www.codeandweb.com/texturepacker-online\n\nTexturePacker desktop offers better support for Pixi and Phaser with sprite trimming, better packing algorithms, hardware texture compression, and PNG optimization.\nTry TexturePacker desktop: https://www.codeandweb.com/texturepacker"
+    }
+}

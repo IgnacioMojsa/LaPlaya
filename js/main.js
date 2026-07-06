@@ -111,7 +111,7 @@ class Juego{
         this.barraEnergia = await PIXI.Assets.load("assets/ui/energia.png");
         this.dineroDisponible = await PIXI.Assets.load("assets/ui/dinero.png");
         this.menuCompra = await PIXI.Assets.load("assets/ui/menuCompra.png");
-        this.reloj = await PIXI.Assets.load("assets/ui/reloj.png");
+        this.reloj = await PIXI.Assets.load("assets/ui/reloj.json");
         this.flechaGarita = await PIXI.Assets.load("assets/ui/flecha.png");
         this.flechaPeligro = await PIXI.Assets.load("assets/ui/flechaPeligro2.png");
         this.casillero = await PIXI.Assets.load("assets/ui/casillero.png");

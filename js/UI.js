@@ -57,9 +57,8 @@ function cargarInterfaz(){
     },
   })
 
-  const visualReloj = new PIXI.Sprite(miJuego.reloj);
-  visualReloj.anchor.set(1, 0);
-  miJuego.uiRelojBanderin.addChild(visualReloj);
+  const visualReloj = new UIReloj(miJuego.reloj);
+  miJuego.uiRelojBanderin.addChild(visualReloj.container);
   miJuego.uiRelojBanderin.addChild(miJuego.uiRelojBanderin);
   miJuego.app.stage.addChild(miJuego.uiRelojBanderin);
   miJuego.uiRelojBanderin.x = window.innerWidth - 10;
@@ -393,25 +392,43 @@ class UICompra {
   onKeyUp(e){ this.keysProcesadas[e.key.toLowerCase()] = false;}
 }
 
-class UIObjetivos{
+class UIReloj{
   constructor(texture){
     this.container = new PIXI.Container();
-    this.texture = texture;
+    this.spritesAnimados = null;
+    this.intervaloReloj = null;
 
-    this.desplegado = false;
+    this.cargarSprites(texture);
+    this.iniciarTemporizador();
   }
 
-  desplegar(){
-    if(!this.desplegado){
-      this.desplegado = true;
+  cargarSprites(spritesACargar){
+    const frames = spritesACargar.animations["reloj"] || Object.values(spritesACargar.textures);
+
+    this.spritesAnimados = new PIXI.AnimatedSprite(frames);
+    this.spritesAnimados.anchor.set(1, 0);
+
+    this.spritesAnimados.stop(); 
+    this.spritesAnimados.currentFrame = 0;
+
+    this.container.addChild(this.spritesAnimados);
+  }
+
+  iniciarTemporizador(){
+    const tiempoPorFrameMS = 10000; 
+
+    this.intervaloReloj = setInterval(() => {
+      if (this.spritesAnimados) {
+        let siguienteFrame = this.spritesAnimados.currentFrame + 1;
+
+        if (siguienteFrame >= this.spritesAnimados.totalFrames) {
+          siguienteFrame = 0;
+        }
+
+          this.spritesAnimados.gotoAndStop(siguienteFrame);
+        }
+      }, tiempoPorFrameMS);
     }
-  }
-
-  contraer(){
-    if(this.desplegado){
-      this.desplegado = false;
-    }
-  }
 }
 
 function menuDeCompra(app, juego, opciones, vendedor) {
