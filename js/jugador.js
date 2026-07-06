@@ -29,9 +29,6 @@ class Jugador {
     this.input = {izq: false, der: false, arriba: false, abajo: false};
     this.inputBloqueado = false;
 
-    this.silbato = new Audio("assets/audio/silbato3.mp3");
-    this.silbato.preload = "auto";
-
     window.addEventListener("keydown", (e) => {
     if (e.key && e.key.toLowerCase() === "q"){
     this.tocarSilbato();}});
@@ -140,8 +137,7 @@ class Jugador {
   }
 
   tocarSilbato(){
-  const silbido = this.silbato.cloneNode(false);
-  silbido.play()
+  playSfx(sfx.silbato)
   }
 
   estaNadando(){
@@ -281,10 +277,7 @@ class Jugador {
   }
 
   actualizarFlechaAhogado(){
-  const sfxSorpresa = new Audio("assets/audio/gasp.mp3");
-  sfxSorpresa.preload = "auto";
-  sfxSorpresa.volume = 0.5;
-  sfxSorpresa.cloneNode(true);
+  
 
   if(!miJuego.hayPersonasAhogadas()){
     if (this.flechaAhogado) this.flechaAhogado.visible = false;
@@ -302,7 +295,7 @@ class Jugador {
     this.flechaAhogado.zIndex = 9999;
     this.flechaAhogado.anchor.set(0.5);
     miJuego.mundo.addChild(this.flechaAhogado);
-    sfxSorpresa.play()
+    playSfx(sfx.sorpresa);
   }
 
   this.flechaAhogado.visible = true;

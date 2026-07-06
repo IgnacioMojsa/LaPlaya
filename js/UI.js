@@ -199,18 +199,6 @@ class UICompra {
     this.container.visible = false;
     this.app.stage.addChild(this.container);
 
-    this.sfxOpcion = new Audio("assets/audio/opcion.mp3")
-    this.sfxOpcion.preload = "auto";
-    this.sfxOpcion.volume = 0.2;
-
-    this.sfxError = new Audio("assets/audio/errorcompra.mp3");
-    this.sfxError.preload = "auto";
-    this.sfxError.volume = 0.2;
-
-    this.sfxCompra = new Audio("assets/audio/compra.mp3");
-    this.sfxCompra.preload = "auto";
-    this.sfxCompra.volume = 0.2;
-
     this.vendedor = vendedor;
 
     const menuAncho = 700;
@@ -338,8 +326,7 @@ class UICompra {
     const compraCorrecta = this.textoOpciones[this.indexOpcion].style.fill;
     this.textoOpciones[this.indexOpcion].style.fill = "#ffb700";
     setTimeout(() => {this.textoOpciones[this.indexOpcion].style.fill = compraCorrecta;}, 500);
-    const sfxCompraCorrecta = this.sfxCompra.cloneNode(false);
-    sfxCompraCorrecta.play()
+    playSfx(sfx.compra);
     
     for (let i = 0; i < opc.cantidad; i++){
       if (Array.isArray(this.vendedor.producto)) {
@@ -366,8 +353,7 @@ class UICompra {
         this.mensajeError.destroy();
         this.mensajeError = null;}
     },800);
-    const sfxErrorDeCompra = this.sfxError.cloneNode(false);
-    sfxErrorDeCompra.play()
+    playSfx(sfx.error);
     }
   }
 
@@ -379,13 +365,11 @@ class UICompra {
     if (!this.abierto) return;
       if (key === 'w'){
         this.indexOpcion = 0; this.hoverOpcion();
-        const sfx = this.sfxOpcion.cloneNode(false);
-        sfx.play()
+        playSfx(sfx.opcion);
       }
       else if (key === 's'){
         this.indexOpcion = 1; this.hoverOpcion();
-        const sfx = this.sfxOpcion.cloneNode(false);
-        sfx.play()
+        playSfx(sfx.opcion);
       }
       else if (key === 'enter'){this.comprarProducto();}
   }

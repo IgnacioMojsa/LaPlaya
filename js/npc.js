@@ -353,11 +353,6 @@ class Npc {
         // nivel de temerosidad debe reducirse a 3 o menos y se debe recompoensar al jugador con x cantidad de dinero.
         // Tambien hay que eliminar al npc rescatado de la lista de personas temerarias
 
-        const sfxAplauso = new Audio("assets/audio/aplauso.mp3")
-        sfxAplauso.preload = "auto";
-        sfxAplauso.volume = 0.5;
-        sfxAplauso.cloneNode(true);
-
         if(this.container.y > miJuego.orillaDelMar + 15){
             this.velocidad.x = 0;
             this.velocidad.y = 0;
@@ -377,7 +372,7 @@ class Npc {
                 this.rescatado = false;
                 this.temerosidad = obtenerNumeroAleatorio(1,3);
                 miJuego.jugador.personaAhogada = null;
-                sfxAplauso.play();
+                playSfx(sfx.aplauso)
             }
         }
     }
