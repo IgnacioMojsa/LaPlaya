@@ -40,6 +40,13 @@ class Juego{
         this.dineroDelJugador = 1000;
         this.energiaDelJugador = 100;
 
+        this.puntajeFinal = 0;
+        this.puntajePorTiempoEmpleado = 24000;
+        this.puntajePorObjetivosCompletados = 0;
+        this.puntajePorNeneRescatado = 0;
+        this.bonusPorAhogadosRescatados = 0; // OTORGA PUNTAJE EXTRA POR RESCATAR MAS AHOGADOS DE LOS REQUERIDOS EN EL OBJETIVO
+        this.puntajePorDineroSobrante = this.dineroDelJugador;
+
         this.bgm.loop = true;
     }
 
@@ -107,6 +114,7 @@ class Juego{
         this.sombra = await PIXI.Assets.load('assets/sombra.png');
 
         //Interfaz
+        this.contenedor = await PIXI.Assets.load('assets/ui/Contenedor.png');
         this.objetivosDesplegados = await PIXI.Assets.load('assets/ui/UIObjetivosDesplegado.png');
         this.objetivosContraidos = await PIXI.Assets.load('assets/ui/UIObjetivos.png');
         this.barraEnergia = await PIXI.Assets.load("assets/ui/energia.png");
@@ -118,6 +126,7 @@ class Juego{
         this.casillero = await PIXI.Assets.load("assets/ui/casillero.png");
         this.tilde = await PIXI.Assets.load("assets/ui/tilde.png");
         this.alertaPeligro = await PIXI.Assets.load("assets/ui/UIAlerta.png")
+        this.finDePartida = await PIXI.Assets.load("assets/ui/PantallaVictoria.png");
         this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}}); 
     }
 
@@ -272,7 +281,7 @@ class Juego{
     }
 
     async prepararEscena(){
-        await cargarCielo(this.app);
+        await cargarCielo(this.mundo);
         await cargarSolYLuna(this.mundo);
         crearSistemaLluvia(this.app.stage);
         await this.cargarFondo();
@@ -446,6 +455,12 @@ class Juego{
         return miJuego.jugador.comidasCompradas.filter(e => e.constructor.name === comidaActual).length
     }
     
+    terminarPartidaYMostrarPuntaje(){
+        this.pantallaDeVictoria.container.children.forEach(e => e.visible = true);
+
+        setTimeout(() => {this.app.stop()}, 2000);
+    }
+
     /*cantidadAleatoriaSegunComida(){
         if(this.comidaAComprar === 'churros'){
             const numero = obtenerNumeroAleatorio(0,1);
@@ -468,7 +483,7 @@ class Juego{
             }
         }
     }*/
-    
+
     gameLoop() {
         const ahora = performance.now();
         if(!this.nuevoAhora) this.nuevoAhora = ahora;

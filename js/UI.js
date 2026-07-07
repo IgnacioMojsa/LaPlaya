@@ -116,6 +116,8 @@ function cargarInterfaz(){
   miJuego.uiDinero.x = 316;
   miJuego.uiDinero.y = 90;
 
+  miJuego.pantallaDeVictoria = new UIPuntaje();
+
   miJuego.nenesPorRescatar = new Objetivos(
     "Encontrar " + miJuego.perdidos + " nenes perdidos", 
     miJuego.uiObjetivosDesplegados.x - 300, 
@@ -141,6 +143,7 @@ function cargarInterfaz(){
   )
         
   miJuego.app.stage.addChild(miJuego.listaDeTareas);
+  miJuego.app.stage.addChild(miJuego.pantallaDeVictoria.container);
 }
 
 function quedanNenesPorRescatar(){
@@ -399,20 +402,53 @@ class UIReloj{
   }
 
   iniciarTemporizador(){
-    const tiempoPorFrameMS = 10000; 
+    const tiempoPorFrameMS = 5000; 
 
     this.intervaloReloj = setInterval(() => {
       if (this.spritesAnimados) {
         let siguienteFrame = this.spritesAnimados.currentFrame + 1;
 
         if (siguienteFrame >= this.spritesAnimados.totalFrames) {
-          siguienteFrame = 0;
+          miJuego.terminarPartidaYMostrarPuntaje();
         }
 
           this.spritesAnimados.gotoAndStop(siguienteFrame);
         }
       }, tiempoPorFrameMS);
-    }
+  }
+}
+
+class UIPuntaje{
+  constructor(){
+    this.container = new PIXI.Container();
+
+    this.jornadaCompletada = new PIXI.Sprite(miJuego.finDePartida);
+    this.jornadaCompletada.anchor.set(0.5, 0.5);
+    this.jornadaCompletada.x = window.innerWidth / 2;
+    this.jornadaCompletada.y = window.innerHeight / 5; 
+    this.jornadaCompletada.visible = false;
+
+    this.contenedorPuntaje = new PIXI.Sprite(miJuego.contenedor);
+    this.contenedorPuntaje.anchor.set(0.5, 0);
+    this.contenedorPuntaje.x = this.jornadaCompletada.x;
+    this.contenedorPuntaje.y = this.jornadaCompletada.y + 80; 
+    this.contenedorPuntaje.visible = false;
+
+    this.fondo = new PIXI.Graphics();
+    this.fondo.beginFill(0x000000, 0.75);
+    this.fondo.drawRect(
+      0,
+      0,
+      miJuego.mundo.width,
+      miJuego.mundo.height
+    );
+    this.fondo.endFill();
+    this.fondo.visible = false;
+
+    this.container.addChild(this.fondo);
+    this.container.addChild(this.jornadaCompletada);
+    this.container.addChild(this.contenedorPuntaje);
+  }
 }
 
 function menuDeCompra(app, juego, opciones, vendedor) {

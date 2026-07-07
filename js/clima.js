@@ -329,9 +329,9 @@ async function cargarCielo(app) {
 
     cielo = new PIXI.Sprite(textura);
 
-    ajustarCielo();
+    //ajustarCielo();
 
-    app.stage.addChildAt(cielo, 0); 
+    app.addChildAt(cielo, 0); 
 }
 
 function ajustarCielo() {
