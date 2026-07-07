@@ -54,6 +54,7 @@ class SwimState{
         }
         else if(this.personaje instanceof Npc && this.personaje.ahogandose && !this.personaje.rescatado){
             this.personaje.maquinaDeEstados.cambiarA('DROWN');
+            playSfx(sfx.sorpresa)
         }
     }
 
@@ -203,7 +204,8 @@ class DrownState{
         if(this.personaje.rescatado){
             this.personaje.ahogandose = false;
 
-            this.personaje.maquinaDeEstados.cambiarA('RESCUED')
+            this.personaje.maquinaDeEstados.cambiarA('RESCUED');
+            playSfx(sfx.aplauso)
         }
     }
 }
@@ -229,10 +231,7 @@ class RescuedState{
             this.personaje.maquinaDeEstados.cambiarA('DEFAULT')
             if(this.personaje instanceof Hombre || this.personaje instanceof Mujer){miJuego.cantidadDePersonasRescatadas += 1;};
             miJuego.dineroDelJugador += 3000;
-            const sfxRecompensa = new Audio("assets/audio/recompensa.mp3");
-            sfxRecompensa.volume = 0.5;
-            sfxRecompensa.cloneNode(false);
-            sfxRecompensa.play()
+            playSfx(sfx.recompensa);
         }
     }
 

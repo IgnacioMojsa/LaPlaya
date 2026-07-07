@@ -277,8 +277,6 @@ class Jugador {
   }
 
   actualizarFlechaAhogado(){
-  
-
   if(!miJuego.hayPersonasAhogadas()){
     if (this.flechaAhogado) this.flechaAhogado.visible = false;
     return;
@@ -295,7 +293,6 @@ class Jugador {
     this.flechaAhogado.zIndex = 9999;
     this.flechaAhogado.anchor.set(0.5);
     miJuego.mundo.addChild(this.flechaAhogado);
-    playSfx(sfx.sorpresa);
   }
 
   this.flechaAhogado.visible = true;

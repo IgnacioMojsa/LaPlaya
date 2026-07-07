@@ -95,8 +95,6 @@ class Npc {
     }
 
     ahogarse(){
-        this.ahogandose = true;
-        
         this.velocidad.x = 0;
         this.velocidad.y = 0;
         this.aceleracion.x = 0;
@@ -358,6 +356,8 @@ class Npc {
             this.velocidad.y = 0;
             this.aceleracion.x = 0;
             this.aceleracion.y = 0;
+            miJuego.jugador.personaAhogada = null;
+            
             
             if(this.ultimaDir === "izq"){
                 this.cambiarAnimacion("idle_izq")
@@ -371,8 +371,6 @@ class Npc {
             if(this.temporizador >= 6){
                 this.rescatado = false;
                 this.temerosidad = obtenerNumeroAleatorio(1,3);
-                miJuego.jugador.personaAhogada = null;
-                playSfx(sfx.aplauso)
             }
         }
     }

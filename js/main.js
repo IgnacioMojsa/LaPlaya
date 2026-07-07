@@ -28,7 +28,7 @@ class Juego{
         this.temporizador = 0;
         this.perdidos = obtenerNumeroAleatorio(2, 5);
         this.totalPersonasTemerarias = [];
-        this.maxPersonasTemerarias = obtenerNumeroAleatorio(5, 10); 
+        this.maxPersonasTemerarias = obtenerNumeroAleatorio(50, 50); 
         this.cantidadTotalDeNpc = this.cantAdultos + this.cantNenes + this.perdidos + this.vendedores; 
         this.cantidadDePersonasRescatadas = 0;
 
