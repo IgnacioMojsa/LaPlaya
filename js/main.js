@@ -115,6 +115,7 @@ class Juego{
 
         //Interfaz
         this.contenedor = await PIXI.Assets.load('assets/ui/Contenedor.png');
+        this.totalPuntos = await PIXI.Assets.load('assets/ui/TotalPtos.png');
         this.objetivosDesplegados = await PIXI.Assets.load('assets/ui/UIObjetivosDesplegado.png');
         this.objetivosContraidos = await PIXI.Assets.load('assets/ui/UIObjetivos.png');
         this.barraEnergia = await PIXI.Assets.load("assets/ui/energia.png");
@@ -457,6 +458,9 @@ class Juego{
     
     terminarPartidaYMostrarPuntaje(){
         this.pantallaDeVictoria.container.children.forEach(e => e.visible = true);
+        this.pantallaDeVictoria.puntosPorObjetivos();
+        this.pantallaDeVictoria.puntosPorDinero();
+        this.pantallaDeVictoria.puntosPorTiempo();
 
         setTimeout(() => {this.app.stop()}, 2000);
     }
@@ -513,6 +517,7 @@ class Juego{
             
             this.actualizarCamara();
             actualizarInterfaz();
+            actualizarPuntaje();
             this.mostrarMensajeDeGarita();
             this.llevarTemerariosAlMar(dt);
             actualizarCielo(this.fondo);

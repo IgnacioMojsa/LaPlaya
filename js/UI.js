@@ -42,6 +42,10 @@ class Objetivos {
     }
   }
 
+  estaCompletado(){
+    return this.completado.visible === true 
+  }
+
   actualizarCondicion(condicion){
     this.condicion = condicion;
   }
@@ -167,6 +171,19 @@ function partidaDeTejoPorGanar(){
   const partidaPorGanar = miJuego.tejoJuego.partidaTerminada && miJuego.tejoJuego.ganador === "BLANCO";
 
   return !partidaPorGanar
+}
+
+function cantidadObjetivosCompletados(){
+  const objetivos = [miJuego.nenesPorRescatar, miJuego.ahogadosARescatar, miJuego.comprasPendientes, miJuego.objetivoTejo];
+  
+  const cantObjCompletados = objetivos.filter(obj => obj.estaCompletado());
+
+  return cantObjCompletados.length
+}
+
+function actualizarPuntaje(){
+  miJuego.puntajePorObjetivosCompletados = cantidadObjetivosCompletados() * 500;
+  miJuego.puntajePorDineroSobrante = miJuego.dineroDelJugador;
 }
 
 function actualizarInterfaz(){
@@ -407,6 +424,8 @@ class UIReloj{
     this.intervaloReloj = setInterval(() => {
       if (this.spritesAnimados) {
         let siguienteFrame = this.spritesAnimados.currentFrame + 1;
+        
+        miJuego.puntajePorTiempoEmpleado -= 200;
 
         if (siguienteFrame >= this.spritesAnimados.totalFrames) {
           miJuego.terminarPartidaYMostrarPuntaje();
@@ -434,6 +453,12 @@ class UIPuntaje{
     this.contenedorPuntaje.y = this.jornadaCompletada.y + 80; 
     this.contenedorPuntaje.visible = false;
 
+    this.totalPuntaje = new PIXI.Sprite(miJuego.totalPuntos);
+    this.totalPuntaje.anchor.set(0.5, 0);
+    this.totalPuntaje.x = this.contenedorPuntaje.x;
+    this.totalPuntaje.y = this.contenedorPuntaje.y + 360; 
+    this.totalPuntaje.visible = false;
+
     this.fondo = new PIXI.Graphics();
     this.fondo.beginFill(0x000000, 0.75);
     this.fondo.drawRect(
@@ -446,8 +471,54 @@ class UIPuntaje{
     this.fondo.visible = false;
 
     this.container.addChild(this.fondo);
+    this.container.addChild(this.totalPuntaje);
     this.container.addChild(this.jornadaCompletada);
     this.container.addChild(this.contenedorPuntaje);
+  }
+
+  puntosPorObjetivos(){
+    this.puntosObjetivos = new PIXI.Text({
+      text: miJuego.puntajePorObjetivosCompletados + " por objetivos",
+      style: {
+      fill: "#f2b705",
+      fontSize: 30,
+      fontFamily: "PixelFont",
+    }});
+    this.puntosObjetivos.anchor.set(0, 0.5);
+    this.puntosObjetivos.x = this.contenedorPuntaje.x - 230;
+    this.puntosObjetivos.y = this.contenedorPuntaje.y + 30;
+
+    this.container.addChild(this.puntosObjetivos);
+  }
+
+  puntosPorDinero(){
+    this.puntosDinero = new PIXI.Text({
+      text: miJuego.puntajePorDineroSobrante + " por dinero sobrante",
+      style: {
+      fill: "#f2b705",
+      fontSize: 30,
+      fontFamily: "PixelFont",
+    }});
+    this.puntosDinero.anchor.set(0, 0.5);
+    this.puntosDinero.x = this.contenedorPuntaje.x - 230;
+    this.puntosDinero.y = this.contenedorPuntaje.y + 60;
+
+    this.container.addChild(this.puntosDinero);
+  }
+
+  puntosPorTiempo(){
+    this.puntosTiempo = new PIXI.Text({
+      text: miJuego.puntajePorTiempoEmpleado + " por tiempo empleado",
+      style: {
+      fill: "#f2b705",
+      fontSize: 30,
+      fontFamily: "PixelFont",
+    }});
+    this.puntosTiempo.anchor.set(0, 0.5);
+    this.puntosTiempo.x = this.contenedorPuntaje.x - 230;
+    this.puntosTiempo.y = this.contenedorPuntaje.y + 90;
+
+    this.container.addChild(this.puntosTiempo);
   }
 }
 
