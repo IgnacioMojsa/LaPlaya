@@ -284,7 +284,7 @@ class Juego{
     async prepararEscena(){
         await cargarCielo(this.mundo);
         await cargarSolYLuna(this.mundo);
-        crearSistemaLluvia(this.app.stage);
+        crearSistemaLluvia(this.app);
         await this.cargarFondo();
 
         crearFlashRelampago(this.app);

@@ -19,9 +19,10 @@ let texturaNublado;
 let texturaLluvia;
 let texturaTormenta;
 
-//LUVIA
+// LLUVIA
 let contenedorLluvia;
-let gotas = [];
+let lluvia;
+let texturaLluviaPatron;
 
 //SOL Y LUNA
 let sol;
@@ -36,6 +37,7 @@ async function cargarSolYLuna(app) {
     texturaNublado = await PIXI.Assets.load('assets/nublado.png');
     texturaLluvia = await PIXI.Assets.load('assets/lluvia.png');
     texturaTormenta = await PIXI.Assets.load('assets/tormenta.png');
+    texturaLluviaPatron = await PIXI.Assets.load("assets/lluvia_patron.png");
 
     sol = new PIXI.Sprite(texturaSol);
     luna = new PIXI.Sprite(texturaLuna);
@@ -66,28 +68,17 @@ function crearSistemaLluvia(app) {
 
     contenedorLluvia.zIndex = 30;
 
-    app.addChild(contenedorLluvia);
+    app.stage.addChild(contenedorLluvia);
 
-    for (let i = 0; i < 250; i++) {
+    lluvia = new PIXI.TilingSprite({
+        texture: texturaLluviaPatron,
+        width: app.screen.width,
+        height: app.screen.height
+    });
 
-        const gota = new PIXI.Graphics();
+    lluvia.alpha = 0;
 
-        gota.moveTo(0, 0);
-        gota.lineTo(0, 12);
-        gota.stroke({
-            color: 0xaadcff,
-            width: 2
-        });
-
-        gota.alpha = 0;
-
-        gota.velocidad = 0;
-        gota.activa = false;
-
-        contenedorLluvia.addChild(gota);
-
-        gotas.push(gota);
-    }
+    contenedorLluvia.addChild(lluvia);
 }
 
 function resetearAstros() {
@@ -208,57 +199,33 @@ function actualizarNubes(fondo, dt) {
 
 function actualizarLluvia(fondo, dt) {
 
-    if (!fondo) return;
+    if (!lluvia) return;
 
-    let intensidad = 0;
+    switch (climaActual) {
 
-    if (climaActual === "lluvia") {
-        intensidad = 200;
-    }
-    else if (climaActual === "tormenta") {
-        intensidad = 500;
-    }
+        case "lluvia":
 
-    const ancho = window.innerWidth;
-    const alto = window.innerHeight;
+            lluvia.alpha += (0.45 - lluvia.alpha) * dt * 5;
 
-    for (let i = 0; i < gotas.length; i++) {
+            lluvia.tilePosition.y += 14 * dt * 60;
+            lluvia.tilePosition.x -= 3 * dt * 60;
 
-        const gota = gotas[i];
+            break;
 
-        if (i < intensidad) {
+        case "tormenta":
 
-            gota.activa = true;
+            lluvia.alpha += (0.8 - lluvia.alpha) * dt * 5;
 
-            gota.alpha += (0.6 - gota.alpha) * dt * 8;
+            lluvia.tilePosition.y += 26 * dt * 60;
+            lluvia.tilePosition.x -= 7 * dt * 60;
 
-            if (gota.velocidad === 0) {
+            break;
 
-                gota.x = Math.random() * ancho;
-                gota.y = Math.random() * alto;
+        default:
 
-                gota.velocidad = 700 + Math.random() * 400;
-            }
+            lluvia.alpha += (0 - lluvia.alpha) * dt * 5;
 
-            gota.y += gota.velocidad * dt;
-            gota.x -= gota.velocidad * 0.15 * dt;
-
-            if (gota.y > alto) {
-
-                gota.y = -20;
-                gota.x = Math.random() * ancho;
-            }
-        }
-        else {
-
-            gota.alpha += (0 - gota.alpha) * dt * 5;
-
-            if (gota.alpha < 0.01) {
-
-                gota.velocidad = 0;
-                gota.activa = false;
-            }
-        }
+            break;
     }
 }
 
@@ -546,6 +513,12 @@ function onResize(app) {
 
     ajustarFondo();
     ajustarCielo();
+    if (lluvia) {
+
+        lluvia.width = window.innerWidth;
+        lluvia.height = window.innerHeight;
+
+    }
     if (flashRelampago) {
 
         flashRelampago.clear();
