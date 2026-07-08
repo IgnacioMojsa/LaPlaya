@@ -429,7 +429,7 @@ class Juego{
 
     unaComidaAleatoria(){
         const comidasDisponibles = [
-            new Churro(obtenerNumeroAleatorio(6,18)), 
+            new Churro(obtenerNumeroAleatorio(6,12)), 
             new Choclo(obtenerNumeroAleatorio(1,2)), 
             new Agua(obtenerNumeroAleatorio(1,3)),
             new Helado(obtenerNumeroAleatorio(1,5))

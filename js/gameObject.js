@@ -38,7 +38,11 @@ class Comida{
 
 class Churro extends Comida{
     constructor(cantidad){
-        super(cantidad)
+        super(cantidad);
+        
+        const cantidadAComprar = [Math.min(cantidad, 6), Math.max(cantidad, 12)];
+
+        this.compraRequerida = cantidadAComprar[obtenerNumeroAleatorio(0,1)];
 
         this.mensajeDeCompra = this.cantidadAComprar() + " de churros";
     }
