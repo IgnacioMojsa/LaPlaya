@@ -422,18 +422,26 @@ class UIReloj{
     const tiempoPorFrameMS = 5000; 
 
     this.intervaloReloj = setInterval(() => {
-      if (this.spritesAnimados) {
+      if (this.spritesAnimados){
         let siguienteFrame = this.spritesAnimados.currentFrame + 1;
         
         miJuego.puntajePorTiempoEmpleado -= 200;
 
-        if (siguienteFrame >= this.spritesAnimados.totalFrames) {
+        if (siguienteFrame >= this.spritesAnimados.totalFrames){
+          siguienteFrame = 72;
           miJuego.terminarPartidaYMostrarPuntaje();
+          this.limpiarTemporizador();
         }
 
-          this.spritesAnimados.gotoAndStop(siguienteFrame);
-        }
-      }, tiempoPorFrameMS);
+        this.spritesAnimados.gotoAndStop(siguienteFrame);
+      }
+    }, tiempoPorFrameMS);
+  }
+
+  limpiarTemporizador(){
+    if (this.intervaloReloj) {
+      clearInterval(this.intervaloReloj);
+    }
   }
 }
 

@@ -457,12 +457,14 @@ class Juego{
     }
     
     terminarPartidaYMostrarPuntaje(){
-        this.pantallaDeVictoria.container.children.forEach(e => e.visible = true);
-        this.pantallaDeVictoria.puntosPorObjetivos();
-        this.pantallaDeVictoria.puntosPorDinero();
-        this.pantallaDeVictoria.puntosPorTiempo();
+        if(this.app.ticker.started === true){
+            this.pantallaDeVictoria.container.children.forEach(e => e.visible = true);
+            this.pantallaDeVictoria.puntosPorObjetivos();
+            this.pantallaDeVictoria.puntosPorDinero();
+            //this.pantallaDeVictoria.puntosPorTiempo();
 
-        setTimeout(() => {this.app.stop()}, 2000);
+            setTimeout(() => {this.app.stop()}, 2000);
+        }
     }
 
     /*cantidadAleatoriaSegunComida(){
