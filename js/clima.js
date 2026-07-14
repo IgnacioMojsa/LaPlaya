@@ -66,7 +66,7 @@ function crearSistemaLluvia(app) {
 
     contenedorLluvia = new PIXI.Container();
 
-    contenedorLluvia.zIndex = 30;
+    contenedorLluvia.zIndex = 0;
 
     app.stage.addChild(contenedorLluvia);
 

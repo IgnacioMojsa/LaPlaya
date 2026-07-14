@@ -179,7 +179,7 @@ class Juego{
         this.garita.x = this.fondo.width/2;
         this.garita.zIndex = this.garita.y;
         
-        this.garita.radioColision = 35;
+        this.garita.radioColision = 30;
         this.obstaculos.push(this.garita);
 
         this.mensajeDeGarita.anchor.set(0.5);
@@ -216,7 +216,7 @@ class Juego{
 
             const sombrillaNueva = new GameObject(coordenadaXDeSombrilla, coordenadaYDeSombrilla, texturaAleatoria, i);
 
-            sombrillaNueva.container.radioColision = 25;
+            //sombrillaNueva.container.radioColision = 25;
 
             this.obstaculos.push(sombrillaNueva.container); 
 
@@ -457,14 +457,12 @@ class Juego{
     }
     
     terminarPartidaYMostrarPuntaje(){
-        if(this.app.ticker.started === true){
-            this.pantallaDeVictoria.container.children.forEach(e => e.visible = true);
-            this.pantallaDeVictoria.puntosPorObjetivos();
-            this.pantallaDeVictoria.puntosPorDinero();
-            //this.pantallaDeVictoria.puntosPorTiempo();
+        this.pantallaDeVictoria.container.children.forEach(e => e.visible = true);
+        this.pantallaDeVictoria.puntosPorObjetivos();
+        this.pantallaDeVictoria.puntosPorDinero();
+        this.pantallaDeVictoria.puntosPorTiempo();
 
-            setTimeout(() => {this.app.stop()}, 2000);
-        }
+        setTimeout(() => {this.app.stop()}, 2000);
     }
 
     /*cantidadAleatoriaSegunComida(){
