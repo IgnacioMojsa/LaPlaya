@@ -8,12 +8,19 @@ const sfx = {
   recompensa: new Audio("assets/audio/recompensa.mp3")
   };
 
+const music = {
+  bgm: new Audio("assets/audio/bgm.wav")
+}
+
 sfx.error.volume = 0.2;
 sfx.compra.volume = 0.2;
 sfx.recompensa.volume = 1;
 sfx.opcion.volume = 0.5;
 sfx.aplauso.volume = 0.5;
-//sfx.sorpresa.volume = 0.5;
+sfx.sorpresa.volume = 0.5;
+
+music.bgm.volume = 1;
+music.bgm.loop = true;
 
 function playSfx(audio) {
     audio.currentTime = 0;
