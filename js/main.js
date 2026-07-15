@@ -2,10 +2,8 @@ class Juego{
     constructor(){
         this.app = null;
         this.mundo = null;
-        //this.enMiniJuego = false;
         this.tejoJuego = null;
         this.portalTejo = null;
-        this.bgm = new Audio("assets/audio/bgm.wav");
         this.nuevoAhora = performance.now();
         this.listaDeTareas = new PIXI.Container();
         this.comidaAComprar = this.unaComidaAleatoria();
@@ -46,8 +44,6 @@ class Juego{
         this.puntajePorNeneRescatado = 0;
         this.bonusPorAhogadosRescatados = 0; // OTORGA PUNTAJE EXTRA POR RESCATAR MAS AHOGADOS DE LOS REQUERIDOS EN EL OBJETIVO
         this.puntajePorDineroSobrante = this.dineroDelJugador;
-
-        this.bgm.loop = true;
     }
 
     async arrancar(){        
@@ -71,19 +67,28 @@ class Juego{
         await this.precargarAssets();
         await this.prepararEscena();
 
-        this.bgmIniciada = false;
+       /*  this.bgmIniciada = false;
         const iniciarBgm = () => {
-            this.bgm.play()
+            playSfx(music.bgm)
             .then(() => {this.bgmIniciada = true;})
             .catch(() => {});
             document.removeEventListener('click', iniciarBgm);
             document.removeEventListener('keydown', iniciarBgm);
         };
         document.addEventListener('click', iniciarBgm);
-        document.addEventListener('keydown', iniciarBgm);
+        document.addEventListener('keydown', iniciarBgm); */
+        this.iniciarBgm()
 
         //Empieza el loop
         this.app.ticker.add(() => this.gameLoop());
+    }
+
+    iniciarBgm() {
+    if (this.bgmIniciada) return;
+
+    music.bgm.play()
+        .then(() => { this.bgmIniciada = true; })
+        .catch(() => {});
     }
 
     async precargarAssets(){
@@ -498,9 +503,9 @@ class Juego{
         if (isNaN(dt) || dt > 0.1) dt = 1/60;
         this.nuevoAhora = ahora;
         
-        if (!this.bgmIniciada){
-        this.bgm.play().then(() => {this.bgmIniciada = true;}).catch(()=>{});
-        }
+        /* if (!this.bgmIniciada){
+        playSfx(music.bgm).then(() => {this.bgmIniciada = true;}).catch(()=>{});
+        } */
 
         if (!enMiniJuego){
           if (this.jugador.inputBloqueado){
