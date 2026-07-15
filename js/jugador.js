@@ -18,10 +18,10 @@ class Jugador {
 
     this.comidasCompradas = [];
 
-    this.velMaxima = 80;
-    this.aceleracion = 80;
+    this.velMaxima = 90;
+    this.aceleracion = 70;
+    this.friccion = 0.5;
     
-    this.friccion = 0.95;
     this.ultimaDireccion = "der";
     this.neneRescatado = null;
     this.personaAhogada = null;
@@ -313,29 +313,31 @@ class Jugador {
       this.actualizarMensajesDeAhogados();
       this.actualizarFlechaAhogado();
       this.actualizarFlechaGarita();
-      
-      const velocidadActual = Math.hypot(this.velocidad.x, this.velocidad.y);
 
-      if(velocidadActual > 0.1){
+      const energia = miJuego.energiaDelJugador;
+      if(energia <= 0){
+        this.velMaxima = 50; 
+        this.aceleracion = 50;
+      }else{
+        this.velMaxima = 90;
+        this.aceleracion = 70;
+      }
+ 
+      this.maquinaDeEstados.update(dt);
+  }
+
+  restarEnergia(cantidad){
+    const velocidadActual = Math.hypot(this.velocidad.x, this.velocidad.y);
+
+      if(velocidadActual > 1){
         this.tiempoGastoEnergia += miJuego.app.ticker.deltaMS;
-        if (this.tiempoGastoEnergia >= this.intervaloGastoEnergia) {
-          miJuego.energiaDelJugador = Math.max(0, miJuego.energiaDelJugador - 1);
+        if (this.tiempoGastoEnergia >= this.intervaloGastoEnergia){
+          miJuego.energiaDelJugador = Math.max(0, miJuego.energiaDelJugador - cantidad);
           this.tiempoGastoEnergia = 0;
         }
       }else{
         this.tiempoGastoEnergia = 0;
       }
-
-      const energia = miJuego.energiaDelJugador;
-      if(energia <= 0){
-        this.velMaxima = 40; 
-        this.aceleracion = 40;
-      }else{
-        this.velMaxima = 80;
-        this.aceleracion = 80;
-      }
- 
-      this.maquinaDeEstados.update(dt);
   }
 
   cargarSpritesAnimados(spritesACargar){
@@ -347,7 +349,7 @@ class Jugador {
       this.spritesAnimados[key].name = key;
       this.spritesAnimados[key].play();
       this.spritesAnimados[key].loop = true;
-      this.spritesAnimados[key].animationSpeed = 0.1;
+      this.spritesAnimados[key].animationSpeed = 0.15;
       this.spritesAnimados[key].anchor.set(0.5, 1);
       this.container.addChild(this.spritesAnimados[key]);
     }
