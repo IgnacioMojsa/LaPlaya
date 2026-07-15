@@ -13,13 +13,13 @@ class MaquinaDeEstados {
         const nuevoEstado = this.estados[nombreDeEstado];
         
         if(this.estadoActual && this.estadoActual.exit){
-            this.estadoActual.exit;
+            this.estadoActual.exit();
         }
 
         this.estadoActual = nuevoEstado
         
         if(this.estadoActual && this.estadoActual.enter){
-            this.estadoActual.enter; 
+            this.estadoActual.enter(); 
         }
     }
 
@@ -37,9 +37,10 @@ class SwimState{
     }   
 
     enter(){
-        console.log("Entrando al estado Swim");
+        //console.log("Entrando al estado Swim");
 
         this.cambiarDireccionYMovimiento();
+        this.personaje.friccion = 0.95;
     }
 
     update(){
@@ -56,10 +57,16 @@ class SwimState{
             this.personaje.maquinaDeEstados.cambiarA('DROWN');
             playSfx(sfx.sorpresa)
         }
+
+        if(this.personaje instanceof Jugador){
+            this.personaje.restarEnergia(2);
+        }
     }
 
     exit(){
-        console.log("Saliendo del estado Swim")
+        //console.log("Saliendo del estado Swim")
+        this.personaje.friccion = 0.5;
+        //this.personaje.aceleracion += 20;
     }
 
     cambiarDireccionYMovimiento(){
@@ -92,7 +99,7 @@ class WithChildState{
     }
 
     enter(){
-        console.log("Entrando al estado WithChild");
+        //console.log("Entrando al estado WithChild");
     }
 
     update(){
@@ -108,10 +115,12 @@ class WithChildState{
         else if(!this.personaje.estaCargandoUnNene() && !this.personaje.estaNadando()){
             this.personaje.maquinaDeEstados.cambiarA('DEFAULT');
         }
+
+        this.personaje.restarEnergia(2);
     }
 
     exit(){
-        console.log("Saliendo del estado WithChild")
+        //console.log("Saliendo del estado WithChild")
     }
 
     cambiarDireccionYMovimiento(){
@@ -145,13 +154,17 @@ class DefaultState{
     }
 
     enter(){
-        console.log("Entrando al estado Default")
+        //console.log("Entrando al estado Default")
     }
 
     update(){
         this.cambiarDireccionYMovimiento();
 
         this.actualizarSombra();
+
+        if(this.personaje instanceof Jugador){
+            this.personaje.restarEnergia(1);
+        }
 
         if(this.personaje.estaNadando()){
             this.personaje.maquinaDeEstados.cambiarA('SWIM')
@@ -162,7 +175,7 @@ class DefaultState{
     }
 
     exit(){
-        console.log("Entrando en el estado Default")
+        //console.log("Entrando en el estado Default")
     }
 
     cambiarDireccionYMovimiento(){
@@ -283,7 +296,7 @@ class IdleState {
     }
 
     enter(){
-        console.log("Entrando al estado Idle")
+        //console.log("Entrando al estado Idle")
     }
 
     update(){
@@ -291,7 +304,7 @@ class IdleState {
     }
 
     exit(){
-        console.log("Saliendo del estado Idle")
+        //console.log("Saliendo del estado Idle")
     }
 }
 
