@@ -9,6 +9,8 @@ class Juego{
         this.comidaAComprar = this.unaComidaAleatoria();
         this.obstaculos = [];
 
+        this.pantallaInicial = null;
+
         this.uiObjetivosDesplegados = new PIXI.Container();
         this.uiObjetivosContraidos = new PIXI.Container();
         this.uiBarraEnergia = new PIXI.Container();
@@ -59,6 +61,13 @@ class Juego{
         window.__PIXI_APP__ = this.app;
 
         document.body.appendChild(this.app.canvas);
+
+        this.pantallaInicial = new Inicio(this.app);
+        await this.pantallaInicial.arrancar();
+    }
+
+    async empezarPartida(){
+        this.pantallaInicial.destruir();
         
         this.mundo = new PIXI.Container();
         this.mundo.sortableChildren = true;
@@ -82,6 +91,7 @@ class Juego{
         //Empieza el loop
         this.app.ticker.add(() => this.gameLoop());
     }
+
 
     iniciarBgm() {
     if (this.bgmIniciada) return;
@@ -622,5 +632,39 @@ window.addEventListener('keydown', (event) => {
         event.preventDefault();
     }
 });
+
+window.addEventListener("keydown", (e) => {
+    if((e.key === "w" || e.key === "W") && miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible === true){
+        miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible = false;
+        miJuego.pantallaInicial.spriteBotonInicioDeseleccionado.visible = true;
+        miJuego.pantallaInicial.spriteBotonAjustesDeseleccionado.visible = false;
+        miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible = true;
+    }
+    else if((e.key === "w" || e.key === "W") && miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible === true){
+        miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible = true;
+        miJuego.pantallaInicial.spriteBotonInicioDeseleccionado.visible = false;
+        miJuego.pantallaInicial.spriteBotonAjustesDeseleccionado.visible = true;
+        miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible = false;
+    }
+
+    if((e.key === "s" || e.key === "S") && miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible === true){
+        miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible = false;
+        miJuego.pantallaInicial.spriteBotonInicioDeseleccionado.visible = true;
+        miJuego.pantallaInicial.spriteBotonAjustesDeseleccionado.visible = false;
+        miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible = true;
+    }
+    else if((e.key === "s" || e.key === "S") && miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible === true){
+        miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible = true;
+        miJuego.pantallaInicial.spriteBotonInicioDeseleccionado.visible = false;
+        miJuego.pantallaInicial.spriteBotonAjustesDeseleccionado.visible = true;
+        miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible = false;
+    }
+
+    if((e.key === "Enter" || e.key === " ") && miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible === true && !miJuego.juegoEnCurso){
+        miJuego.empezarPartida()
+        miJuego.juegoEnCurso = true;
+    }
+});
+	
 
 miJuego.arrancar()
