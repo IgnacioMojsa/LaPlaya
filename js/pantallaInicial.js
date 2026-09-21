@@ -7,6 +7,14 @@ class Inicio{
         this.spriteBotonAjustesSeleccionado = null;
         this.spriteBotonInicioDeseleccionado = null;
         this.spriteBotonAjustesDeseleccionado = null;
+
+        this.anchoDeReferencia = 1920; 
+        this.altoDeReferencia = 1080;
+
+        this.posicionStart = { x: 1590, y: 474 };
+        this.posicionSettings = { x: 1590, y: 714 };
+
+        this.onResize = this.redimensionar.bind(this);
     }
 
     async precargarAssets(){
@@ -26,38 +34,63 @@ class Inicio{
         this.contenedor.addChild(this.imagenDeInicio);
 
         this.spriteBotonInicioSeleccionado = new PIXI.Sprite(this.botonInicioSeleccionado); 
-        this.spriteBotonInicioSeleccionado.scale.set(0.7, 0.6);
+        //this.spriteBotonInicioSeleccionado.scale.set(0.7, 0.6);
         this.spriteBotonInicioSeleccionado.anchor.set(0.5);
-        this.spriteBotonInicioSeleccionado.x = 1093;
-        this.spriteBotonInicioSeleccionado.y = 282;
         this.contenedor.addChild(this.spriteBotonInicioSeleccionado);
 
         this.spriteBotonInicioDeseleccionado = new PIXI.Sprite(this.botonInicioDeseleccionado); 
-        this.spriteBotonInicioDeseleccionado.scale.set(0.7, 0.6);
+        //this.spriteBotonInicioDeseleccionado.scale.set(0.7, 0.6);
         this.spriteBotonInicioDeseleccionado.anchor.set(0.5);
-        this.spriteBotonInicioDeseleccionado.x = 1093;
-        this.spriteBotonInicioDeseleccionado.y = 282;
         this.spriteBotonInicioDeseleccionado.visible = false;
         this.contenedor.addChild(this.spriteBotonInicioDeseleccionado);
 
         this.spriteBotonAjustesSeleccionado = new PIXI.Sprite(this.botonAjustesSeleccionado);
-        this.spriteBotonAjustesSeleccionado.scale.set(0.7, 0.6);
+        //this.spriteBotonAjustesSeleccionado.scale.set(0.7, 0.6);
         this.spriteBotonAjustesSeleccionado.anchor.set(0.5);
-        this.spriteBotonAjustesSeleccionado.x = 1093;
-        this.spriteBotonAjustesSeleccionado.y = 426;
         this.spriteBotonAjustesSeleccionado.visible = false;
         this.contenedor.addChild(this.spriteBotonAjustesSeleccionado);
 
         this.spriteBotonAjustesDeseleccionado = new PIXI.Sprite(this.botonAjustesDeseleccionado);
-        this.spriteBotonAjustesDeseleccionado.scale.set(0.7, 0.6);
+        //this.spriteBotonAjustesDeseleccionado.scale.set(0.7, 0.6);
         this.spriteBotonAjustesDeseleccionado.anchor.set(0.5);
-        this.spriteBotonAjustesDeseleccionado.x = 1093;
-        this.spriteBotonAjustesDeseleccionado.y = 426;
         this.contenedor.addChild(this.spriteBotonAjustesDeseleccionado);
 
         this.app.stage.addChild(this.contenedor);
+
+        this.redimensionar();
+
+        window.addEventListener("resize", this.onResize);
     }
     
+    redimensionar() {
+        const anchoVentana = window.innerWidth;
+        const altoVentana = window.innerHeight;
+
+        const escalaX = anchoVentana / this.anchoDeReferencia;
+        const escalaY = altoVentana / this.altoDeReferencia;
+
+        this.imagenDeInicio.width = anchoVentana;
+        this.imagenDeInicio.height = altoVentana;
+
+        const posXStart = this.posicionStart.x * escalaX;
+        const posYStart = this.posicionStart.y * escalaY;
+
+        const posXSettings = this.posicionSettings.x * escalaX;
+        const posYSettings = this.posicionSettings.y * escalaY;
+
+        this.spriteBotonInicioSeleccionado.position.set(posXStart, posYStart);
+        this.spriteBotonInicioDeseleccionado.position.set(posXStart, posYStart);
+
+        this.spriteBotonAjustesSeleccionado.position.set(posXSettings, posYSettings);
+        this.spriteBotonAjustesDeseleccionado.position.set(posXSettings, posYSettings);
+
+        const escalaBoton = Math.min(escalaX, escalaY);
+        this.spriteBotonInicioSeleccionado.scale.set(escalaBoton);
+        this.spriteBotonInicioDeseleccionado.scale.set(escalaBoton);
+        this.spriteBotonAjustesSeleccionado.scale.set(escalaBoton);
+        this.spriteBotonAjustesDeseleccionado.scale.set(escalaBoton);
+    }
+
     destruir() {
         this.app.stage.removeChild(this.contenedor);
         this.contenedor.destroy({ children: true });
