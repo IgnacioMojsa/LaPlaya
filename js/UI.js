@@ -419,7 +419,7 @@ class UIReloj{
   }
 
   iniciarTemporizador(){
-    const tiempoPorFrameMS = 5000; 
+    const tiempoPorFrameMS = 2500; 
 
     this.intervaloReloj = setInterval(() => {
       if (this.spritesAnimados){
@@ -449,39 +449,34 @@ class UIPuntaje{
   constructor(){
     this.container = new PIXI.Container();
 
+    this.fondo = new PIXI.Graphics();
+    this.fondo.visible = false;
+    
     this.jornadaCompletada = new PIXI.Sprite(miJuego.finDePartida);
     this.jornadaCompletada.anchor.set(0.5, 0.5);
-    this.jornadaCompletada.x = window.innerWidth / 2;
-    this.jornadaCompletada.y = window.innerHeight / 5; 
+    //this.jornadaCompletada.x = window.innerWidth / 2;
+    //this.jornadaCompletada.y = window.innerHeight / 5; 
     this.jornadaCompletada.visible = false;
 
     this.contenedorPuntaje = new PIXI.Sprite(miJuego.contenedor);
     this.contenedorPuntaje.anchor.set(0.5, 0);
-    this.contenedorPuntaje.x = this.jornadaCompletada.x;
-    this.contenedorPuntaje.y = this.jornadaCompletada.y + 80; 
+    //this.contenedorPuntaje.x = this.jornadaCompletada.x;
+    //this.contenedorPuntaje.y = this.jornadaCompletada.y + 80; 
     this.contenedorPuntaje.visible = false;
 
     this.totalPuntaje = new PIXI.Sprite(miJuego.totalPuntos);
     this.totalPuntaje.anchor.set(0.5, 0);
-    this.totalPuntaje.x = this.contenedorPuntaje.x;
-    this.totalPuntaje.y = this.contenedorPuntaje.y + 360; 
+    //this.totalPuntaje.x = this.contenedorPuntaje.x;
+    //this.totalPuntaje.y = this.contenedorPuntaje.y + 360; 
     this.totalPuntaje.visible = false;
-
-    this.fondo = new PIXI.Graphics();
-    this.fondo.beginFill(0x000000, 0.75);
-    this.fondo.drawRect(
-      0,
-      0,
-      miJuego.mundo.width,
-      miJuego.mundo.height
-    );
-    this.fondo.endFill();
-    this.fondo.visible = false;
 
     this.container.addChild(this.fondo);
     this.container.addChild(this.totalPuntaje);
     this.container.addChild(this.jornadaCompletada);
     this.container.addChild(this.contenedorPuntaje);
+
+    this.reescalar();
+    window.addEventListener("resize", () => this.reescalar());
   }
 
   puntosPorObjetivos(){
@@ -493,10 +488,10 @@ class UIPuntaje{
       fontFamily: "PixelFont",
     }});
     this.puntosObjetivos.anchor.set(0, 0.5);
-    this.puntosObjetivos.x = this.contenedorPuntaje.x - 230;
-    this.puntosObjetivos.y = this.contenedorPuntaje.y + 30;
 
     this.container.addChild(this.puntosObjetivos);
+
+    this.reescalar();
   }
 
   puntosPorDinero(){
@@ -508,10 +503,10 @@ class UIPuntaje{
       fontFamily: "PixelFont",
     }});
     this.puntosDinero.anchor.set(0, 0.5);
-    this.puntosDinero.x = this.contenedorPuntaje.x - 230;
-    this.puntosDinero.y = this.contenedorPuntaje.y + 60;
 
     this.container.addChild(this.puntosDinero);
+
+    this.reescalar();
   }
 
   puntosPorTiempo(){
@@ -523,10 +518,54 @@ class UIPuntaje{
       fontFamily: "PixelFont",
     }});
     this.puntosTiempo.anchor.set(0, 0.5);
-    this.puntosTiempo.x = this.contenedorPuntaje.x - 230;
-    this.puntosTiempo.y = this.contenedorPuntaje.y + 90;
 
     this.container.addChild(this.puntosTiempo);
+
+    this.reescalar();
+  }
+
+  reescalar() {
+    const ancho = window.innerWidth;
+    const alto = window.innerHeight;
+
+    this.fondo.clear();
+    this.fondo.beginFill(0x000000, 0.75);
+    this.fondo.drawRect(0, 0, ancho, alto);
+    this.fondo.endFill();
+
+    const escalaBase = Math.min(ancho / 1920, alto / 1080);
+    const escalaFinal = Math.max(0.5, Math.min(escalaBase * 1.2, 1.2));
+
+    this.jornadaCompletada.scale.set(escalaFinal);
+    this.contenedorPuntaje.scale.set(escalaFinal);
+    this.totalPuntaje.scale.set(escalaFinal);
+
+    this.jornadaCompletada.x = ancho / 2;
+    this.jornadaCompletada.y = alto * 0.18;
+
+    this.contenedorPuntaje.x = ancho / 2;
+    this.contenedorPuntaje.y = this.jornadaCompletada.y + (100 * escalaFinal);
+
+    this.totalPuntaje.x = ancho / 2;
+    this.totalPuntaje.y = this.contenedorPuntaje.y + (380 * escalaFinal);
+
+    if (this.puntosObjetivos) {
+      this.puntosObjetivos.style.fontSize = Math.round(30 * escalaFinal);
+      this.puntosObjetivos.x = this.contenedorPuntaje.x - (230 * escalaFinal);
+      this.puntosObjetivos.y = this.contenedorPuntaje.y + (40 * escalaFinal);
+    }
+
+    if (this.puntosDinero) {
+      this.puntosDinero.style.fontSize = Math.round(30 * escalaFinal);
+      this.puntosDinero.x = this.contenedorPuntaje.x - (230 * escalaFinal);
+      this.puntosDinero.y = this.contenedorPuntaje.y + (80 * escalaFinal);
+    }
+
+    if (this.puntosTiempo) {
+      this.puntosTiempo.style.fontSize = Math.round(30 * escalaFinal);
+      this.puntosTiempo.x = this.contenedorPuntaje.x - (230 * escalaFinal);
+      this.puntosTiempo.y = this.contenedorPuntaje.y + (120 * escalaFinal);
+    }
   }
 }
 
