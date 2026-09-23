@@ -245,6 +245,14 @@ class TejoJuego {
         // ------------------------
         // CANCHA
         // ------------------------
+        this.fondoCancha.x = this.app.screen.width / 2;
+        this.fondoCancha.y = this.app.screen.height / 2;
+
+        const escalaFondoX = this.app.screen.width / this.fondoCancha.texture.width;
+        const escalaFondoY = this.app.screen.height / this.fondoCancha.texture.height;
+        const escalaFondo = Math.max(escalaFondoX, escalaFondoY);
+
+        this.fondoCancha.scale.set(escalaFondo);
 
         this.cancha.x = this.app.screen.width / 2;
         this.cancha.y = this.app.screen.height / 2;
@@ -331,8 +339,7 @@ class TejoJuego {
 
             const tamañoDeseado = this.app.screen.width * 0.05;
 
-            const escalaTejin =
-                tamañoDeseado / this.tejin.texture.width;
+            const escalaTejin = tamañoDeseado / this.tejin.texture.width;
 
             this.tejin.scale.set(escalaTejin);
         }
@@ -341,8 +348,7 @@ class TejoJuego {
         
             const tamañoDeseado = this.app.screen.width * 0.05;
         
-            const escalaTejo =
-                tamañoDeseado / this.tejoBlanco.texture.width;
+            const escalaTejo = tamañoDeseado / this.tejoBlanco.texture.width;
         
             this.tejoBlanco.scale.set(escalaTejo);
         }
@@ -457,11 +463,17 @@ class TejoJuego {
         this.tejosRojos = [];
         
         // FONDO CANCHA
+        const texturaFondoCancha = await PIXI.Assets.load('assets/cancha_tejo_fondo.png');
+        this.fondoCancha = new PIXI.Sprite(texturaFondoCancha);
+        
+        this.fondoCancha.anchor.set(0.5);
+        
+        this.container.addChild(this.fondoCancha);
+        
         const texturaCancha = await PIXI.Assets.load('assets/cancha_tejo.png');
         this.cancha = new PIXI.Sprite(texturaCancha);
         
         this.cancha.anchor.set(0.5);
-
         
         this.container.addChild(this.cancha);
 

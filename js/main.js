@@ -92,7 +92,6 @@ class Juego{
         this.app.ticker.add(() => this.gameLoop());
     }
 
-
     iniciarBgm() {
     if (this.bgmIniciada) return;
 
