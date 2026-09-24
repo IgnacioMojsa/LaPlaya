@@ -419,7 +419,7 @@ class UIReloj{
   }
 
   iniciarTemporizador(){
-    const tiempoPorFrameMS = 2500; 
+    const tiempoPorFrameMS = 5000; 
 
     this.intervaloReloj = setInterval(() => {
       if (this.spritesAnimados){
