@@ -145,6 +145,9 @@ function cargarInterfaz(){
     miJuego.uiObjetivosDesplegados.x - 300, 
     miJuego.uiObjetivosDesplegados.y + 200
   )
+
+  miJuego.visualReloj = new UIReloj(miJuego.reloj);
+  miJuego.uiRelojBanderin.addChild(miJuego.visualReloj.container);
         
   miJuego.app.stage.addChild(miJuego.listaDeTareas);
   miJuego.app.stage.addChild(miJuego.pantallaDeVictoria.container);
@@ -403,7 +406,6 @@ class UIReloj{
     this.intervaloReloj = null;
 
     this.cargarSprites(texture);
-    this.iniciarTemporizador();
   }
 
   cargarSprites(spritesACargar){
@@ -419,6 +421,8 @@ class UIReloj{
   }
 
   iniciarTemporizador(){
+    if (this.intervaloReloj) return;
+
     const tiempoPorFrameMS = 5000; 
 
     this.intervaloReloj = setInterval(() => {

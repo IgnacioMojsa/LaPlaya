@@ -10,6 +10,7 @@ class Juego{
         this.obstaculos = [];
 
         this.pantallaInicial = null;
+        this.pantallaCarga = null;
 
         this.uiObjetivosDesplegados = new PIXI.Container();
         this.uiObjetivosContraidos = new PIXI.Container();
@@ -69,26 +70,51 @@ class Juego{
     async empezarPartida(){
         this.pantallaInicial.destruir();
         
+        this.pantallaCarga = new PantallaCarga(this.app, () => {
+            this.iniciarLoopJuego();
+        });
+
+        await this.pantallaCarga.arrancar();
+
         this.mundo = new PIXI.Container();
         this.mundo.sortableChildren = true;
+        this.mundo.visible = false;
         this.app.stage.addChild(this.mundo);
 
         await this.precargarAssets();
         await this.prepararEscena();
 
-       /*  this.bgmIniciada = false;
-        const iniciarBgm = () => {
-            playSfx(music.bgm)
-            .then(() => {this.bgmIniciada = true;})
-            .catch(() => {});
-            document.removeEventListener('click', iniciarBgm);
-            document.removeEventListener('keydown', iniciarBgm);
-        };
-        document.addEventListener('click', iniciarBgm);
-        document.addEventListener('keydown', iniciarBgm); */
-        this.iniciarBgm()
+        this.ocultarUI();
 
-        //Empieza el loop
+        this.pantallaCarga.mostrarBotonJugar();
+    }
+
+    ocultarUI() {
+        if (this.uiRelojBanderin) this.uiRelojBanderin.visible = false;
+        if (this.uiObjetivosContraidos) this.uiObjetivosContraidos.visible = false;
+        if (this.uiObjetivosDesplegados) this.uiObjetivosDesplegados.visible = false;
+        if (this.uiBarraEnergia) this.uiBarraEnergia.visible = false;
+        if (this.uiDinero) this.uiDinero.visible = false;
+        if (this.listaDeTareas) this.listaDeTareas.visible = false;
+    }
+
+    mostrarUI() {
+        if (this.uiRelojBanderin) this.uiRelojBanderin.visible = true;
+        if (this.uiObjetivosContraidos) this.uiObjetivosContraidos.visible = true;
+        if (this.uiBarraEnergia) this.uiBarraEnergia.visible = true;
+        if (this.uiDinero) this.uiDinero.visible = true;
+        if (this.listaDeTareas) this.listaDeTareas.visible = true;
+    }
+
+    iniciarLoopJuego() {
+        this.mundo.visible = true;
+        this.mostrarUI();
+        
+        this.iniciarBgm();
+        if(this.visualReloj) {
+            this.visualReloj.iniciarTemporizador();
+        }
+
         this.app.ticker.add(() => this.gameLoop());
     }
 
@@ -643,6 +669,11 @@ window.addEventListener("keydown", (e) => {
     if ((e.key === "Enter" || e.key === " ") && miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible && !miJuego.juegoEnCurso) {
         miJuego.juegoEnCurso = true;
         miJuego.empezarPartida();
+    }
+
+    if ((e.key === "Enter" || e.key === " ") && miJuego.pantallaCarga && miJuego.pantallaCarga.botonNormal.visible) {
+        miJuego.pantallaCarga.destruir();
+        miJuego.iniciarLoopJuego();
     }
 });
 	
