@@ -36,12 +36,12 @@ class Inicio{
         this.spriteBotonInicioSeleccionado = new PIXI.Sprite(this.botonInicioSeleccionado); 
         //this.spriteBotonInicioSeleccionado.scale.set(0.7, 0.6);
         this.spriteBotonInicioSeleccionado.anchor.set(0.5);
+        this.spriteBotonInicioSeleccionado.visible = false;
         this.contenedor.addChild(this.spriteBotonInicioSeleccionado);
 
         this.spriteBotonInicioDeseleccionado = new PIXI.Sprite(this.botonInicioDeseleccionado); 
         //this.spriteBotonInicioDeseleccionado.scale.set(0.7, 0.6);
         this.spriteBotonInicioDeseleccionado.anchor.set(0.5);
-        this.spriteBotonInicioDeseleccionado.visible = false;
         this.contenedor.addChild(this.spriteBotonInicioDeseleccionado);
 
         this.spriteBotonAjustesSeleccionado = new PIXI.Sprite(this.botonAjustesSeleccionado);
@@ -56,6 +56,8 @@ class Inicio{
         this.contenedor.addChild(this.spriteBotonAjustesDeseleccionado);
 
         this.app.stage.addChild(this.contenedor);
+
+        this.configurarInteracciones();
 
         this.redimensionar();
 
@@ -95,5 +97,48 @@ class Inicio{
         this.app.stage.removeChild(this.contenedor);
         this.contenedor.destroy({ children: true });
         console.log("Pantalla de inicio destruida.");
+    }
+
+    configurarInteracciones() {
+        [this.spriteBotonInicioSeleccionado, this.spriteBotonInicioDeseleccionado].forEach(boton => {
+            boton.eventMode = 'static';
+            boton.cursor = 'pointer';
+
+            boton.on('pointerover', () => {
+                this.seleccionarBoton('inicio');
+            });
+
+            boton.on('pointertap', () => {
+                if (!miJuego.juegoEnCurso) {
+                    miJuego.juegoEnCurso = true;
+                    miJuego.empezarPartida();
+                }
+            });
+        });
+
+        [this.spriteBotonAjustesSeleccionado, this.spriteBotonAjustesDeseleccionado].forEach(boton => {
+            boton.eventMode = 'static';
+            boton.cursor = 'pointer';
+
+            boton.on('pointerover', () => {
+                this.seleccionarBoton('ajustes');
+            });
+        });
+    }
+
+    seleccionarBoton(tipo) {
+        if (tipo === 'inicio') {
+            this.spriteBotonInicioSeleccionado.visible = true;
+            this.spriteBotonInicioDeseleccionado.visible = false;
+
+            this.spriteBotonAjustesSeleccionado.visible = false;
+            this.spriteBotonAjustesDeseleccionado.visible = true;
+        } else if (tipo === 'ajustes') {
+            this.spriteBotonInicioSeleccionado.visible = false;
+            this.spriteBotonInicioDeseleccionado.visible = true;
+
+            this.spriteBotonAjustesSeleccionado.visible = true;
+            this.spriteBotonAjustesDeseleccionado.visible = false;
+        }
     }
 }

@@ -633,35 +633,16 @@ window.addEventListener('keydown', (event) => {
 });
 
 window.addEventListener("keydown", (e) => {
-    if((e.key === "w" || e.key === "W") && miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible === true){
-        miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible = false;
-        miJuego.pantallaInicial.spriteBotonInicioDeseleccionado.visible = true;
-        miJuego.pantallaInicial.spriteBotonAjustesDeseleccionado.visible = false;
-        miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible = true;
-    }
-    else if((e.key === "w" || e.key === "W") && miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible === true){
-        miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible = true;
-        miJuego.pantallaInicial.spriteBotonInicioDeseleccionado.visible = false;
-        miJuego.pantallaInicial.spriteBotonAjustesDeseleccionado.visible = true;
-        miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible = false;
+    if (!miJuego.pantallaInicial) return;
+
+    if (e.key === "w" || e.key === "W" || e.key === "s" || e.key === "S") {
+        const inicioActivo = miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible;
+        miJuego.pantallaInicial.seleccionarBoton(inicioActivo ? 'ajustes' : 'inicio');
     }
 
-    if((e.key === "s" || e.key === "S") && miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible === true){
-        miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible = false;
-        miJuego.pantallaInicial.spriteBotonInicioDeseleccionado.visible = true;
-        miJuego.pantallaInicial.spriteBotonAjustesDeseleccionado.visible = false;
-        miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible = true;
-    }
-    else if((e.key === "s" || e.key === "S") && miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible === true){
-        miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible = true;
-        miJuego.pantallaInicial.spriteBotonInicioDeseleccionado.visible = false;
-        miJuego.pantallaInicial.spriteBotonAjustesDeseleccionado.visible = true;
-        miJuego.pantallaInicial.spriteBotonAjustesSeleccionado.visible = false;
-    }
-
-    if((e.key === "Enter" || e.key === " ") && miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible === true && !miJuego.juegoEnCurso){
-        miJuego.empezarPartida()
+    if ((e.key === "Enter" || e.key === " ") && miJuego.pantallaInicial.spriteBotonInicioSeleccionado.visible && !miJuego.juegoEnCurso) {
         miJuego.juegoEnCurso = true;
+        miJuego.empezarPartida();
     }
 });
 	
