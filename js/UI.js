@@ -458,26 +458,29 @@ class UIPuntaje{
     
     this.jornadaCompletada = new PIXI.Sprite(miJuego.finDePartida);
     this.jornadaCompletada.anchor.set(0.5, 0.5);
-    //this.jornadaCompletada.x = window.innerWidth / 2;
-    //this.jornadaCompletada.y = window.innerHeight / 5; 
     this.jornadaCompletada.visible = false;
 
     this.contenedorPuntaje = new PIXI.Sprite(miJuego.contenedor);
     this.contenedorPuntaje.anchor.set(0.5, 0);
-    //this.contenedorPuntaje.x = this.jornadaCompletada.x;
-    //this.contenedorPuntaje.y = this.jornadaCompletada.y + 80; 
     this.contenedorPuntaje.visible = false;
 
     this.totalPuntaje = new PIXI.Sprite(miJuego.totalPuntos);
     this.totalPuntaje.anchor.set(0.5, 0);
-    //this.totalPuntaje.x = this.contenedorPuntaje.x;
-    //this.totalPuntaje.y = this.contenedorPuntaje.y + 360; 
     this.totalPuntaje.visible = false;
+
+    this.lobby = new PIXI.Sprite(miJuego.botonDeLobby);
+    this.lobby.anchor.set(0.5, 0.5);
+    this.lobby.visible = false;
+
+    this.lobby.eventMode = 'static';
+    this.lobby.cursor = 'pointer';
+    this.lobby.on('pointertap', () => { window.location.reload(); });
 
     this.container.addChild(this.fondo);
     this.container.addChild(this.totalPuntaje);
     this.container.addChild(this.jornadaCompletada);
     this.container.addChild(this.contenedorPuntaje);
+    this.container.addChild(this.lobby);
 
     this.reescalar();
     window.addEventListener("resize", () => this.reescalar());
@@ -543,6 +546,7 @@ class UIPuntaje{
     this.jornadaCompletada.scale.set(escalaFinal);
     this.contenedorPuntaje.scale.set(escalaFinal);
     this.totalPuntaje.scale.set(escalaFinal);
+    this.lobby.scale.set(escalaFinal * 0.4);
 
     this.jornadaCompletada.x = ancho / 2;
     this.jornadaCompletada.y = alto * 0.18;
@@ -552,6 +556,13 @@ class UIPuntaje{
 
     this.totalPuntaje.x = ancho / 2;
     this.totalPuntaje.y = this.contenedorPuntaje.y + (380 * escalaFinal);
+
+    const anchoBarraTotal = this.totalPuntaje.texture ? (this.totalPuntaje.texture.width * escalaFinal) : (400 * escalaFinal);
+    const altoBarraTotal = this.totalPuntaje.texture ? (this.totalPuntaje.texture.height * escalaFinal) : (80 * escalaFinal);
+    const separacionX = (this.lobby.width / 2) + (15 * escalaFinal);
+
+    this.lobby.x = (ancho / 2) - (anchoBarraTotal / 2) - separacionX;
+    this.lobby.y = this.totalPuntaje.y + (altoBarraTotal / 2);
 
     if (this.puntosObjetivos) {
       this.puntosObjetivos.style.fontSize = Math.round(30 * escalaFinal);

@@ -168,6 +168,7 @@ class Juego{
         this.tilde = await PIXI.Assets.load("assets/ui/tilde.png");
         this.alertaPeligro = await PIXI.Assets.load("assets/ui/UIAlerta.png")
         this.finDePartida = await PIXI.Assets.load("assets/ui/PantallaVictoria.png");
+        this.botonDeLobby = await PIXI.Assets.load("assets/ui/UILobby.png");
         this.tipografia = await PIXI.Assets.load({src: "assets/Tiny5-Regular.ttf", data:{family: "PixelFont"}}); 
     }
 
